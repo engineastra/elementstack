@@ -13,8 +13,12 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "typeRoots": ["./node_modules/@types", "./libs/*/types"],
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@elementstack/shared-assets": ["libs/shared-assets/src/index.ts"],
+      "@elementstack/shared-assets/*": ["libs/shared-assets/src/*"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

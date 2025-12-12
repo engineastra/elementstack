@@ -17,7 +17,39 @@ module.exports = {
     //     ...createGlobPatternsForDependencies(__dirname)
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#71f163',
+        backgroundAccent: '#050816',
+        card: '#0B1020',
+        pannel: '#111827',
+        primaryText: '#F9FAFB',
+        secondaryText: '#9CA3AF',
+        disabled: '#4B5563',
+        divider: '#1F2933',
+        success: '#22C55E',
+        warning: '#F59E0B',
+        error: '#EF4444',
+        project: '#F8977C',
+        machine: '#B69FE9',
+        problems: '#7EBBF8',
+        peer: '#22C55E',
+      },
+    },
   },
   plugins: [],
+  safelist: [
+    // Gradients
+    'theme-grad',
+    'feature-grad',
+    'project-grad',
+    'machine-grad',
+    'problems-grad',
+    'peer-grad',
+    // Colors
+    'text-project',
+    'text-machine',
+    'text-problems',
+    'text-peer',
+  ],
 };

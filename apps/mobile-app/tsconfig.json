@@ -19,5 +19,8 @@
     {
       "path": "./tsconfig.spec.json"
     }
-  ]
+  ],
+  "paths": {
+    // "@elementstack/shared-assets/*": ["libs/shared-assets/src/*"]
+  }
 }
