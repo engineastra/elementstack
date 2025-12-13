@@ -15,6 +15,7 @@ export type OptionCardConfig = {
   title: string;
   bgGrad: string;
   textColor: string;
+  pathName: string;
 };
 
 export const OPTION_CARDS: Record<string, OptionCardConfig> = {
@@ -24,6 +25,7 @@ export const OPTION_CARDS: Record<string, OptionCardConfig> = {
     title: 'Projects',
     bgGrad: 'project-grad',
     textColor: 'project',
+    pathName: 'projects',
   },
   machine: {
     id: 2,
@@ -31,6 +33,7 @@ export const OPTION_CARDS: Record<string, OptionCardConfig> = {
     title: 'Machine Coding',
     bgGrad: 'machine-grad',
     textColor: 'machine',
+    pathName: 'machine',
   },
   problems: {
     id: 3,
@@ -38,6 +41,7 @@ export const OPTION_CARDS: Record<string, OptionCardConfig> = {
     title: 'Problems',
     bgGrad: 'problems-grad',
     textColor: 'problems',
+    pathName: 'problems',
   },
   peer: {
     id: 4,
@@ -45,6 +49,7 @@ export const OPTION_CARDS: Record<string, OptionCardConfig> = {
     title: 'Peer Code',
     bgGrad: 'peer-grad',
     textColor: 'peer',
+    pathName: 'peercode',
   },
 };
 

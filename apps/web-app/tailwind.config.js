@@ -21,6 +21,7 @@ module.exports = {
       colors: {
         primary: '#71f163',
         backgroundAccent: '#050816',
+        backgroundAccentTransparent: '#050816af',
         card: '#0B1020',
         pannel: '#111827',
         primaryText: '#F9FAFB',

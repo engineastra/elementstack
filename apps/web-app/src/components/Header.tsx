@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation';
 import COMMON_TEXTS from '@elementstack/shared-assets/CommonTexts';
 import logo from '@elementstack/shared-assets/icons/Logo.svg';
 import Image from 'next/image';
-import ROUTES from '../constants/Routes';
+import ROUTES, { BrandRoutes } from '../constants/Routes';
 import { OPTION_CARDS } from '@elementstack/shared-assets/Constants';
 
 const TitleTag = ({ name }: { name: string }) => {
@@ -47,8 +47,12 @@ const Header = () => {
   const pathname = usePathname();
   return (
     <>
-      <div className="flex justify-between flex-col lg:flex-row">
-        <Branding />
+      <div
+        className={`flex justify-between ${
+          pathname === ROUTES.HOME ? 'flex-row' : 'flex-col'
+        } lg:flex-row`}
+      >
+        {BrandRoutes.includes(pathname) ? <Branding /> : <></>}
         <nav className="flex items-center gap-3 flex-col lg:flex-row">
           {pathname === ROUTES.HOME && (
             <div className="flex py-1 px-2 bg-card rounded-full">

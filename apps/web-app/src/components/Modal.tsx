@@ -23,16 +23,16 @@ const Modal = ({ children, isOpen, onClose }: ModalProps) => {
         onClose();
       }
     };
-    document.addEventListener('click', handleOutsideClick);
+    document.addEventListener('mousedown', handleOutsideClick);
     return () => {
-      document.removeEventListener('click', handleOutsideClick);
+      document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, []);
 
   if (!modalEle || !isOpen) return null;
 
   return createPortal(
-    <div className="modal-bg flex h-[100vh] w-[100vw] feature-grad opacity-80 justify-center items-center">
+    <div className="modal-bg flex h-[100vh] w-[100vw] bg-backgroundAccentTransparent justify-center items-center">
       <div className="flex p-4 rounded-3xl bg-pannel border border-primary">
         {children}
       </div>

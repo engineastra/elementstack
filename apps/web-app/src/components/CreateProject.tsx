@@ -1,15 +1,34 @@
+'use client';
+import { Controller } from 'react-hook-form';
 import { CREATE_PROJECT_OPTIONS } from '@elementstack/shared-assets/Constants';
-import { oxanium } from '../constants/Common';
+import { oxanium } from 'apps/web-app/src/constants/Common';
 import Image from 'next/image';
+import { useCreateProject } from 'apps/web-app/src/hooks/useCreateProject';
 
-const CreateProject = () => {
+const CreateProject = ({ onClose }: { onClose: () => void }) => {
+  const {
+    control,
+    projectType,
+    projectName,
+    errors,
+    handleProjectNameChange,
+    handleProjectTypeSelection,
+    handleCreateClick,
+  } = useCreateProject(onClose);
+
   return (
     <div
-      className={`flex flex-col ${oxanium.variable} w-[95vw] lg:max-w-[550px] gap-3`}
+      className={`flex flex-col ${oxanium.variable} w-[90vw] lg:max-w-[550px] gap-3`}
     >
       <header className="flex with-divider justify-between items-center pb-3">
         <p className="oxanium-font text-primary text-[24px]">Create Project</p>
-        <button className="oxanium-font py-2 px-5 text-[14px] theme-grad rounded-full text-black font-medium border-none hover:scale-105">
+        <button
+          disabled={
+            !(projectName && !errors.projectName?.message && projectType)
+          }
+          className="oxanium-font py-2 px-5 text-[14px] theme-grad disabled:bg-none disabled:bg-disabled rounded-full text-black disabled:text-white disabled:cursor-not-allowed font-medium border-none hover:scale-105"
+          onClick={handleCreateClick}
+        >
           Create
         </button>
       </header>
@@ -17,9 +36,24 @@ const CreateProject = () => {
         <p className="oxanium-font text-secondaryText text-[16px] font-medium">
           Enter Name
         </p>
-        <input
-          type="text"
-          className="w-full h-[45px] oxanium-font text-white text-[16px] font-medium outline-none rounded-xl bg-greenishgrey px-3"
+        <Controller
+          name="projectName"
+          control={control}
+          render={({ field, fieldState }) => (
+            <>
+              <input
+                {...field}
+                type="text"
+                className="w-full h-[45px] oxanium-font text-white text-[16px] font-medium outline-none rounded-xl bg-greenishgrey px-3"
+                onChange={(e) => handleProjectNameChange(e, field)}
+              />
+              {fieldState.error && (
+                <p className="text-error text-[12px] italic font-medium">
+                  {fieldState.error.message}
+                </p>
+              )}
+            </>
+          )}
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -27,14 +61,18 @@ const CreateProject = () => {
           Select tech stack for the project
         </p>
         <div className="flex flex-wrap gap-3 cursor-pointer">
-          {Object.values(CREATE_PROJECT_OPTIONS).map((obj) => {
+          {Object.entries(CREATE_PROJECT_OPTIONS).map(([key, val]) => {
             return (
               <button
-                key={obj.id}
-                className="flex gap-2 rounded-xl bg-card px-5 py-3 w-fit"
+                key={key}
+                data-type={key}
+                className={`flex gap-2 rounded-xl bg-card px-5 py-3 w-fit border border-${
+                  projectType === key ? 'primary' : 'transparent'
+                } hover:scale-105`}
+                onClick={handleProjectTypeSelection}
               >
-                <Image src={obj.icon} alt={obj.title} className="w-6 h-6" />
-                <p>{obj.title}</p>
+                <Image src={val.icon} alt={val.title} className="w-6 h-6" />
+                <p>{val.title}</p>
               </button>
             );
           })}

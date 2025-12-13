@@ -1,4 +1,8 @@
-export default {
+const Routes = {
   HOME: '/',
-  PROJECT: '/project',
+  PROJECT: '/projects',
 };
+
+export const BrandRoutes = [Routes.HOME, Routes.PROJECT];
+
+export default Routes;
