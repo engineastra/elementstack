@@ -34,6 +34,7 @@ module.exports = {
         machine: '#B69FE9',
         problems: '#7EBBF8',
         peer: '#22C55E',
+        greenishgrey: '#1F2933',
       },
     },
   },

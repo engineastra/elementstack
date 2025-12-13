@@ -20,4 +20,6 @@ function App() {
   return <input value={name} onChange={e => setName(e.target.value)} />;
 }`,
   LOGIN: 'Login',
+  NEW_FOLDER: 'New Folder',
+  NEW_PROJECT: 'New Project',
 };
