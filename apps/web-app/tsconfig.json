@@ -30,8 +30,10 @@
     "**/*.jsx",
     "../../apps/web-app/.next/types/**/*.ts",
     "../../dist/apps/web-app/.next/types/**/*.ts",
-    "next-env.d.ts"
-, "../../libs/shared-assets/src/Regex.ts"  ],
+    "next-env.d.ts",
+    "../../libs/shared-assets/src/Regex.ts",
+    "../../libs/shared-assets/src/Enums.ts"
+  ],
   "exclude": [
     "node_modules",
     "jest.config.ts",

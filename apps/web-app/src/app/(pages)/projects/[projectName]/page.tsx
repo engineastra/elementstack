@@ -1,16 +1,15 @@
 'use client';
-import React, { use } from 'react';
-import ProjectHeader from './ProjectHeader';
-import { useSearchParams } from 'next/navigation';
+import React from 'react';
+import FilesTab from 'apps/web-app/src/components/FilesTab';
+import SideBar from 'apps/web-app/src/app/(pages)/projects/[projectName]/SideBar';
 
 const SingleProject = () => {
-  const searchParams = useSearchParams();
-  const projectName = searchParams.get('name') || '';
-  const projectType = searchParams.get('type') || '';
-  console.log(projectName, projectType);
   return (
-    <div>
-      <ProjectHeader type={projectType} name={projectName} />
+    <div className="flex w-full h-[100vh] max-h-[100vh] p-2 gap-2">
+      <SideBar />
+      <div className="flex flex-1 flex-col bg-card h-full rounded-md">
+        <FilesTab />
+      </div>
     </div>
   );
 };

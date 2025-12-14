@@ -90,7 +90,7 @@ html {
       left: 0;
       bottom: 0;
       width: 100%;
-      border: 1px solid #1F2933;
+      border: 1px solid #1f2933;
     }
   }
 }
@@ -102,4 +102,32 @@ html {
 
 .current-line {
   border: none !important;
+}
+
+/* SideBar expand styles */
+@layer utilities {
+  .expandable-icon {
+    display: none;
+  }
+  .visible-hover-expand-icon {
+    position: relative;
+    &:hover {
+      .expandable-icon {
+        display: block;
+        img {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          top: calc(50% - 10px);
+          left: calc(100% - 10px);
+          padding: 5px;
+          width: 20px;
+          height: 20px;
+          border-radius: 5px;
+          background-color: #000000af;
+        }
+      }
+    }
+  }
 }

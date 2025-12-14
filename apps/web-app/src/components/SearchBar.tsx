@@ -5,11 +5,16 @@ type SearchBarProps = {
   name?: string;
   value?: string;
   placeholder?: string;
+  width?: string;
 };
 
-const SearchBar = ({ name, value, placeholder }: SearchBarProps) => {
+const SearchBar = ({ name, value, placeholder, width }: SearchBarProps) => {
   return (
-    <div className="flex px-4 rounded-full bg-greenishgrey text-[14px] min-h-10 w-full lg:w-[300px]">
+    <div
+      className={`flex max-h-[40px] px-4 rounded-full bg-greenishgrey text-[14px] min-h-10 w-full lg:w-[300px] ${
+        width || ''
+      }`}
+    >
       <input
         type="text"
         className="flex flex-1 bg-transparent outline-none placeholder:text-secondaryText"

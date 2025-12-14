@@ -1,21 +1,29 @@
+'use client';
 import Image from 'next/image';
-import logo from '@elementstack/shared-assets/icons/Logo.svg';
-import { CREATE_PROJECT_OPTIONS } from '@elementstack/shared-assets/Constants';
+import addFileSVG from '@elementstack/shared-assets/icons/addFile.svg';
+import addFolderSVG from '@elementstack/shared-assets/icons/addFolder.svg';
+import { useContext } from 'react';
+import { ProjectDetailsContext } from 'apps/web-app/src/contexts/ProjectDetailsProvider';
 
-const ProjectHeader = ({ type, name }: { type: string; name: string }) => {
-  console.log(type);
+const ProjectHeader = () => {
+  const { projectDetails } = useContext(ProjectDetailsContext);
   return (
-    <div className="flex w-full justify-between">
-      <Image className="inline w-5 h-5" src={logo} alt="app-logo" />
-      <div className="flex w-full justify-center items-center gap-1">
+    <div className="flex h-[] items-center p-2 pl-5 rounded-md rounded-b-none max-h-[100vh] border-b border-b-greenishgrey">
+      <p className="text-[11px] py-[3px]">
+        {projectDetails.selectedSideBarOption}
+      </p>
+      <div className="flex h-full items-center ml-auto gap-2">
         <Image
-          className="inline w-5 h-5"
-          src={CREATE_PROJECT_OPTIONS[type].icon}
-          alt="app-logo"
+          className="inline h-3 w-fit cursor-pointer"
+          src={addFileSVG}
+          alt="add-file"
         />
-        <p>{name}</p>
+        <Image
+          className="inline h-3 w-fit cursor-pointer"
+          src={addFolderSVG}
+          alt="add-folder"
+        />
       </div>
-      <div></div>
     </div>
   );
 };

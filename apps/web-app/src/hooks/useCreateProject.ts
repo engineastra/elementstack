@@ -1,5 +1,5 @@
 // useCreateProject.ts
-import { useEffect, useReducer } from 'react';
+import { useReducer, Reducer } from 'react';
 import { defaultStateReducer } from '../utils/commonUtils';
 import Regex from '@elementstack/shared-assets/Regex';
 import { useForm } from 'react-hook-form';
@@ -16,17 +16,24 @@ const zodSchema = z.object({
 
 type FormData = z.infer<typeof zodSchema>;
 
-const initialState: {
+type InitialStateSchema = {
   projectType: string;
   isCreateEnable: boolean;
-} = {
+};
+
+const initialState: InitialStateSchema = {
   projectType: '',
   isCreateEnable: false,
 };
 
+type Action = { payload: Partial<InitialStateSchema> };
+
 export const useCreateProject = (onClose: () => void) => {
   const router = useRouter();
-  const [state, dispatch] = useReducer(defaultStateReducer, initialState);
+  const [state, dispatch] = useReducer(
+    defaultStateReducer as Reducer<InitialStateSchema, Action>,
+    initialState
+  );
   const { projectType } = state;
   const {
     control,
@@ -41,9 +48,9 @@ export const useCreateProject = (onClose: () => void) => {
 
   const handleProjectNameChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    field: any
+    field: { onChange: (val: string) => string }
   ) => {
-    let nameValue = e.target.value;
+    const nameValue = e.target.value;
     field.onChange(nameValue);
     return nameValue;
   };
@@ -51,13 +58,12 @@ export const useCreateProject = (onClose: () => void) => {
   const handleProjectTypeSelection = (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
-    let typeValue = e.currentTarget.dataset.type;
+    const typeValue = e.currentTarget.dataset.type;
     dispatch({ payload: { projectType: typeValue } });
   };
 
   const handleCreateClick = () => {
     const params = new URLSearchParams();
-    params.set('name', projectName);
     params.set('type', projectType);
 
     router.push(`${Routes.PROJECT}/${projectName}?${params.toString()}`);
