@@ -8,7 +8,47 @@ import chevRightSvg from '@elementstack/shared-assets/icons/chevRightWhite.svg';
 import Image from 'next/image';
 import { FsItemType } from '@elementstack/shared-assets/Enums';
 import { useFolderTree } from '@web-app/hooks/useFolderTree';
-import { Controller } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { Ref } from 'react';
+
+type NewInputFieldPropType<T extends FieldValues> = {
+  name: Path<T>;
+  ref?: Ref<HTMLInputElement>;
+  control: Control<T>;
+  onInputEnter: () => void;
+};
+
+const NewInputField = <T extends FieldValues>({
+  name,
+  ref,
+  control,
+  onInputEnter,
+}: NewInputFieldPropType<T>) => (
+  <Controller
+    name={name}
+    control={control}
+    render={({ field, fieldState }) => (
+      <div className="flex flex-col">
+        <input
+          {...field}
+          ref={ref}
+          type="text"
+          className="text-[12px] text-white  outline-none bg-transparent"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              onInputEnter();
+            }
+          }}
+        />
+        {fieldState.error && (
+          <p className="text-error text-[8px] italic font-medium">
+            {fieldState.error.message}
+          </p>
+        )}
+      </div>
+    )}
+  />
+);
 
 const FolderTree = ({ folder }: { folder: Folder }) => {
   const {
@@ -17,11 +57,17 @@ const FolderTree = ({ folder }: { folder: Folder }) => {
     newInputData,
     expanded,
     currentSelectedId,
+    renameFileOrFolderObj,
+    renameFileOrFolderRef,
+    multipleItemsSelected,
     handleFileOrFolderSelection,
+    handleFileRenameEnter,
+    handleFolderRenameEnter,
     onNewFileInputEnter,
     onDragStartFileOrFolder,
     onDragOverFileOrFolder,
     onDropFileOrFolder,
+    onFileOrFolderNameDoubleClick,
   } = useFolderTree({
     folder,
   });
@@ -34,8 +80,8 @@ const FolderTree = ({ folder }: { folder: Folder }) => {
       <div
         draggable={!folder.isRoot}
         className="flex items-center gap-2 pt-1 cursor-pointer"
-        onClick={() =>
-          handleFileOrFolderSelection(folder.id, FsItemType.FOLDER)
+        onClick={(e) =>
+          handleFileOrFolderSelection(e, folder.id, FsItemType.FOLDER)
         }
         onDragStart={(e) =>
           onDragStartFileOrFolder(e, {
@@ -53,13 +99,28 @@ const FolderTree = ({ folder }: { folder: Folder }) => {
           />
         )}
         <Image src={folderSvg} alt={folder.name} />
-        <p
-          className={`text-[12px] ${
-            currentSelectedId === folder.id ? 'text-primary' : ''
-          }`}
-        >
-          {folder.name}
-        </p>
+        {renameFileOrFolderObj && renameFileOrFolderObj.id === folder.id ? (
+          <div className="flex my-[4px] px-1 py-[2px] bg-greenishgrey border border-primary gap-1">
+            <NewInputField
+              name="renameFileOrFolder"
+              ref={renameFileOrFolderRef}
+              control={control}
+              onInputEnter={() => handleFolderRenameEnter(folder)}
+            />
+          </div>
+        ) : (
+          <p
+            className={`text-[12px] ${
+              currentSelectedId === folder.id ||
+              multipleItemsSelected.includes(folder.id)
+                ? 'text-primary'
+                : ''
+            }`}
+            onDoubleClick={() => onFileOrFolderNameDoubleClick(folder)}
+          >
+            {folder.name}
+          </p>
+        )}
       </div>
       {newInputData.isEnabled && newInputData.folderId === folder.id && (
         <div className="flex my-[4px] ml-4 px-1 py-[2px] bg-greenishgrey border border-primary gap-1">
@@ -68,29 +129,11 @@ const FolderTree = ({ folder }: { folder: Folder }) => {
             alt={newInputData.type as string}
             className="w-3 mb-auto pt-[2px]"
           />
-          <Controller
+          <NewInputField
             name="newInputName"
+            ref={inputRef}
             control={control}
-            render={({ field, fieldState }) => (
-              <div className="flex flex-col">
-                <input
-                  {...field}
-                  ref={inputRef}
-                  type="text"
-                  className="text-[12px] text-white  outline-none bg-transparent"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      onNewFileInputEnter();
-                    }
-                  }}
-                />
-                {fieldState.error && (
-                  <p className="text-error text-[8px] italic font-medium">
-                    {fieldState.error.message}
-                  </p>
-                )}
-              </div>
-            )}
+            onInputEnter={onNewFileInputEnter}
           />
         </div>
       )}
@@ -105,13 +148,15 @@ const FolderTree = ({ folder }: { folder: Folder }) => {
                 key={file.id}
                 draggable
                 className="flex gap-2 pt-1 cursor-pointer"
-                onClick={() =>
+                onClick={(e) => {
                   handleFileOrFolderSelection(
+                    e,
                     file.id,
                     FsItemType.FILE,
-                    folder.id
-                  )
-                }
+                    folder.id,
+                    file
+                  );
+                }}
                 onDragStart={(e) =>
                   onDragStartFileOrFolder(e, {
                     movableFileOrFolderId: file.id,
@@ -125,13 +170,29 @@ const FolderTree = ({ folder }: { folder: Folder }) => {
                   alt={file.id}
                   className="w-3"
                 />
-                <p
-                  className={`text-[12px] ${
-                    currentSelectedId === file.id ? 'text-primary' : ''
-                  }`}
-                >
-                  {file.name}
-                </p>
+                {renameFileOrFolderObj &&
+                renameFileOrFolderObj.id === file.id ? (
+                  <div className="flex my-[4px] px-1 py-[2px] bg-greenishgrey border border-primary gap-1">
+                    <NewInputField
+                      name="renameFileOrFolder"
+                      ref={renameFileOrFolderRef}
+                      control={control}
+                      onInputEnter={() => handleFileRenameEnter(file)}
+                    />
+                  </div>
+                ) : (
+                  <p
+                    className={`text-[12px] ${
+                      currentSelectedId === file.id ||
+                      multipleItemsSelected.includes(file.id)
+                        ? 'text-primary'
+                        : ''
+                    }`}
+                    onDoubleClick={() => onFileOrFolderNameDoubleClick(file)}
+                  >
+                    {file.name}
+                  </p>
+                )}
               </div>
             );
           })}

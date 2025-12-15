@@ -1,4 +1,11 @@
-import { DragEvent, useContext, useEffect, useRef, useState } from 'react';
+import {
+  DragEvent,
+  MouseEvent,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
 import {
   FileData,
@@ -10,9 +17,17 @@ import z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Regex from '@elementstack/shared-assets/Regex';
+import { FILE_TYPE_TO_LANGUAGE } from '@elementstack/shared-assets/Constants';
 
 const zodSchema = z.object({
   newInputName: z
+    .string()
+    .min(1, 'Enter valid file name')
+    .regex(
+      Regex.FILE_OR_FOLDER_NAME,
+      'Invalid name, only use (a–z, A–Z, 0–9, _, -, .)'
+    ),
+  renameFileOrFolder: z
     .string()
     .min(1, 'Enter valid file name')
     .regex(
@@ -34,10 +49,18 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
   const { projectDetails, setProjectDetails } = useContext(
     ProjectDetailsContext
   );
-  const { newInputData, currentSelectedId, rootFolder } = projectDetails;
+  const {
+    newInputData,
+    currentSelectedId,
+    rootFolder,
+    tabs,
+    renameFileOrFolderObj,
+    multipleItemsSelected,
+  } = projectDetails;
   const {
     control,
     setValue,
+    setError,
     getValues,
     formState: { errors },
   } = useForm<FormData>({
@@ -46,6 +69,18 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
     mode: 'onChange',
   });
   const inputRef = useRef<HTMLInputElement>(null);
+  const renameFileOrFolderRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (folder.isRoot) {
+      setProjectDetails({
+        payload: {
+          currentSelectedId: rootFolder.id,
+          selectedFolderId: rootFolder.id,
+        },
+      });
+    }
+  }, [folder.isRoot]);
 
   useEffect(() => {
     setExpanded(folder.isRoot || false);
@@ -60,17 +95,42 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
     }
   }, [newInputData.isEnabled, newInputData.folderId]);
 
+  useEffect(() => {
+    if (renameFileOrFolderRef.current) {
+      renameFileOrFolderRef.current.focus();
+    }
+  }, [renameFileOrFolderObj]);
+
   const handleFileOrFolderSelection = (
+    e: MouseEvent<HTMLDivElement>,
     id: string,
     type: FsItemType,
-    parentFolderId?: string
+    parentFolderId?: string,
+    fileObj?: FileData
   ) => {
     const payload: Partial<ProjectDetailsSchema> = { currentSelectedId: id };
     if (type === FsItemType.FOLDER) {
       setExpanded((prev) => !prev);
-      payload.selectedFolder = id;
+      payload.selectedFolderId = id;
+    } else if (type === FsItemType.FILE && fileObj) {
+      payload.selectedFolderId = parentFolderId;
+      const isOpened = tabs.some((file: FileData) => fileObj.id === file.id);
+      payload.selectedFile = fileObj;
+      if (!isOpened) {
+        payload.tabs = [...tabs, fileObj];
+      }
+    }
+    // Multiple Selection on Command Click
+    if (e.ctrlKey || e.metaKey) {
+      if (multipleItemsSelected.includes(id)) {
+        payload.multipleItemsSelected = multipleItemsSelected.filter(
+          (mid) => mid != id
+        );
+      } else {
+        payload.multipleItemsSelected = [...multipleItemsSelected, id];
+      }
     } else {
-      payload.selectedFolder = parentFolderId;
+      payload.multipleItemsSelected = [id];
     }
     setProjectDetails({ payload });
   };
@@ -91,7 +151,7 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
   };
 
   const onNewFileInputEnter = () => {
-    if (!getValues().newInputName || errors.newInputName) return;
+    if (!getValues().newInputName || errors.newInputName?.message) return;
     const newRootFolder = { ...rootFolder };
     updateFolder(
       newRootFolder,
@@ -112,6 +172,7 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
               id: newId,
               name: getValues().newInputName,
               type: 'txt',
+              language: 'text',
               value: '',
               parentFolderId: prevId,
             };
@@ -121,6 +182,7 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
               id: newId,
               name: getValues().newInputName,
               type: fileExt as string,
+              language: FILE_TYPE_TO_LANGUAGE[fileExt as string] || 'text',
               value: '',
               parentFolderId: prevId,
             };
@@ -251,17 +313,51 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
     }
   };
 
+  const onFileOrFolderNameDoubleClick = (fileOrFolder: FileData | Folder) => {
+    setValue('renameFileOrFolder', fileOrFolder.name);
+    setProjectDetails({ payload: { renameFileOrFolderObj: fileOrFolder } });
+  };
+
+  const handleFileRenameEnter = (file: FileData) => {
+    if (getValues().renameFileOrFolder && !errors.renameFileOrFolder?.message) {
+      file.name = getValues().renameFileOrFolder;
+      file.type = file.name.split('.').at(-1) || 'txt';
+      file.language = FILE_TYPE_TO_LANGUAGE[file.type];
+      setValue('renameFileOrFolder', '');
+      setError('renameFileOrFolder', { message: '' });
+      setProjectDetails({
+        payload: { renameFileOrFolderObj: null, rootFolder: { ...rootFolder } },
+      });
+    }
+  };
+
+  const handleFolderRenameEnter = (fld: Folder) => {
+    if (getValues().renameFileOrFolder && !errors.renameFileOrFolder?.message) {
+      fld.name = getValues().renameFileOrFolder;
+      setValue('renameFileOrFolder', '');
+      setError('renameFileOrFolder', { message: '' });
+      setProjectDetails({
+        payload: { renameFileOrFolderObj: null, rootFolder: { ...rootFolder } },
+      });
+    }
+  };
+
   return {
     inputRef,
     control,
-    errors,
     newInputData,
     expanded,
     currentSelectedId,
+    renameFileOrFolderObj,
+    renameFileOrFolderRef,
+    multipleItemsSelected,
     handleFileOrFolderSelection,
+    handleFileRenameEnter,
+    handleFolderRenameEnter,
     onNewFileInputEnter,
     onDragStartFileOrFolder,
     onDragOverFileOrFolder,
     onDropFileOrFolder,
+    onFileOrFolderNameDoubleClick,
   };
 };

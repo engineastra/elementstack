@@ -117,3 +117,22 @@ export const SIDE_BAR_OPTIONS_ICON: Record<
   [SideBarOptions.SEARCH]: { open: searchOpenSVG, close: searchCloseSVG },
   [SideBarOptions.PREVIEW]: { open: playOpenSVG, close: playCloseSVG },
 };
+
+export const FILE_TYPE_TO_LANGUAGE: Record<string, string> = {
+  tsx: 'typescript',
+  jsx: 'javascript',
+  ts: 'typescript',
+  js: 'javascript',
+  html: 'html',
+  css: 'css',
+  json: 'json',
+};
+
+export const EmptyFile = {
+  id: '',
+  name: '',
+  value: '',
+  parentFolderId: '',
+  type: '',
+  language: '',
+};

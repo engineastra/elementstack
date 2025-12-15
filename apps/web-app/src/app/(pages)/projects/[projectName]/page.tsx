@@ -1,6 +1,7 @@
 import React from 'react';
 import SideBar from './SideBar';
 import FilesTab from '@web-app/components/FilesTab';
+import ProjectEditorSection from './ProjectEditorSection';
 
 const SingleProject = () => {
   return (
@@ -8,6 +9,7 @@ const SingleProject = () => {
       <SideBar />
       <div className="flex flex-1 flex-col bg-card h-full rounded-md">
         <FilesTab />
+        <ProjectEditorSection />
       </div>
     </div>
   );

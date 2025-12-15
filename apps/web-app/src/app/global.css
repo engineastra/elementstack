@@ -18,11 +18,28 @@ html {
   --darkgreen-gradient: linear-gradient(180deg, #178c42 0%, #0d3a1e 100%);
 }
 
+/* Hide scrollbar but allow scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   color: var(--primary-text);
+  & {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer utilities {
@@ -97,7 +114,7 @@ html {
 
 .monaco-editor-background,
 .margin-view-overlays {
-  background-color: #111827 !important;
+  background-color: #0c1020 !important;
 }
 
 .current-line {

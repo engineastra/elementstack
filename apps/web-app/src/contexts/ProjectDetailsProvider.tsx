@@ -1,6 +1,9 @@
 'use client';
 import { createContext, ReactNode, useReducer, Dispatch } from 'react';
-import { ProjectDetailsSchema } from '@elementstack/shared-assets/Types';
+import {
+  Folder,
+  ProjectDetailsSchema,
+} from '@elementstack/shared-assets/Types';
 import { SideBarOptions } from '@elementstack/shared-assets/Enums';
 import { defaultStateReducer } from '../utils/commonUtils';
 
@@ -19,7 +22,17 @@ const initialState: ProjectDetailsSchema = {
   },
   selectedSideBarOption: SideBarOptions.FILES,
   currentSelectedId: '',
-  selectedFolder: '',
+  selectedFile: {
+    id: '',
+    name: '',
+    value: '',
+    parentFolderId: '',
+    type: '',
+    language: '',
+  },
+  selectedFolderId: '',
+  renameFileOrFolderObj: null,
+  multipleItemsSelected: [],
   newInputData: {
     isEnabled: false,
     folderId: '',
@@ -30,6 +43,7 @@ const initialState: ProjectDetailsSchema = {
 type ProjectDetailsContextSchema = {
   projectDetails: ProjectDetailsSchema;
   setProjectDetails: Dispatch<{ payload: Partial<ProjectDetailsSchema> }>;
+  deleteFilesAndFolders: (currentFolder?: Folder) => Folder | undefined;
 };
 
 export const ProjectDetailsContext = createContext<ProjectDetailsContextSchema>(
@@ -38,14 +52,36 @@ export const ProjectDetailsContext = createContext<ProjectDetailsContextSchema>(
     setProjectDetails: () => {
       return;
     },
+    deleteFilesAndFolders: () => {
+      return;
+    },
   }
 );
 
 const ProjectDetailsProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(defaultStateReducer, initialState);
+  const { multipleItemsSelected, rootFolder } = state;
+
+  const deleteFilesAndFolders = (currentFolder: Folder = rootFolder) => {
+    const filteredFiles = currentFolder.files.filter(
+      (file) => !multipleItemsSelected.includes(file.id)
+    );
+    const filteredFolders = currentFolder.folders.filter(
+      (fld) => !multipleItemsSelected.includes(fld.id)
+    );
+    currentFolder.files = filteredFiles;
+    currentFolder.folders = filteredFolders;
+    currentFolder.folders.forEach((fld) => deleteFilesAndFolders(fld));
+    return { ...currentFolder };
+  };
+
   return (
     <ProjectDetailsContext.Provider
-      value={{ projectDetails: state, setProjectDetails: dispatch }}
+      value={{
+        projectDetails: state,
+        setProjectDetails: dispatch,
+        deleteFilesAndFolders,
+      }}
     >
       {children}
     </ProjectDetailsContext.Provider>

@@ -4,29 +4,34 @@ import MonacoEditor from '@monaco-editor/react';
 type EditorProp = {
   hideNumbering?: boolean;
   height?: string;
+  width?: string;
   selectedLanguageuage?: string;
   value: string;
   readOnly?: boolean;
-  setValue?: (selectedLanguage: string, val: string) => void;
+  lineDecorationsWidth?: number;
+  fontSize?: number;
+  setValue?: (val: string) => void;
 };
 
 const Editor = ({
   height = '100%',
+  width = '100%',
   selectedLanguageuage = 'javascript',
   value,
   readOnly = false,
+  lineDecorationsWidth = 10,
+  fontSize = 12,
   setValue,
 }: EditorProp) => {
   return (
     <MonacoEditor
-      key={selectedLanguageuage} // Stable key prevents remounts
       language={selectedLanguageuage}
       value={value}
       theme="vs-dark" // Match handleEditorMount theme
-      width="100%"
+      width={width}
       height={height}
       onChange={(val: string | undefined) => {
-        if (setValue) return setValue(selectedLanguageuage, val ?? '');
+        if (setValue) return setValue(val ?? '');
       }}
       //   onMount={handleEditorMount}
       options={{
@@ -56,14 +61,14 @@ const Editor = ({
         lineNumbersMinChars: 2,
         folding: false, // Removes folding margin space [web:4][web:6]
         glyphMargin: false, // Hides glyph/debugger margin [web:6]
-        lineDecorationsWidth: 10, // Minimizes decoration space (undocumented but
+        lineDecorationsWidth, // Minimizes decoration space (undocumented but
 
         // Essential
         smoothScrolling: true,
         lineNumbers: 'on',
         cursorBlinking: 'smooth',
         automaticLayout: true,
-        fontSize: 12,
+        fontSize,
 
         // Language server
         wordBasedSuggestions: true,

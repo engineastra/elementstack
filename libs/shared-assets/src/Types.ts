@@ -4,7 +4,8 @@ export type FileData = {
   id: string; // based on index + depth order + name
   name: string;
   type: string;
-  value?: string;
+  language: string;
+  value: string;
   parentFolderId: string;
 };
 
@@ -26,7 +27,10 @@ export type ProjectDetailsSchema = {
   rootFolder: Folder;
   selectedSideBarOption: SideBarOptions;
   currentSelectedId: string;
-  selectedFolder: string;
+  selectedFile: FileData;
+  selectedFolderId: string;
+  renameFileOrFolderObj: FileData | Folder | null;
+  multipleItemsSelected: Array<string>;
   newInputData: {
     isEnabled: boolean;
     folderId: string;
