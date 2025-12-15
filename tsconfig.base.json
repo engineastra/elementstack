@@ -16,6 +16,7 @@
     "typeRoots": ["./node_modules/@types", "./libs/*/types"],
     "baseUrl": ".",
     "paths": {
+      "@web-app/*": ["apps/web-app/src/*"],
       "@elementstack/shared-assets": ["libs/shared-assets/src/index.ts"],
       "@elementstack/shared-assets/*": ["libs/shared-assets/src/*"]
     }
