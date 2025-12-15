@@ -9,10 +9,10 @@ import {
   CREATE_PROJECT_OPTIONS,
   SIDE_BAR_OPTIONS_ICON,
 } from '@elementstack/shared-assets/Constants';
-import { ProjectDetailsContext } from 'apps/web-app/src/contexts/ProjectDetailsProvider';
-import { DummyRootFolder } from 'apps/web-app/src/constants/MockData';
 import { SideBarOptions } from '@elementstack/shared-assets/Enums';
-import FolderTree from 'apps/web-app/src/components/FolderTree';
+import { ProjectDetailsContext } from '../../../..//contexts/ProjectDetailsProvider';
+import { DummyRootFolder } from '../../../..//constants/MockData';
+import FolderTree from '../../../..//components/FolderTree';
 
 const SideBar = () => {
   const searchParams = useSearchParams();
@@ -27,7 +27,7 @@ const SideBar = () => {
     setOpened((prev) => !prev);
   };
 
-  const handleOptionSelection = (val: string) => {
+  const handleOptionSelection = (val: SideBarOptions) => {
     setProjectDetails({ payload: { selectedSideBarOption: val } });
   };
 
@@ -36,7 +36,7 @@ const SideBar = () => {
   }, []);
 
   return (
-    <div className={`flex visible-hover-expand-icon`}>
+    <div className={`relative flex`}>
       <div
         className={`flex items-center flex-col bg-card h-full rounded-md ${
           opened ? 'rounded-r-none border-r border-r-greenishgrey' : ''
@@ -58,7 +58,7 @@ const SideBar = () => {
                 <div
                   key={key}
                   className="h-[40px]"
-                  onClick={() => handleOptionSelection(key)}
+                  onClick={() => handleOptionSelection(key as SideBarOptions)}
                 >
                   <Image
                     src={
@@ -84,7 +84,7 @@ const SideBar = () => {
         <div className="flex flex-col w-[250px] max-w-[250px] bg-card h-full rounded-r-md">
           <ProjectHeader />
           {selectedSideBarOption === SideBarOptions.FILES && (
-            <div className="flex flex-col pl-5 pt-2">
+            <div className="flex flex-col pl-5 pt-2 h-full">
               <FolderTree folder={rootFolder} />
             </div>
           )}

@@ -2,14 +2,16 @@ import COMMON_TEXTS from '@elementstack/shared-assets/CommonTexts';
 import yrgDots from '@elementstack/shared-assets/images/yrgDots.svg';
 import { OPTION_CARDS } from '@elementstack/shared-assets/Constants';
 import Image from 'next/image';
-import OptionCard from '../components/OptionCard';
-import Editor from '../components/Editor';
-import Header from '../components/Header';
-import { oxanium } from '../constants/Common';
+import OptionCard from '@web-app/components/OptionCard';
+import Editor from '@web-app/components/Editor';
+import Header from '@web-app/components/Header';
+import { oxanium } from '@web-app/constants/Common';
 
 export default function Home() {
   return (
-    <div className={`flex flex-col min-h-[100vh] ${oxanium.variable} px-5 py-4`}>
+    <div
+      className={`flex flex-col min-h-[100vh] ${oxanium.variable} px-5 py-4`}
+    >
       <Header />
       <div className="flex min-h-[90vh] justify-start items-center w-full py-7 lg:px-10 flex-col lg:flex-row">
         <div className="flex flex-col lg:px-5 lg:max-w-[55%]">

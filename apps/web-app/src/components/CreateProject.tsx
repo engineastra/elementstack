@@ -1,9 +1,9 @@
 'use client';
 import { Controller } from 'react-hook-form';
 import { CREATE_PROJECT_OPTIONS } from '@elementstack/shared-assets/Constants';
-import { oxanium } from 'apps/web-app/src/constants/Common';
+import { oxanium } from '@web-app/constants/Common';
 import Image from 'next/image';
-import { useCreateProject } from 'apps/web-app/src/hooks/useCreateProject';
+import { useCreateProject } from '@web-app/hooks/useCreateProject';
 
 const CreateProject = ({ onClose }: { onClose: () => void }) => {
   const {
@@ -11,7 +11,6 @@ const CreateProject = ({ onClose }: { onClose: () => void }) => {
     projectType,
     projectName,
     errors,
-    handleProjectNameChange,
     handleProjectTypeSelection,
     handleCreateClick,
   } = useCreateProject(onClose);
@@ -45,7 +44,6 @@ const CreateProject = ({ onClose }: { onClose: () => void }) => {
                 {...field}
                 type="text"
                 className="w-full h-[45px] oxanium-font text-white text-[16px] font-medium outline-none rounded-xl bg-greenishgrey px-3"
-                onChange={(e) => handleProjectNameChange(e, field)}
               />
               {fieldState.error && (
                 <p className="text-error text-[12px] italic font-medium">

@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation';
 import COMMON_TEXTS from '@elementstack/shared-assets/CommonTexts';
 import logo from '@elementstack/shared-assets/icons/Logo.svg';
 import Image from 'next/image';
-import ROUTES, { BrandRoutes } from '../constants/Routes';
+import ROUTES, { BrandRoutes } from '@web-app/constants/Routes';
 import { OPTION_CARDS } from '@elementstack/shared-assets/Constants';
 
 const TitleTag = ({ name }: { name: string }) => {

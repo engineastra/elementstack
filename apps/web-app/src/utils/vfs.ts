@@ -1,10 +1,10 @@
 // vfs.types.ts
-import { FileMetaData } from '@elementstack/shared-assets/Types';
+import { FileData } from '@elementstack/shared-assets/Types';
 
 export type FilePath = string;
 
 export interface VFSFile {
-  metaData: FileMetaData;
+  metaData: FileData;
   path: FilePath;
   content: string;
 }

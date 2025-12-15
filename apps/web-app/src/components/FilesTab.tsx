@@ -3,8 +3,8 @@ import { useContext } from 'react';
 import Image from 'next/image';
 import closeSVG from '@elementstack/shared-assets/icons/close.svg';
 import { FILE_TYPE_TO_ICON } from '@elementstack/shared-assets/Constants';
-import { ProjectDetailsContext } from '../contexts/ProjectDetailsProvider';
-import { FileMetaData } from '@elementstack/shared-assets/Types';
+import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
+import { FileData } from '@elementstack/shared-assets/Types';
 
 const FilesTab = () => {
   const { projectDetails, setProjectDetails } = useContext(
@@ -12,14 +12,14 @@ const FilesTab = () => {
   );
   const { tabs: files } = projectDetails;
 
-  const onCloseFile = (obj: FileMetaData) => {
+  const onCloseFile = (obj: FileData) => {
     const newList = [...files].filter((file) => file != obj);
     setProjectDetails({ payload: { tabs: newList } });
   };
 
   return (
     <div className="flex h-[30px] w-full bg-pannel rounded-md rounded-b-none overflow-y-scroll">
-      {files.map((obj: FileMetaData) => {
+      {files.map((obj: FileData) => {
         return (
           <button
             key={obj.id}

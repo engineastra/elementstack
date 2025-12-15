@@ -1,6 +1,6 @@
-import Header from 'apps/web-app/src/components/Header';
+import Header from '@web-app/components/Header';
 import HeaderOptions from './HeaderOptions';
-import { oxanium } from 'apps/web-app/src/constants/Common';
+import { oxanium } from '@web-app/constants/Common';
 
 const Project = () => {
   return (

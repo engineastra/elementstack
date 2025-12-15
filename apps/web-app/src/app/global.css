@@ -107,27 +107,19 @@ html {
 /* SideBar expand styles */
 @layer utilities {
   .expandable-icon {
-    display: none;
-  }
-  .visible-hover-expand-icon {
-    position: relative;
-    &:hover {
-      .expandable-icon {
-        display: block;
-        img {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          position: absolute;
-          top: calc(50% - 10px);
-          left: calc(100% - 10px);
-          padding: 5px;
-          width: 20px;
-          height: 20px;
-          border-radius: 5px;
-          background-color: #000000af;
-        }
-      }
+    display: block;
+    img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: calc(50% - 10px);
+      left: calc(100% - 10px);
+      padding: 5px;
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      background-color: #000000af;
     }
   }
 }

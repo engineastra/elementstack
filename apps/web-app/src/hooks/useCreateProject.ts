@@ -46,15 +46,6 @@ export const useCreateProject = (onClose: () => void) => {
   });
   const { projectName } = getValues();
 
-  const handleProjectNameChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: { onChange: (val: string) => string }
-  ) => {
-    const nameValue = e.target.value;
-    field.onChange(nameValue);
-    return nameValue;
-  };
-
   const handleProjectTypeSelection = (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -75,7 +66,6 @@ export const useCreateProject = (onClose: () => void) => {
     projectType,
     projectName,
     errors,
-    handleProjectNameChange,
     handleProjectTypeSelection,
     handleCreateClick,
   };

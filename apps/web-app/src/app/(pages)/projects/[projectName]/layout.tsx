@@ -1,4 +1,4 @@
-import ProjectDetailsProvider from 'apps/web-app/src/contexts/ProjectDetailsProvider';
+import ProjectDetailsProvider from '@web-app/contexts/ProjectDetailsProvider';
 import React, { ReactNode } from 'react';
 
 const SingleProjectLayout = ({ children }: { children: ReactNode }) => {

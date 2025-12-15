@@ -9,10 +9,22 @@ const initialState: ProjectDetailsSchema = {
   name: '',
   openedFile: null,
   tabs: [],
-  rootFolder: { id: '0', name: '', totalItems: 0, files: [], folders: [] },
+  rootFolder: {
+    id: '0',
+    name: '',
+    parentFolderId: '',
+    totalItems: 0,
+    files: [],
+    folders: [],
+  },
   selectedSideBarOption: SideBarOptions.FILES,
   currentSelectedId: '',
   selectedFolder: '',
+  newInputData: {
+    isEnabled: false,
+    folderId: '',
+    type: undefined,
+  },
 };
 
 type ProjectDetailsContextSchema = {
