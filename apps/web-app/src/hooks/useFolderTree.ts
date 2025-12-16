@@ -56,6 +56,7 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
     tabs,
     renameFileOrFolderObj,
     multipleItemsSelected,
+    selectedFolderId,
   } = projectDetails;
   const {
     control,
@@ -88,12 +89,12 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
 
   useEffect(() => {
     if (newInputData.isEnabled) {
-      if (newInputData.folderId === folder.id) setExpanded(true);
+      if (selectedFolderId === folder.id) setExpanded(true);
       if (inputRef.current) {
         inputRef.current.focus();
       }
     }
-  }, [newInputData.isEnabled, newInputData.folderId]);
+  }, [newInputData.isEnabled, selectedFolderId]);
 
   useEffect(() => {
     if (renameFileOrFolderRef.current) {
@@ -135,86 +136,96 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
     setProjectDetails({ payload });
   };
 
-  const updateFolder = (
-    fld: Folder,
-    prevId: string,
-    searcFolderId: string,
-    updateCallback: (fldArg: Folder, prevIdArg: string) => void
-  ) => {
+  const getFolderById = (fldId: string, root = rootFolder): Folder | null => {
     // base condition
-    if (fld.id === searcFolderId) {
-      updateCallback(fld, prevId);
+    if (root.id === fldId) {
+      return root;
     }
-    fld.folders.forEach((nextFld) => {
-      updateFolder(nextFld, fld.id, searcFolderId, updateCallback); // id is in formal '001:file-name'
+    let output: Folder | null = null;
+    root.folders.forEach((nextFld) => {
+      if (output === null) {
+        output = getFolderById(fldId, nextFld);
+      }
     });
+    return output;
   };
 
-  const onNewFileInputEnter = () => {
-    if (!getValues().newInputName || errors.newInputName?.message) return;
-    const newRootFolder = { ...rootFolder };
-    updateFolder(
-      newRootFolder,
-      '',
-      newInputData.folderId,
-      (fld: Folder, prevId: string) => {
-        const newId =
-          prevId.split(':')[0] +
-          fld.totalItems +
-          '-' +
-          getValues().newInputName;
-        if (newInputData.type === FsItemType.FILE) {
-          let newFile: FileData;
-          const fileAttrs = getValues().newInputName.split('.');
-          if (fileAttrs.length === 1) {
-            // text file
-            newFile = {
-              id: newId,
-              name: getValues().newInputName,
-              type: 'txt',
-              language: 'text',
-              value: '',
-              parentFolderId: prevId,
-            };
-          } else {
-            const fileExt = fileAttrs.at(-1);
-            newFile = {
-              id: newId,
-              name: getValues().newInputName,
-              type: fileExt as string,
-              language: FILE_TYPE_TO_LANGUAGE[fileExt as string] || 'text',
-              value: '',
-              parentFolderId: prevId,
-            };
-          }
-          fld.files.push(newFile); // push new file
-        } else if (newInputData.type === FsItemType.FOLDER) {
-          const newFolderName = getValues().newInputName;
-          const newFolder: Folder = {
-            id: newId,
-            name: newFolderName,
-            files: [],
-            folders: [],
-            totalItems: 0,
-            parentFolderId: prevId,
-          };
-          fld.folders.push(newFolder);
-        }
-        fld.totalItems++; // update items count in the folder
+  const onNewFileInputEnter = (folderObj: Folder) => {
+    if (!getValues().newInputName || errors.newInputName?.message) {
+      if (!getValues().newInputName) {
         setProjectDetails({
           payload: {
-            currentSelectedId: newId,
-            rootFolder: newRootFolder,
             newInputData: {
-              ...newInputData,
               isEnabled: false,
               type: undefined,
-              folderId: '',
             },
           },
-        }); // setting current file
+        }); // empty input handelling
       }
-    );
+      return;
+    }
+
+    const newId =
+      folderObj.id.split(':')[0] +
+      folderObj.totalItems +
+      '-' +
+      getValues().newInputName;
+    const newTabs = [...tabs];
+    if (newInputData.type === FsItemType.FILE) {
+      let newFile: FileData;
+      const fileAttrs = getValues().newInputName.split('.');
+      if (fileAttrs.length === 1) {
+        // text file
+        newFile = {
+          id: newId,
+          name: getValues().newInputName,
+          type: 'txt',
+          language: 'text',
+          value: '',
+          parentFolderId: folderObj.id,
+        };
+      } else {
+        const fileExt = fileAttrs.at(-1);
+        newFile = {
+          id: newId,
+          name: getValues().newInputName,
+          type: fileExt as string,
+          language: FILE_TYPE_TO_LANGUAGE[fileExt as string] || 'text',
+          value: '',
+          parentFolderId: folderObj.id,
+        };
+      }
+      newTabs.push(newFile);
+      folderObj.files.push(newFile); // push new file
+    } else if (newInputData.type === FsItemType.FOLDER) {
+      const newFolderName = getValues().newInputName;
+      const newFolder: Folder = {
+        id: newId,
+        name: newFolderName,
+        files: [],
+        folders: [],
+        totalItems: 0,
+        parentFolderId: folderObj.id,
+      };
+      folderObj.folders.push(newFolder);
+    }
+    folderObj.totalItems++; // update items count in the folder
+    setProjectDetails({
+      payload: {
+        currentSelectedId: newId,
+        rootFolder: { ...rootFolder },
+        multipleItemsSelected: [newId],
+        selectedFolderId:
+          newInputData.type === FsItemType.FOLDER ? newId : folderObj.id,
+        newInputData: {
+          ...newInputData,
+          isEnabled: false,
+          type: undefined,
+        },
+        tabs: newTabs,
+      },
+    }); // setting current file
+
     setValue('newInputName', '');
   };
 
@@ -231,7 +242,7 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
 
   const onDropFileOrFolder = (
     e: DragEvent<HTMLDivElement>,
-    dropFolderId: string
+    dropFolder: Folder
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -240,76 +251,45 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
     );
     const { movableFileOrFolderId, movableFileOrFolderParentFolderId, type } =
       movableData;
-    if (type === FsItemType.FILE) {
-      updateFolder(
-        rootFolder,
-        '',
-        movableFileOrFolderParentFolderId,
-        (fld: Folder, prevId: string) => {
-          // fld is the parent folder in from which the dragged file or folder will be removed
-          // 1. get file from folder
-          const movingFile: FileData | undefined = fld.files.find(
-            (file) => file.id === movableFileOrFolderId
-          );
-          // 2. remove file from fld.files
-          fld.files = fld.files.filter(
-            (file) => file.id != movableFileOrFolderId
-          );
-          setProjectDetails({ payload: { rootFolder: { ...rootFolder } } });
-          // 3. updating the files inside new dropFolderId
-          updateFolder(
-            rootFolder,
-            '',
-            dropFolderId,
-            (dropFld: Folder, dropPrev: string) => {
-              if (movingFile) {
-                movingFile.id =
-                  dropPrev + dropFld.totalItems + ':' + movingFile.name;
-                movingFile.parentFolderId = dropFolderId;
-                dropFld.files.push(movingFile);
-                setProjectDetails({
-                  payload: { rootFolder: { ...rootFolder } },
-                });
-              }
-            }
-          );
-        }
+    const prevFolder = getFolderById(movableFileOrFolderParentFolderId);
+    if (type === FsItemType.FILE && prevFolder) {
+      // 1. get file from previous folder
+      const movingFile: FileData | undefined = prevFolder.files.find(
+        (file) => file.id === movableFileOrFolderId
       );
-    } else if (type === FsItemType.FOLDER) {
-      updateFolder(
-        rootFolder,
-        '',
-        movableFileOrFolderParentFolderId,
-        (fld: Folder, prevId: string) => {
-          // fld is the parent folder in from which the dragged folder will be removed
-          // 1. get folder from its current parent folder
-          const movingFolder: Folder | undefined = fld.folders.find(
-            (file) => file.id === movableFileOrFolderId
-          );
-          // 2. remove folder from fld.folders
-          fld.folders = fld.folders.filter(
-            (file) => file.id != movableFileOrFolderId
-          );
-          setProjectDetails({ payload: { rootFolder: { ...rootFolder } } });
-          // 3. updating the folders inside new dropFolderId
-          updateFolder(
-            rootFolder,
-            '',
-            dropFolderId,
-            (dropFld: Folder, dropPrev: string) => {
-              if (movingFolder) {
-                movingFolder.id =
-                  dropPrev + dropFld.totalItems + ':' + movingFolder.name;
-                movingFolder.parentFolderId = dropFolderId;
-                dropFld.folders.push(movingFolder);
-                setProjectDetails({
-                  payload: { rootFolder: { ...rootFolder } },
-                });
-              }
-            }
-          );
-        }
+      // 2. remove file from previous folder files
+      prevFolder.files = prevFolder.files.filter(
+        (file) => file.id != movableFileOrFolderId
       );
+      // 3. updating the files inside new dropFolderId
+      if (movingFile) {
+        movingFile.id =
+          dropFolder.id + dropFolder.totalItems + ':' + movingFile.name;
+        movingFile.parentFolderId = dropFolder.id;
+        dropFolder.files.push(movingFile);
+        setProjectDetails({
+          payload: { rootFolder: { ...rootFolder } },
+        });
+      }
+    } else if (type === FsItemType.FOLDER && prevFolder) {
+      // 1. get folder from its current parent folder
+      const movingFolder: Folder | undefined = prevFolder.folders.find(
+        (file) => file.id === movableFileOrFolderId
+      );
+      // 2. remove folder from fld.folders
+      prevFolder.folders = prevFolder.folders.filter(
+        (file) => file.id != movableFileOrFolderId
+      );
+      // 3. updating the folders inside new dropFolderId
+      if (movingFolder) {
+        movingFolder.id =
+          dropFolder.id + dropFolder.totalItems + ':' + movingFolder.name;
+        movingFolder.parentFolderId = dropFolder.id;
+        dropFolder.folders.push(movingFolder);
+        setProjectDetails({
+          payload: { rootFolder: { ...rootFolder } },
+        });
+      }
     }
   };
 
@@ -351,6 +331,7 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
     renameFileOrFolderObj,
     renameFileOrFolderRef,
     multipleItemsSelected,
+    selectedFolderId,
     handleFileOrFolderSelection,
     handleFileRenameEnter,
     handleFolderRenameEnter,

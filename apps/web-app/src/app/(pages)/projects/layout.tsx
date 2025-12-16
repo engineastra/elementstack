@@ -1,8 +1,8 @@
 import ProjectDetailsProvider from '@web-app/contexts/ProjectDetailsProvider';
 import React, { ReactNode } from 'react';
 
-const SingleProjectLayout = ({ children }: { children: ReactNode }) => {
+const ProjectLayout = ({ children }: { children: ReactNode }) => {
   return <ProjectDetailsProvider>{children}</ProjectDetailsProvider>;
 };
 
-export default SingleProjectLayout;
+export default ProjectLayout;

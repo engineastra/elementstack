@@ -20,8 +20,9 @@ export type Folder = {
 };
 
 export type ProjectDetailsSchema = {
-  id?: string;
-  name?: string;
+  id: string;
+  name: string;
+  type: string;
   openedFile: FileData | null;
   tabs: Array<FileData>;
   rootFolder: Folder;
@@ -33,7 +34,6 @@ export type ProjectDetailsSchema = {
   multipleItemsSelected: Array<string>;
   newInputData: {
     isEnabled: boolean;
-    folderId: string;
     type: FsItemType | undefined;
   };
 };

@@ -2,21 +2,17 @@
 import Image from 'next/image';
 import chevRightSVG from '@elementstack/shared-assets/icons/chevRight.svg';
 import chevLeftSVG from '@elementstack/shared-assets/icons/chevLeft.svg';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import ProjectHeader from './ProjectHeader';
-import { useSearchParams } from 'next/navigation';
 import {
   CREATE_PROJECT_OPTIONS,
   SIDE_BAR_OPTIONS_ICON,
 } from '@elementstack/shared-assets/Constants';
 import { SideBarOptions } from '@elementstack/shared-assets/Enums';
-import { ProjectDetailsContext } from '../../../..//contexts/ProjectDetailsProvider';
-import { DummyRootFolder } from '../../../..//constants/MockData';
-import FolderTree from '../../../..//components/FolderTree';
+import { ProjectDetailsContext } from '../../../../contexts/ProjectDetailsProvider';
+import FolderTree from '../../../../components/FolderTree';
 
 const SideBar = () => {
-  const searchParams = useSearchParams();
-  const projectType = searchParams.get('type') || '';
   const [opened, setOpened] = useState(true);
   const { projectDetails, setProjectDetails } = useContext(
     ProjectDetailsContext
@@ -31,10 +27,6 @@ const SideBar = () => {
     setProjectDetails({ payload: { selectedSideBarOption: val } });
   };
 
-  useEffect(() => {
-    setProjectDetails({ payload: { rootFolder: DummyRootFolder } });
-  }, []);
-
   return (
     <div className={`relative flex`}>
       <div
@@ -45,7 +37,7 @@ const SideBar = () => {
         <div className="flex w-full justify-center items-center h-[40px] border-b border-b-greenishgrey">
           <Image
             className="w-4"
-            src={CREATE_PROJECT_OPTIONS[projectType].icon}
+            src={CREATE_PROJECT_OPTIONS[projectDetails.type].icon}
             alt="app-logo"
           />
         </div>

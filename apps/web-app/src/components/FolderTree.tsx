@@ -60,6 +60,7 @@ const FolderTree = ({ folder }: { folder: Folder }) => {
     renameFileOrFolderObj,
     renameFileOrFolderRef,
     multipleItemsSelected,
+    selectedFolderId,
     handleFileOrFolderSelection,
     handleFileRenameEnter,
     handleFolderRenameEnter,
@@ -74,7 +75,7 @@ const FolderTree = ({ folder }: { folder: Folder }) => {
   return (
     <div
       className={`flex flex-col ${folder.isRoot ? 'flex-1' : ''}`}
-      onDrop={(e) => onDropFileOrFolder(e, folder.id)}
+      onDrop={(e) => onDropFileOrFolder(e, folder)}
       onDragOver={onDragOverFileOrFolder}
     >
       <div
@@ -122,7 +123,7 @@ const FolderTree = ({ folder }: { folder: Folder }) => {
           </p>
         )}
       </div>
-      {newInputData.isEnabled && newInputData.folderId === folder.id && (
+      {newInputData.isEnabled && selectedFolderId === folder.id && (
         <div className="flex my-[4px] ml-4 px-1 py-[2px] bg-greenishgrey border border-primary gap-1">
           <Image
             src={newInputData.type === FsItemType.FILE ? fileSvg : folderSvg}
@@ -133,7 +134,7 @@ const FolderTree = ({ folder }: { folder: Folder }) => {
             name="newInputName"
             ref={inputRef}
             control={control}
-            onInputEnter={onNewFileInputEnter}
+            onInputEnter={() => onNewFileInputEnter(folder)}
           />
         </div>
       )}

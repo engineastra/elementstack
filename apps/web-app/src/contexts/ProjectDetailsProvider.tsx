@@ -1,15 +1,25 @@
 'use client';
-import { createContext, ReactNode, useReducer, Dispatch } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useReducer,
+  Dispatch,
+  useEffect,
+} from 'react';
 import {
   Folder,
   ProjectDetailsSchema,
 } from '@elementstack/shared-assets/Types';
 import { SideBarOptions } from '@elementstack/shared-assets/Enums';
-import { defaultStateReducer } from '../utils/commonUtils';
+import {
+  defaultStateReducer,
+  setProjectsInLocalStorage,
+} from '../utils/commonUtils';
 
 const initialState: ProjectDetailsSchema = {
   id: '',
   name: '',
+  type: '',
   openedFile: null,
   tabs: [],
   rootFolder: {
@@ -35,10 +45,11 @@ const initialState: ProjectDetailsSchema = {
   multipleItemsSelected: [],
   newInputData: {
     isEnabled: false,
-    folderId: '',
     type: undefined,
   },
 };
+
+export const ProjectDetailsInitialState = Object.freeze({ ...initialState });
 
 type ProjectDetailsContextSchema = {
   projectDetails: ProjectDetailsSchema;
@@ -59,7 +70,10 @@ export const ProjectDetailsContext = createContext<ProjectDetailsContextSchema>(
 );
 
 const ProjectDetailsProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(defaultStateReducer, initialState);
+  const [state, dispatch] = useReducer(
+    defaultStateReducer<ProjectDetailsSchema, Partial<ProjectDetailsSchema>>,
+    initialState
+  );
   const { multipleItemsSelected, rootFolder } = state;
 
   const deleteFilesAndFolders = (currentFolder: Folder = rootFolder) => {
@@ -75,11 +89,21 @@ const ProjectDetailsProvider = ({ children }: { children: ReactNode }) => {
     return { ...currentFolder };
   };
 
+  useEffect(() => {
+    if (state.id) setProjectsInLocalStorage(state);
+  }, [state]);
+
+  const setProjectDetails = (action: {
+    payload: Partial<ProjectDetailsSchema>;
+  }) => {
+    dispatch(action);
+  };
+
   return (
     <ProjectDetailsContext.Provider
       value={{
         projectDetails: state,
-        setProjectDetails: dispatch,
+        setProjectDetails,
         deleteFilesAndFolders,
       }}
     >

@@ -1,12 +1,17 @@
 // useCreateProject.ts
-import { useReducer, Reducer } from 'react';
+import { useReducer, Reducer, useContext } from 'react';
 import { defaultStateReducer } from '../utils/commonUtils';
 import Regex from '@elementstack/shared-assets/Regex';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
 import Routes from '../constants/Routes';
+import { v4 as uuidv4 } from 'uuid';
+import {
+  ProjectDetailsContext,
+  ProjectDetailsInitialState,
+} from '@web-app/contexts/ProjectDetailsProvider';
 
 const zodSchema = z.object({
   projectName: z
@@ -30,6 +35,7 @@ type Action = { payload: Partial<InitialStateSchema> };
 
 export const useCreateProject = (onClose: () => void) => {
   const router = useRouter();
+  const { setProjectDetails } = useContext(ProjectDetailsContext);
   const [state, dispatch] = useReducer(
     defaultStateReducer as Reducer<InitialStateSchema, Action>,
     initialState
@@ -37,14 +43,15 @@ export const useCreateProject = (onClose: () => void) => {
   const { projectType } = state;
   const {
     control,
-    getValues,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(zodSchema),
     defaultValues: { projectName: '' },
-    mode: 'onChange',
   });
-  const { projectName } = getValues();
+  const projectName = useWatch({
+    control,
+    name: 'projectName',
+  });
 
   const handleProjectTypeSelection = (
     e: React.MouseEvent<HTMLButtonElement>
@@ -54,10 +61,19 @@ export const useCreateProject = (onClose: () => void) => {
   };
 
   const handleCreateClick = () => {
-    const params = new URLSearchParams();
-    params.set('type', projectType);
+    const payload = { ...ProjectDetailsInitialState };
+    payload.id = uuidv4();
+    payload.name = projectName;
+    payload.type = projectType;
+    payload.rootFolder = {
+      ...payload.rootFolder,
+      id: '0:' + projectName,
+      name: projectName,
+    };
 
-    router.push(`${Routes.PROJECT}/${projectName}?${params.toString()}`);
+    setProjectDetails({ payload });
+
+    router.push(`${Routes.PROJECT}/${payload.id}`);
     onClose();
   };
 

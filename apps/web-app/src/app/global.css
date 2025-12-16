@@ -97,6 +97,10 @@ html {
       background-color: #111827;
       border-radius: 0.9rem;
     }
+    .monaco-editor-background,
+    .margin-view-overlays {
+      background-color: #111827 !important;
+    }
   }
 
   .with-divider {

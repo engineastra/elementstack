@@ -1,6 +1,7 @@
 import Header from '@web-app/components/Header';
 import HeaderOptions from './HeaderOptions';
 import { oxanium } from '@web-app/constants/Common';
+import AllProjects from './AllProjects';
 
 const Project = () => {
   return (
@@ -9,6 +10,7 @@ const Project = () => {
     >
       <Header />
       <HeaderOptions />
+      <AllProjects />
     </div>
   );
 };

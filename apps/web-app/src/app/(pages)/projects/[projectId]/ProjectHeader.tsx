@@ -4,7 +4,7 @@ import addFileSVG from '@elementstack/shared-assets/icons/addFile.svg';
 import addFolderSVG from '@elementstack/shared-assets/icons/addFolder.svg';
 import deleteSVG from '@elementstack/shared-assets/icons/bin.svg';
 import discardSVG from '@elementstack/shared-assets/icons/boxDash.svg';
-import { FsItemType } from '@elementstack/shared-assets/Enums';
+import { FsItemType, SideBarOptions } from '@elementstack/shared-assets/Enums';
 import { useContext } from 'react';
 import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
 import { EmptyFile } from '@elementstack/shared-assets/Constants';
@@ -19,6 +19,7 @@ const ProjectHeader = () => {
     selectedFolderId,
     multipleItemsSelected,
     currentSelectedId,
+    selectedSideBarOption,
   } = projectDetails;
 
   const handleOnAddClick = (type: FsItemType) => {
@@ -62,40 +63,42 @@ const ProjectHeader = () => {
       <p className="text-[11px] py-[3px]">
         {projectDetails.selectedSideBarOption}
       </p>
-      <div className="flex h-full items-center justify-center ml-auto gap-2">
-        <Image
-          className="inline h-3 w-fit cursor-pointer"
-          src={addFileSVG}
-          alt="add-file"
-          onClick={() => handleOnAddClick(FsItemType.FILE)}
-        />
-        <Image
-          className="inline h-3 w-fit cursor-pointer"
-          src={addFolderSVG}
-          alt="add-folder"
-          onClick={() => handleOnAddClick(FsItemType.FOLDER)}
-        />
-        {rootFolder.id !== currentSelectedId && (
+      {selectedSideBarOption === SideBarOptions.FILES && (
+        <div className="flex h-full items-center justify-center ml-auto gap-2">
           <Image
             className="inline h-3 w-fit cursor-pointer"
-            src={deleteSVG}
-            alt="delete-file-or-folder"
-            onClick={handleOnDeleteItems}
+            src={addFileSVG}
+            alt="add-file"
+            onClick={() => handleOnAddClick(FsItemType.FILE)}
           />
-        )}
-        {multipleItemsSelected.length > 1 && (
           <Image
             className="inline h-3 w-fit cursor-pointer"
-            src={discardSVG}
-            alt="delete-file-or-folder"
-            onClick={() => {
-              setProjectDetails({
-                payload: { multipleItemsSelected: [currentSelectedId] },
-              });
-            }}
+            src={addFolderSVG}
+            alt="add-folder"
+            onClick={() => handleOnAddClick(FsItemType.FOLDER)}
           />
-        )}
-      </div>
+          {rootFolder.id !== currentSelectedId && (
+            <Image
+              className="inline h-3 w-fit cursor-pointer"
+              src={deleteSVG}
+              alt="delete-file-or-folder"
+              onClick={handleOnDeleteItems}
+            />
+          )}
+          {multipleItemsSelected.length > 1 && (
+            <Image
+              className="inline h-3 w-fit cursor-pointer"
+              src={discardSVG}
+              alt="delete-file-or-folder"
+              onClick={() => {
+                setProjectDetails({
+                  payload: { multipleItemsSelected: [currentSelectedId] },
+                });
+              }}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 };

@@ -17,7 +17,13 @@ const FilesTab = () => {
   const { tabs, selectedFile } = projectDetails;
 
   const onSelectFile = (fileObj: FileData) => {
-    setProjectDetails({ payload: { selectedFile: fileObj } });
+    setProjectDetails({
+      payload: {
+        selectedFile: fileObj,
+        currentSelectedId: fileObj.id,
+        multipleItemsSelected: [fileObj.id],
+      },
+    });
   };
 
   const onCloseFile = (e: MouseEvent<HTMLImageElement>, obj: FileData) => {

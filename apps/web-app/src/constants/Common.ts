@@ -6,3 +6,7 @@ export const oxanium = Oxanium({
   variable: '--font-oxanium', // Optional CSS variable
   weight: ['300', '400', '700'], // Choose weights as needed
 });
+
+export const LOCAL_STORAGE_KEYS: Record<string, string> = {
+  projects: 'projects',
+};
