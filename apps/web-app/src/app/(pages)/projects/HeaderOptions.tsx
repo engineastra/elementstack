@@ -4,8 +4,8 @@ import { createPortal } from 'react-dom';
 import COMMON_TEXTS from '@elementstack/shared-assets/CommonTexts';
 import SearchBar from '@web-app/components/SearchBar';
 import { useProject } from '../../../hooks/useProject';
-import CreateProject from '@web-app/components/CreateProject';
 import Modal from '@web-app/components/Modal';
+import CreateProject from './CreateProject';
 
 const HeaderOptions = () => {
   const { enableCreateModel, onOpenCreateModel, onCloseCreateModel } =

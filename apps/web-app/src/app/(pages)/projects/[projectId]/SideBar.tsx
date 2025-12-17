@@ -10,7 +10,7 @@ import {
 } from '@elementstack/shared-assets/Constants';
 import { SideBarOptions } from '@elementstack/shared-assets/Enums';
 import { ProjectDetailsContext } from '../../../../contexts/ProjectDetailsProvider';
-import FolderTree from '../../../../components/FolderTree';
+import FolderTree from './FolderTree';
 
 const SideBar = () => {
   const [opened, setOpened] = useState(true);

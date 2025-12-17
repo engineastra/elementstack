@@ -1,12 +1,19 @@
-import { Folder } from '@elementstack/shared-assets/Types';
-import { useEsbuildSandbox } from '../hooks/useEsbuildSandbox';
+'use client';
 
-export function SandboxPreview({ folder }: { folder: Folder }) {
-  const { iframeRef, error } = useEsbuildSandbox(folder);
+import { Folder, ProjectType } from '@elementstack/shared-assets/Types';
+import { useSandbox } from '@web-app/hooks/useSandbox';
+
+export function SandboxPreview({
+  folder,
+  type,
+}: {
+  folder: Folder;
+  type: ProjectType;
+}) {
+  const iframeRef = useSandbox(folder, type);
 
   return (
     <div className="h-full w-full">
-      {error && <pre style={{ color: 'red' }}>{error}</pre>}
       <iframe
         ref={iframeRef}
         sandbox="allow-scripts"

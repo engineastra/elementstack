@@ -1,16 +1,17 @@
 'use client';
+import { FileData } from '@elementstack/shared-assets/Types';
 import Editor from '@web-app/components/Editor';
 import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
 import { useContext } from 'react';
 
-const ProjectEditorSection = () => {
+const ProjectEditorSection = ({ selectedFile }: { selectedFile: FileData }) => {
   const { projectDetails, setProjectDetails } = useContext(
     ProjectDetailsContext
   );
-  const { tabs, selectedFile } = projectDetails;
+  const { rootFolder } = projectDetails;
   const updateValue = (val: string) => {
     selectedFile.value = val;
-    setProjectDetails({ payload: { tabs: [...tabs] } });
+    setProjectDetails({ payload: { rootFolder: { ...rootFolder } } });
   };
   return (
     <div className="flex flex-col h-full w-full pt-3 pl-3 min-w-0">

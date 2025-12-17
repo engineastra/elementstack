@@ -61,16 +61,21 @@ export const useCreateProject = (onClose: () => void) => {
   };
 
   const handleCreateClick = () => {
-    const payload = { ...ProjectDetailsInitialState };
-    payload.id = uuidv4();
-    payload.name = projectName;
-    payload.type = projectType;
+    const payload = {
+      ...ProjectDetailsInitialState,
+      id: uuidv4(),
+      name: projectName,
+      type: projectType,
+    };
     payload.rootFolder = {
       ...payload.rootFolder,
       id: '0:' + projectName,
       name: projectName,
+      isRoot: true,
+      isExpanded: true,
     };
-
+    payload.currentSelectedId = payload.rootFolder.id;
+    payload.selectedFolderId = payload.rootFolder.id;
     setProjectDetails({ payload });
 
     router.push(`${Routes.PROJECT}/${payload.id}`);

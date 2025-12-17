@@ -16,7 +16,6 @@ const ProjectHeader = () => {
     tabs,
     rootFolder,
     newInputData,
-    selectedFolderId,
     multipleItemsSelected,
     currentSelectedId,
     selectedSideBarOption,
@@ -28,7 +27,6 @@ const ProjectHeader = () => {
         newInputData: {
           ...newInputData,
           isEnabled: true,
-          folderId: selectedFolderId,
           type,
         },
       },

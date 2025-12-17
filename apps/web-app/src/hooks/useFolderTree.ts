@@ -1,11 +1,4 @@
-import {
-  DragEvent,
-  MouseEvent,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { DragEvent, MouseEvent, useContext, useEffect, useRef } from 'react';
 import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
 import {
   FileData,
@@ -18,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Regex from '@elementstack/shared-assets/Regex';
 import { FILE_TYPE_TO_LANGUAGE } from '@elementstack/shared-assets/Constants';
+import { getFolderById } from '@web-app/utils/commonUtils';
 
 const zodSchema = z.object({
   newInputName: z
@@ -45,7 +39,6 @@ type MovableFileOrFolderType = {
 };
 
 export const useFolderTree = ({ folder }: { folder: Folder }) => {
-  const [expanded, setExpanded] = useState(false);
   const { projectDetails, setProjectDetails } = useContext(
     ProjectDetailsContext
   );
@@ -73,28 +66,10 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
   const renameFileOrFolderRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (folder.isRoot) {
-      setProjectDetails({
-        payload: {
-          currentSelectedId: rootFolder.id,
-          selectedFolderId: rootFolder.id,
-        },
-      });
+    if (newInputData.isEnabled && inputRef.current) {
+      inputRef.current.focus();
     }
-  }, [folder.isRoot]);
-
-  useEffect(() => {
-    setExpanded(folder.isRoot || false);
-  }, [folder.isRoot]);
-
-  useEffect(() => {
-    if (newInputData.isEnabled) {
-      if (selectedFolderId === folder.id) setExpanded(true);
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    }
-  }, [newInputData.isEnabled, selectedFolderId]);
+  }, [selectedFolderId]);
 
   useEffect(() => {
     if (renameFileOrFolderRef.current) {
@@ -102,19 +77,20 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
     }
   }, [renameFileOrFolderObj]);
 
-  const handleFileOrFolderSelection = (
-    e: MouseEvent<HTMLDivElement>,
-    id: string,
-    type: FsItemType,
-    parentFolderId?: string,
-    fileObj?: FileData
-  ) => {
-    const payload: Partial<ProjectDetailsSchema> = { currentSelectedId: id };
-    if (type === FsItemType.FOLDER) {
-      setExpanded((prev) => !prev);
-      payload.selectedFolderId = id;
-    } else if (type === FsItemType.FILE && fileObj) {
-      payload.selectedFolderId = parentFolderId;
+  const handleFileOrFolderSelection = (args: {
+    e: MouseEvent<HTMLDivElement>;
+    fileObj?: FileData | undefined;
+    folderObj?: Folder | undefined;
+  }) => {
+    const { e, fileObj, folderObj } = args;
+    const payload: Partial<ProjectDetailsSchema> = {};
+    if (folderObj) {
+      folderObj.isExpanded = !folderObj.isExpanded;
+      payload.selectedFolderId = folderObj.id;
+      payload.currentSelectedId = folderObj.id;
+    } else if (fileObj) {
+      payload.selectedFolderId = fileObj.parentFolderId;
+      payload.currentSelectedId = fileObj.id;
       const isOpened = tabs.some((file: FileData) => fileObj.id === file.id);
       payload.selectedFile = fileObj;
       if (!isOpened) {
@@ -123,34 +99,23 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
     }
     // Multiple Selection on Command Click
     if (e.ctrlKey || e.metaKey) {
-      if (multipleItemsSelected.includes(id)) {
+      if (multipleItemsSelected.includes(payload.currentSelectedId as string)) {
         payload.multipleItemsSelected = multipleItemsSelected.filter(
-          (mid) => mid != id
+          (mid) => mid != (payload.currentSelectedId as string)
         );
       } else {
-        payload.multipleItemsSelected = [...multipleItemsSelected, id];
+        payload.multipleItemsSelected = [
+          ...multipleItemsSelected,
+          payload.currentSelectedId as string,
+        ];
       }
     } else {
-      payload.multipleItemsSelected = [id];
+      payload.multipleItemsSelected = [payload.currentSelectedId as string];
     }
     setProjectDetails({ payload });
   };
 
-  const getFolderById = (fldId: string, root = rootFolder): Folder | null => {
-    // base condition
-    if (root.id === fldId) {
-      return root;
-    }
-    let output: Folder | null = null;
-    root.folders.forEach((nextFld) => {
-      if (output === null) {
-        output = getFolderById(fldId, nextFld);
-      }
-    });
-    return output;
-  };
-
-  const onNewFileInputEnter = (folderObj: Folder) => {
+  const onNewFileOrFolderInputEnter = (folderObj: Folder) => {
     if (!getValues().newInputName || errors.newInputName?.message) {
       if (!getValues().newInputName) {
         setProjectDetails({
@@ -206,6 +171,7 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
         folders: [],
         totalItems: 0,
         parentFolderId: folderObj.id,
+        isExpanded: true,
       };
       folderObj.folders.push(newFolder);
     }
@@ -251,7 +217,10 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
     );
     const { movableFileOrFolderId, movableFileOrFolderParentFolderId, type } =
       movableData;
-    const prevFolder = getFolderById(movableFileOrFolderParentFolderId);
+    const prevFolder = getFolderById(
+      movableFileOrFolderParentFolderId,
+      rootFolder
+    );
     if (type === FsItemType.FILE && prevFolder) {
       // 1. get file from previous folder
       const movingFile: FileData | undefined = prevFolder.files.find(
@@ -267,6 +236,7 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
           dropFolder.id + dropFolder.totalItems + ':' + movingFile.name;
         movingFile.parentFolderId = dropFolder.id;
         dropFolder.files.push(movingFile);
+        dropFolder.isExpanded = true;
         setProjectDetails({
           payload: { rootFolder: { ...rootFolder } },
         });
@@ -286,6 +256,7 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
           dropFolder.id + dropFolder.totalItems + ':' + movingFolder.name;
         movingFolder.parentFolderId = dropFolder.id;
         dropFolder.folders.push(movingFolder);
+        dropFolder.isExpanded = true;
         setProjectDetails({
           payload: { rootFolder: { ...rootFolder } },
         });
@@ -326,7 +297,6 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
     inputRef,
     control,
     newInputData,
-    expanded,
     currentSelectedId,
     renameFileOrFolderObj,
     renameFileOrFolderRef,
@@ -335,7 +305,7 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
     handleFileOrFolderSelection,
     handleFileRenameEnter,
     handleFolderRenameEnter,
-    onNewFileInputEnter,
+    onNewFileOrFolderInputEnter,
     onDragStartFileOrFolder,
     onDragOverFileOrFolder,
     onDropFileOrFolder,

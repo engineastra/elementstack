@@ -16,6 +16,7 @@ export type Folder = {
   folders: Array<Folder>;
   totalItems: number;
   isRoot?: boolean;
+  isExpanded: boolean;
   parentFolderId: string;
 };
 
@@ -37,3 +38,5 @@ export type ProjectDetailsSchema = {
     type: FsItemType | undefined;
   };
 };
+
+export type ProjectType = 'js' | 'ts' | 'jsx' | 'tsx';

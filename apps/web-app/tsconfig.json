@@ -33,7 +33,7 @@
     "next-env.d.ts",
     "../../libs/shared-assets/src/Regex.ts",
     "../../libs/shared-assets/src/Enums.ts"
-  ],
+, "../../libs/shared-assets/src/esbuild/initEsbuild.ts"  ],
   "exclude": [
     "node_modules",
     "jest.config.ts",
