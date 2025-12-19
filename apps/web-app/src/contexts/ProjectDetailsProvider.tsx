@@ -10,7 +10,6 @@ import {
   Folder,
   ProjectDetailsSchema,
 } from '@elementstack/shared-assets/Types';
-import { SideBarOptions } from '@elementstack/shared-assets/Enums';
 import {
   defaultStateReducer,
   setProjectsInLocalStorage,
@@ -27,22 +26,17 @@ const initialState: ProjectDetailsSchema = {
     name: '',
     parentFolderId: '',
     totalItems: 0,
+    isExpanded: true,
     files: [],
     folders: [],
   },
-  selectedSideBarOption: SideBarOptions.FILES,
   currentSelectedId: '',
-  selectedFile: {
-    id: '',
-    name: '',
-    value: '',
-    parentFolderId: '',
-    type: '',
-    language: '',
-  },
+  selectedFileId: '',
   selectedFolderId: '',
   renameFileOrFolderObj: null,
   multipleItemsSelected: [],
+  isPreviewOn: true,
+  sideBarExpanded: true,
   newInputData: {
     isEnabled: false,
     type: undefined,

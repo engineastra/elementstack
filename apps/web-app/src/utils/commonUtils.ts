@@ -1,4 +1,5 @@
 import {
+  FileData,
   Folder,
   ProjectDetailsSchema,
 } from '@elementstack/shared-assets/Types';
@@ -113,4 +114,43 @@ export const getFolderById = (fldId: string, root: Folder): Folder | null => {
     }
   });
   return output;
+};
+
+export const getFileById = (fileId: string, root: Folder): FileData | null => {
+  // base condition
+  for (const val of root.files) {
+    if (val.id === fileId) return val;
+  }
+  let output: FileData | null = null;
+  root.folders.forEach((nextFld) => {
+    if (output === null) {
+      output = getFileById(fileId, nextFld);
+    }
+  });
+  return output;
+};
+
+export const getDebounceFn = function (fn: any, delay: number, trail = true) {
+  // let fnRan = false; // For leading debounce
+  let timerId: any;
+  return function (...args: any) {
+    if (trail) {
+      clearTimeout(timerId);
+      timerId = setTimeout(() => {
+        fn(...args);
+      }, delay);
+    } else {
+      // !timerId means all previous timeouts executed (delay period is over)
+      if (!timerId) {
+        fn(...args);
+      } else {
+        // clear previous pending timeout
+        clearTimeout(timerId);
+      }
+      // on each event we need to create new timeout (After prevous one is either executed or in execution)
+      timerId = setTimeout(() => {
+        timerId = null; // reset to null for any new execution
+      }, delay);
+    }
+  };
 };

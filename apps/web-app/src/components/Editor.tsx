@@ -1,5 +1,6 @@
 'use client';
-import MonacoEditor from '@monaco-editor/react';
+import MonacoEditor, { OnMount } from '@monaco-editor/react';
+import { useCallback, useRef } from 'react';
 
 type EditorProp = {
   hideNumbering?: boolean;
@@ -23,6 +24,66 @@ const Editor = ({
   fontSize = 12,
   setValue,
 }: EditorProp) => {
+  // eslin-disable next-line
+  const editorRef = useRef(null);
+
+  const handleEditorMount: OnMount = useCallback(function (editor, monaco) {
+    // Set editor ref
+    editorRef.current = editor;
+
+    // Set theme
+    monaco.editor.setTheme('vs-dark');
+
+    // Ctrl+S: Format + Save
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, async () => {
+      await editor.getAction('editor.action.formatDocument').run();
+      const updatedValue = editor.getValue();
+      if (setValue) setValue(updatedValue);
+    });
+
+    // Ctrl+Space: Trigger IntelliSense
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Space, () =>
+      monaco.editor.trigger('keyboard', 'editor.action.triggerSuggest', {})
+    );
+
+    // Enable ALL essential IntelliSense features
+    editor.updateOptions({
+      // Core IntelliSense
+      quickSuggestions: true,
+      suggestOnTriggerCharacters: true,
+      acceptSuggestionOnCommitCharacter: true,
+      acceptSuggestionOnEnter: 'on',
+      tabCompletion: 'on',
+      snippetSuggestions: 'inline',
+
+      // Formatting
+      formatOnType: true,
+      formatOnPaste: true,
+      autoIndent: 'full',
+
+      // UI/UX
+      parameterHints: { enabled: true },
+      matchBrackets: 'always',
+      autoClosingBrackets: 'always',
+      autoClosingOvertype: 'always',
+      wordBasedSuggestions: true,
+
+      // Enhanced suggestions
+      suggest: {
+        showWords: true,
+        showFunctions: true,
+        showClasses: true,
+        showConstructors: true,
+        showFields: true,
+        showInterfaces: true,
+        showModules: true,
+        showProperties: true,
+        showTypes: true,
+        showVariables: true,
+      },
+    });
+  }, []);
+
   return (
     <MonacoEditor
       language={selectedLanguageuage}
@@ -33,7 +94,7 @@ const Editor = ({
       onChange={(val: string | undefined) => {
         if (setValue) return setValue(val ?? '');
       }}
-      //   onMount={handleEditorMount}
+      onMount={handleEditorMount}
       options={{
         readOnly,
         scrollBeyondLastLine: false,
@@ -54,7 +115,7 @@ const Editor = ({
         // UI/UX
         minimap: { enabled: false },
         scrollbar: { verticalScrollbarSize: 6 },
-        wordWrap: 'on',
+        wordWrap: 'off',
         parameterHints: { enabled: true },
         matchBrackets: 'always',
         autoClosingBrackets: 'always',

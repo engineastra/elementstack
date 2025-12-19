@@ -1,6 +1,6 @@
 import * as esbuild from 'esbuild-wasm';
 import type { BuildOptions } from 'esbuild-wasm';
-import { virtualFsPlugin } from './plugin';
+import { cssPlugin, virtualFsPlugin } from './plugin';
 import { ProjectType } from '@elementstack/shared-assets/Types';
 
 const BUILD_CONFIG: Record<ProjectType, BuildOptions> = {
@@ -9,6 +9,18 @@ const BUILD_CONFIG: Record<ProjectType, BuildOptions> = {
   jsx: { bundle: true, platform: 'browser', jsx: 'automatic' },
   tsx: { bundle: true, platform: 'browser', jsx: 'automatic' },
 };
+
+function normalizeFiles(files: Record<string, string>): Record<string, string> {
+  const normalized: Record<string, string> = {};
+
+  for (const [path, contents] of Object.entries(files)) {
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+
+    normalized[normalizedPath] = contents;
+  }
+
+  return normalized;
+}
 
 function getEntryPoint(
   files: Record<string, string>,
@@ -41,7 +53,10 @@ export async function buildProject(
     entryPoints: [entryPoint],
     absWorkingDir: '/',
     write: false,
-    plugins: [virtualFsPlugin(files)],
+    plugins: [
+      virtualFsPlugin(normalizeFiles(files)),
+      cssPlugin(normalizeFiles(files)),
+    ],
   });
 
   return result.outputFiles[0].text;

@@ -10,13 +10,6 @@ import htmlSVG from './icons/html.svg';
 import cssSVG from './icons/css.svg';
 import jsonSVG from './icons/json.svg';
 import nodeSVG from './icons/node.svg';
-import fileOpenSVG from './icons/filesOpen.svg';
-import fileCloseSVG from './icons/filesColse.svg';
-import searchOpenSVG from './icons/Search.svg';
-import searchCloseSVG from './icons/searchClose.svg';
-import playOpenSVG from './icons/playOpen.svg';
-import playCloseSVG from './icons/playClose.svg';
-import { SideBarOptions } from './Enums';
 
 export type OptionCardConfig = {
   id: number;
@@ -107,15 +100,6 @@ export const FILE_TYPE_TO_ICON: Record<string, string> = {
   html: htmlSVG,
   css: cssSVG,
   json: jsonSVG,
-};
-
-export const SIDE_BAR_OPTIONS_ICON: Record<
-  SideBarOptions,
-  { open: string; close: string }
-> = {
-  [SideBarOptions.FILES]: { open: fileOpenSVG, close: fileCloseSVG },
-  [SideBarOptions.SEARCH]: { open: searchOpenSVG, close: searchCloseSVG },
-  [SideBarOptions.PREVIEW]: { open: playOpenSVG, close: playCloseSVG },
 };
 
 export const FILE_TYPE_TO_LANGUAGE: Record<string, string> = {

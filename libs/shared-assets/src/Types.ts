@@ -1,4 +1,4 @@
-import { FsItemType, SideBarOptions } from './Enums';
+import { FsItemType } from './Enums';
 
 export type FileData = {
   id: string; // based on index + depth order + name
@@ -27,12 +27,13 @@ export type ProjectDetailsSchema = {
   openedFile: FileData | null;
   tabs: Array<FileData>;
   rootFolder: Folder;
-  selectedSideBarOption: SideBarOptions;
   currentSelectedId: string;
-  selectedFile: FileData;
+  selectedFileId: string;
   selectedFolderId: string;
   renameFileOrFolderObj: FileData | Folder | null;
   multipleItemsSelected: Array<string>;
+  isPreviewOn: boolean;
+  sideBarExpanded: boolean;
   newInputData: {
     isEnabled: boolean;
     type: FsItemType | undefined;

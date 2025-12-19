@@ -38,7 +38,7 @@ type MovableFileOrFolderType = {
   type: FsItemType;
 };
 
-export const useFolderTree = ({ folder }: { folder: Folder }) => {
+export const useFolderTree = () => {
   const { projectDetails, setProjectDetails } = useContext(
     ProjectDetailsContext
   );
@@ -92,7 +92,7 @@ export const useFolderTree = ({ folder }: { folder: Folder }) => {
       payload.selectedFolderId = fileObj.parentFolderId;
       payload.currentSelectedId = fileObj.id;
       const isOpened = tabs.some((file: FileData) => fileObj.id === file.id);
-      payload.selectedFile = fileObj;
+      payload.selectedFileId = fileObj.id;
       if (!isOpened) {
         payload.tabs = [...tabs, fileObj];
       }

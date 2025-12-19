@@ -3,11 +3,7 @@ import React, { use, useContext, useEffect } from 'react';
 import SideBar from './SideBar';
 import ProjectEditorSection from './ProjectEditorSection';
 import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
-import { SideBarOptions } from '@elementstack/shared-assets/Enums';
 import { getProjectFromLocalStorageById } from '@web-app/utils/commonUtils';
-import { SandboxPreview } from '@web-app/components/Preview';
-import { ProjectType } from '@elementstack/shared-assets/Types';
-import FilesTab from './FilesTab';
 
 const SingleProject = ({
   params,
@@ -18,7 +14,7 @@ const SingleProject = ({
   const { projectDetails, setProjectDetails } = useContext(
     ProjectDetailsContext
   );
-  const { selectedSideBarOption, selectedFile, rootFolder } = projectDetails;
+  const { selectedFileId } = projectDetails;
   useEffect(() => {
     const projectData = getProjectFromLocalStorageById(paramObj.projectId);
     setProjectDetails({ payload: projectData });
@@ -28,21 +24,7 @@ const SingleProject = ({
   return (
     <div className="flex w-full h-[100vh] max-h-[100vh] p-2 gap-1">
       <SideBar />
-      <div className="flex flex-1 flex-col bg-card h-full rounded-md">
-        {selectedSideBarOption === SideBarOptions.PREVIEW ? (
-          <>
-            <SandboxPreview
-              folder={rootFolder}
-              type={projectDetails.type as ProjectType}
-            />
-          </>
-        ) : (
-          <>
-            <FilesTab />
-            <ProjectEditorSection selectedFile={selectedFile} />
-          </>
-        )}
-      </div>
+      <ProjectEditorSection selectedFileId={selectedFileId} />
     </div>
   );
 };

@@ -14,12 +14,12 @@ const FilesTab = () => {
   const { projectDetails, setProjectDetails } = useContext(
     ProjectDetailsContext
   );
-  const { tabs, selectedFile } = projectDetails;
+  const { tabs, selectedFileId } = projectDetails;
 
   const onSelectFile = (fileObj: FileData) => {
     setProjectDetails({
       payload: {
-        selectedFile: fileObj,
+        selectedFileId: fileObj.id,
         currentSelectedId: fileObj.id,
         multipleItemsSelected: [fileObj.id],
       },
@@ -30,13 +30,11 @@ const FilesTab = () => {
     e.stopPropagation();
     const newList = [...tabs].filter((file) => file != obj);
     const newSelectedFile =
-      obj.id === selectedFile.id
-        ? newList.at(-1) || { ...EmptyFile }
-        : selectedFile;
+      obj.id === selectedFileId ? newList.at(-1) || { ...EmptyFile } : obj;
     setProjectDetails({
       payload: {
         tabs: newList,
-        selectedFile: newSelectedFile,
+        selectedFileId: newSelectedFile.id,
         selectedFolderId: newSelectedFile.parentFolderId,
         currentSelectedId: newSelectedFile.id,
         multipleItemsSelected: newSelectedFile.id ? [newSelectedFile.id] : [],
@@ -52,7 +50,7 @@ const FilesTab = () => {
             key={obj.id}
             data-type={obj.id}
             className={`flex flex-shrink-0 justify-between items-center gap-2 h-full w-fit px-2 py-1 border-b ${
-              selectedFile.id === obj.id
+              selectedFileId === obj.id
                 ? 'border-b-primary'
                 : 'border-b-transparent'
             }  border-r border-r-greenishgrey overflow-cli`}
@@ -65,7 +63,7 @@ const FilesTab = () => {
             />
             <p
               className={`text-[12px] ${
-                selectedFile.id === obj.id ? 'text-primary' : 'text-white'
+                selectedFileId === obj.id ? 'text-primary' : 'text-white'
               }`}
             >
               {obj.name}

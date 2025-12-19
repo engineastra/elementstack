@@ -2,84 +2,43 @@
 import Image from 'next/image';
 import chevRightSVG from '@elementstack/shared-assets/icons/chevRight.svg';
 import chevLeftSVG from '@elementstack/shared-assets/icons/chevLeft.svg';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import ProjectHeader from './ProjectHeader';
-import {
-  CREATE_PROJECT_OPTIONS,
-  SIDE_BAR_OPTIONS_ICON,
-} from '@elementstack/shared-assets/Constants';
-import { SideBarOptions } from '@elementstack/shared-assets/Enums';
 import { ProjectDetailsContext } from '../../../../contexts/ProjectDetailsProvider';
 import FolderTree from './FolderTree';
 
 const SideBar = () => {
-  const [opened, setOpened] = useState(true);
   const { projectDetails, setProjectDetails } = useContext(
     ProjectDetailsContext
   );
-  const { rootFolder, selectedSideBarOption } = projectDetails;
+  const { rootFolder, sideBarExpanded } = projectDetails;
 
   const handleOpenedEvent = () => {
-    setOpened((prev) => !prev);
-  };
-
-  const handleOptionSelection = (val: SideBarOptions) => {
-    setProjectDetails({ payload: { selectedSideBarOption: val } });
+    setProjectDetails({ payload: { sideBarExpanded: !sideBarExpanded } });
   };
 
   return (
     <div className={`relative flex`}>
-      <div
-        className={`flex items-center flex-col bg-card h-full rounded-md ${
-          opened ? 'rounded-r-none border-r border-r-greenishgrey' : ''
-        }`}
-      >
-        <div className="flex w-full justify-center items-center h-[40px] border-b border-b-greenishgrey">
-          <Image
-            className="w-4"
-            src={CREATE_PROJECT_OPTIONS[projectDetails.type].icon}
-            alt="app-logo"
-          />
-        </div>
+      <div className={`flex items-center flex-col bg-card h-full rounded-md`}>
         <div
-          className={`flex items-center h-[calc(100%-35px)] flex-col px-2 py-3 pt-[20px]`}
-        >
-          {Object.entries(SIDE_BAR_OPTIONS_ICON).map(
-            ([key, value]: [string, { open: string; close: string }]) => {
-              return (
-                <div
-                  key={key}
-                  className="h-[40px]"
-                  onClick={() => handleOptionSelection(key as SideBarOptions)}
-                >
-                  <Image
-                    src={
-                      selectedSideBarOption === key ? value.open : value.close
-                    }
-                    alt={key}
-                    className={`h-[15px] cursor-pointer`}
-                  />
-                </div>
-              );
-            }
-          )}
-        </div>
+          className={`${
+            sideBarExpanded ? 'hidden' : 'flex'
+          } items-center h-[calc(100%-35px)] flex-col px-2 py-3 pt-[20px]`}
+        ></div>
         <div className="expandable-icon" onClick={handleOpenedEvent}>
           <Image
-            src={opened ? chevLeftSVG : chevRightSVG}
+            src={sideBarExpanded ? chevLeftSVG : chevRightSVG}
             alt="expand"
             className={`w-4 h-4 cursor-pointer`}
           />
         </div>
       </div>
-      {opened && (
-        <div className="flex flex-col w-[250px] max-w-[250px] bg-card h-full rounded-r-md">
+      {sideBarExpanded && (
+        <div className="flex flex-col w-[250px] max-w-[250px] bg-card h-full rounded-md">
           <ProjectHeader />
-          {selectedSideBarOption === SideBarOptions.FILES && (
-            <div className="flex flex-col pl-5 pt-2 h-full">
-              <FolderTree folder={rootFolder} />
-            </div>
-          )}
+          <div className="flex flex-col pl-5 pt-2 h-full">
+            <FolderTree folder={rootFolder} />
+          </div>
         </div>
       )}
     </div>

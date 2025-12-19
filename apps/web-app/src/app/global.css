@@ -117,7 +117,9 @@ html {
 }
 
 .monaco-editor-background,
-.margin-view-overlays {
+.margin-view-overlays,
+.sticky-line-content,
+.sticky-line-number {
   background-color: #0c1020 !important;
 }
 
@@ -141,6 +143,16 @@ html {
       height: 20px;
       border-radius: 5px;
       background-color: #000000af;
+    }
+  }
+}
+
+/* Divider expand styles */
+@layer utilities {
+  .horz-divider {
+    background-color: #0b1020;
+    &:hover {
+      background-color: #71f163 !important;
     }
   }
 }
