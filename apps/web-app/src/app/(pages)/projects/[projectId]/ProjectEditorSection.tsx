@@ -4,7 +4,7 @@ import Editor from '@web-app/components/Editor';
 import { SandboxPreview } from '@web-app/components/Preview';
 import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
 import closeSVG from '@elementstack/shared-assets/icons/close.svg';
-import { getDebounceFn, getFileById } from '@web-app/utils/commonUtils';
+import { getFileById } from '@web-app/utils/commonUtils';
 import { useContext, useRef, useState } from 'react';
 import FilesTab from './FilesTab';
 import Image from 'next/image';
@@ -28,16 +28,11 @@ function ProjectEditorSection({ selectedFileId }: { selectedFileId: string }) {
     }
   };
 
-  const debouncedSetDividerLeft = getDebounceFn(
-    (val: number) => setDividerLeft(val),
-    200
-  );
-
   const onResize = (currLeft: number) => {
     if (editorRef.current && previewRef.current) {
       editorRef.current.style.width = `calc(${currLeft + '%'})`;
       previewRef.current.style.width = `calc(${100 - currLeft + '%'})`;
-      debouncedSetDividerLeft(currLeft);
+      setDividerLeft(currLeft);
     }
   };
 
@@ -50,15 +45,15 @@ function ProjectEditorSection({ selectedFileId }: { selectedFileId: string }) {
 
   return (
     <div
-      className="flex flex-row h-full w-full min-w-0 gap-1 justify-between"
+      className="flex flex-row h-full w-full min-w-0 gap-1 justify-between *:select-none"
       ref={wrapperRef}
     >
-      {selectedFileId && fileObj && (
-        <div
-          ref={editorRef}
-          className={`flex flex-col ${isPreviewOn ? '' : 'flex-1'}`}
-        >
-          <FilesTab />
+      <div
+        ref={editorRef}
+        className={`flex flex-col ${isPreviewOn ? '' : 'flex-1'}`}
+      >
+        <FilesTab />
+        {selectedFileId && fileObj && (
           <div className="flex flex-1 bg-card pl-2 pt-2 rounded-b-md">
             <Editor
               key={`${isPreviewOn}`}
@@ -69,8 +64,8 @@ function ProjectEditorSection({ selectedFileId }: { selectedFileId: string }) {
               setValue={updateValue}
             />
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {isPreviewOn && (
         <>

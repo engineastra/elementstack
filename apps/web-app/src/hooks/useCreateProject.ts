@@ -2,6 +2,7 @@
 import { useReducer, Reducer, useContext } from 'react';
 import { defaultStateReducer } from '../utils/commonUtils';
 import Regex from '@elementstack/shared-assets/Regex';
+import { getFolderTemplate } from '@elementstack/shared-assets/Template';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -43,6 +44,7 @@ export const useCreateProject = (onClose: () => void) => {
   const { projectType } = state;
   const {
     control,
+    setError,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(zodSchema),
@@ -67,13 +69,15 @@ export const useCreateProject = (onClose: () => void) => {
       name: projectName,
       type: projectType,
     };
-    payload.rootFolder = {
-      ...payload.rootFolder,
-      id: '0:' + projectName,
-      name: projectName,
-      isRoot: true,
-      isExpanded: true,
-    };
+    const newRootFolder = getFolderTemplate(projectType, projectName);
+    if (!newRootFolder) {
+      setError('projectName', {
+        message: 'Something went wrong! please try again after some time',
+      });
+      return;
+    }
+    newRootFolder.isRoot = true;
+    payload.rootFolder = newRootFolder;
     payload.currentSelectedId = payload.rootFolder.id;
     payload.selectedFolderId = payload.rootFolder.id;
     setProjectDetails({ payload });

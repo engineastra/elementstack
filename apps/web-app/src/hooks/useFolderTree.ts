@@ -69,7 +69,7 @@ export const useFolderTree = () => {
     if (newInputData.isEnabled && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [selectedFolderId]);
+  }, [newInputData]);
 
   useEffect(() => {
     if (renameFileOrFolderRef.current) {
@@ -133,7 +133,7 @@ export const useFolderTree = () => {
     const newId =
       folderObj.id.split(':')[0] +
       folderObj.totalItems +
-      '-' +
+      ':' +
       getValues().newInputName;
     const newTabs = [...tabs];
     if (newInputData.type === FsItemType.FILE) {

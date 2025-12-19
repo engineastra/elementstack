@@ -28,6 +28,19 @@ const Editor = ({
   const editorRef = useRef(null);
 
   const handleEditorMount: OnMount = useCallback(function (editor, monaco) {
+    monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+      jsx: monaco.languages.typescript.JsxEmit.React,
+      allowJs: true,
+      target: monaco.languages.typescript.ScriptTarget.Latest,
+    });
+
+    monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+      jsx: monaco.languages.typescript.JsxEmit.React,
+      allowNonTsExtensions: true,
+      allowJs: true,
+      target: monaco.languages.typescript.ScriptTarget.Latest,
+    });
+
     // Set editor ref
     editorRef.current = editor;
 

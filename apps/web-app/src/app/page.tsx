@@ -4,7 +4,7 @@ import { OPTION_CARDS } from '@elementstack/shared-assets/Constants';
 import Image from 'next/image';
 import OptionCard from '@web-app/components/OptionCard';
 import Editor from '@web-app/components/Editor';
-import Header from '@web-app/components/Header';
+import Header from '@web-app/app/Header';
 import { oxanium } from '@web-app/constants/Common';
 
 export default function Home() {

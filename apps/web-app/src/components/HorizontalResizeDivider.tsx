@@ -54,14 +54,15 @@ const HorizontalResizeDivider = ({
         ) {
           return;
         }
-
-        const delta = e.clientX - currPos.current;
         const width = windowRef.current.offsetWidth;
-
         if (width === 0) return;
+        
+        const rect = windowRef.current.getBoundingClientRect();
 
-        const newLeft = Math.ceil(left + (delta * 100) / width);
+        const cursorX = e.clientX - rect.left; // px inside container
+        const percent = (cursorX / rect.width) * 100;
 
+        const newLeft = Math.min(max ?? 100, Math.max(min ?? 0, percent));
         if (
           (min !== undefined && newLeft < min) ||
           (max !== undefined && newLeft > max)

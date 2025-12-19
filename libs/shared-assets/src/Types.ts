@@ -16,7 +16,7 @@ export type Folder = {
   folders: Array<Folder>;
   totalItems: number;
   isRoot?: boolean;
-  isExpanded: boolean;
+  isExpanded?: boolean;
   parentFolderId: string;
 };
 

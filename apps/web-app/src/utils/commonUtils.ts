@@ -52,12 +52,27 @@ export const getAllProjectsFromLocalStorage = () => {
       allProjects = JSON.parse(allProjectsJSON);
       allProjects = allProjects.filter((proj) => proj.id);
     }
-    return allProjects;
+    return allProjects.reverse();
   }
   return [];
 };
 
 export const getProjectFromLocalStorageById = (id: string) => {
+  if (typeof window !== 'undefined') {
+    const allProjectsB64 = localStorage.getItem(LOCAL_STORAGE_KEYS.projects);
+    let allProjects: Array<ProjectDetailsSchema> = [];
+    if (allProjectsB64) {
+      const allProjectsJSON = decodeBase64(allProjectsB64);
+      allProjects = JSON.parse(allProjectsJSON);
+      const projectDetails = allProjects.filter((proj) => proj.id === id)[0];
+      return projectDetails || [];
+    }
+    return allProjects;
+  }
+  return {};
+};
+
+export const deleteProjectFromLocalStorageById = (id: string) => {
   if (typeof window !== 'undefined') {
     const allProjectsB64 = localStorage.getItem(LOCAL_STORAGE_KEYS.projects);
     let allProjects: Array<ProjectDetailsSchema> = [];
@@ -128,29 +143,4 @@ export const getFileById = (fileId: string, root: Folder): FileData | null => {
     }
   });
   return output;
-};
-
-export const getDebounceFn = function (fn: any, delay: number, trail = true) {
-  // let fnRan = false; // For leading debounce
-  let timerId: any;
-  return function (...args: any) {
-    if (trail) {
-      clearTimeout(timerId);
-      timerId = setTimeout(() => {
-        fn(...args);
-      }, delay);
-    } else {
-      // !timerId means all previous timeouts executed (delay period is over)
-      if (!timerId) {
-        fn(...args);
-      } else {
-        // clear previous pending timeout
-        clearTimeout(timerId);
-      }
-      // on each event we need to create new timeout (After prevous one is either executed or in execution)
-      timerId = setTimeout(() => {
-        timerId = null; // reset to null for any new execution
-      }, delay);
-    }
-  };
 };

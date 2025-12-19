@@ -9,7 +9,6 @@ import jsSVG from './icons/js.svg';
 import htmlSVG from './icons/html.svg';
 import cssSVG from './icons/css.svg';
 import jsonSVG from './icons/json.svg';
-import nodeSVG from './icons/node.svg';
 
 export type OptionCardConfig = {
   id: number;
@@ -85,11 +84,6 @@ export const CREATE_PROJECT_OPTIONS: Record<
     icon: jsSVG,
     title: 'Javascript',
   },
-  node: {
-    id: 5,
-    icon: nodeSVG,
-    title: 'Node.js',
-  },
 };
 
 export const FILE_TYPE_TO_ICON: Record<string, string> = {
@@ -119,4 +113,35 @@ export const EmptyFile = {
   parentFolderId: '',
   type: '',
   language: '',
+};
+
+export const PROJECT_THEME_BY_TYPE: Record<
+  string,
+  { bg: string; text: string; shadow: string }
+> = {
+  tsx: {
+    bg: '',
+    text: '#2cbef5',
+    shadow: 'inset 0 0 10px #2cbef5',
+  },
+  jsx: {
+    bg: '',
+    text: '#f99e04',
+    shadow: 'inset 0 0 10px #f99e04',
+  },
+  ts: {
+    bg: '',
+    text: '#2c78c7',
+    shadow: 'inset 0 0 10px #2c78c7',
+  },
+  js: {
+    bg: '',
+    text: '#F6DE22',
+    shadow: 'inset 0 0 10px rgba(246, 223, 29, 0.6)',
+  },
+  other: {
+    bg: '',
+    text: '#ff9700',
+    shadow: 'inset 0 0 10px #ff9700',
+  },
 };
