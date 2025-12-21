@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "ignoreDeprecations": "6.0",
     "jsx": "preserve",
     "strict": true,
     "noEmit": true,
@@ -21,7 +20,7 @@
         "name": "next"
       }
     ],
-    "types": ["jest", "node"],
+    "types": ["jest", "node"]
   },
   "include": [
     "**/*.ts",
@@ -32,8 +31,9 @@
     "../../dist/apps/web-app/.next/types/**/*.ts",
     "next-env.d.ts",
     "../../libs/shared-assets/src/Regex.ts",
-    "../../libs/shared-assets/src/Enums.ts"
-, "../../libs/shared-assets/src/esbuild/initEsbuild.ts"  ],
+    "../../libs/shared-assets/src/Enums.ts",
+    "../../libs/shared-assets/src/esbuild/initEsbuild.ts"
+  ],
   "exclude": [
     "node_modules",
     "jest.config.ts",

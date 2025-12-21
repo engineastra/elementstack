@@ -3,7 +3,6 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "types": ["node"],
-    "ignoreDeprecations": "6.0"
   },
   "files": ["../../node_modules/@nx/expo/typings/svg.d.ts"],
   "exclude": [

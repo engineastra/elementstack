@@ -10,9 +10,7 @@ import {
   Folder,
   ProjectDetailsSchema,
 } from '@elementstack/shared-assets/Types';
-import {
-  defaultStateReducer,
-} from '../utils/commonUtils';
+import { defaultStateReducer } from '../utils/commonUtils';
 import { setProjectsInLocalStorage } from '@web-app/utils/projectUtils';
 
 const initialState: ProjectDetailsSchema = {
@@ -57,8 +55,8 @@ export const ProjectDetailsContext = createContext<ProjectDetailsContextSchema>(
     setProjectDetails: () => {
       return;
     },
-    deleteFilesAndFolders: () => {
-      return;
+    deleteFilesAndFolders: (_: Folder | undefined) => {
+      return undefined;
     },
   }
 );
