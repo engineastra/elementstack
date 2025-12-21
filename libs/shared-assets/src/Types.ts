@@ -40,4 +40,9 @@ export type ProjectDetailsSchema = {
   };
 };
 
-export type ProjectType = 'js' | 'ts' | 'jsx' | 'tsx';
+export enum ProjectType {
+  'js' = 'js',
+  'ts' = 'ts',
+  'jsx' = 'jsx',
+  'tsx' = 'tsx',
+}

@@ -1,6 +1,6 @@
 import { Folder } from './Types';
 
-export const BOILER_PLATES = {
+export const BOILER_PLATES: Record<string, string> = {
   html: `<!DOCTYPE html>
 <html>
   <head>
@@ -10,8 +10,7 @@ export const BOILER_PLATES = {
 
   <body>
     <div id="app"></div>
-
-    <script src="./index.mjs" type="module"></script>
+    <script type="module"></script>
   </body>
 </html>`,
   json: `{
@@ -44,7 +43,8 @@ document.getElementById("app").innerHTML = \`
 document.getElementById("app").innerHTML = \`
 <h1>Hello JavaScript!</h1>
 \`;`,
-  jsx: `import "./styles.css";
+  jsx: `import React from 'react';
+import "./styles.css";
 
 export default function App() {
   return (
@@ -85,11 +85,12 @@ export default function App() {
 		You need to enable JavaScript to run this app.
 	</noscript>
 	<div id="root"></div>
+  <script type="module"></script>
 	<!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
-      You can add webfonts, meta tags, or analytics to this file.
+      You can add webfon'ts') meta tags, or analytics to this file.
       The build step will place the bundled scripts into the <body> tag.
 
       To begin the development, run \`npm start\` or \`yarn start\`.
@@ -98,19 +99,17 @@ export default function App() {
 </body>
 
 </html>`,
-  jsxIndex: `import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+  jsxIndex: `import React from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App';
 
-import App from "./App";
+const rootEl = document.getElementById('root');
+if (!rootEl) {
+  throw new Error('Root element not found');
+}
 
-const rootElement = document.getElementById("root");
-const root = createRoot(rootElement);
-
-root.render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+const root = createRoot(rootEl);
+root.render(<App />);
 `,
   jsxCSS: `.App {
   font-family: sans-serif;
@@ -157,6 +156,9 @@ root.render(
     }
 }`,
 };
+const getBolierPlate = (type: string): string => {
+  return structuredClone(BOILER_PLATES[type]);
+};
 
 export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
   js: {
@@ -169,7 +171,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
         type: 'json',
         language: 'json',
         parentFolderId: '0:', // Update on initialization w.r.t parent's id
-        value: BOILER_PLATES.json,
+        value: getBolierPlate('json'),
       },
     ],
     folders: [
@@ -183,7 +185,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'html',
             language: 'html',
             parentFolderId: '01:src',
-            value: BOILER_PLATES.html,
+            value: getBolierPlate('html'),
           },
           {
             id: '011:styles.css',
@@ -191,7 +193,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'css',
             language: 'css',
             parentFolderId: '01:src',
-            value: BOILER_PLATES.css,
+            value: getBolierPlate('css'),
           },
           {
             id: '012:index.js',
@@ -199,7 +201,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'js',
             language: 'javascript',
             parentFolderId: '01:js',
-            value: BOILER_PLATES.js,
+            value: getBolierPlate('js'),
           },
         ],
         folders: [],
@@ -224,7 +226,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
         type: 'json',
         language: 'json',
         parentFolderId: '0:', // Update on initialization w.r.t parent's id
-        value: BOILER_PLATES.json,
+        value: getBolierPlate('json'),
       },
     ],
     folders: [
@@ -238,7 +240,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'html',
             language: 'html',
             parentFolderId: '01:src',
-            value: BOILER_PLATES.html,
+            value: getBolierPlate('html'),
           },
           {
             id: '011:styles.css',
@@ -246,7 +248,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'css',
             language: 'css',
             parentFolderId: '01:src',
-            value: BOILER_PLATES.css,
+            value: getBolierPlate('css'),
           },
           {
             id: '012:index.ts',
@@ -254,7 +256,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'ts',
             language: 'typescript',
             parentFolderId: '01:ts',
-            value: BOILER_PLATES.ts,
+            value: getBolierPlate('ts'),
           },
         ],
         folders: [],
@@ -279,7 +281,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
         type: 'json',
         language: 'json',
         parentFolderId: '0:', // Update on initialization w.r.t parent's id
-        value: BOILER_PLATES.reactPackageJSON,
+        value: getBolierPlate('reactPackageJSON'),
       },
     ],
     folders: [
@@ -293,7 +295,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'html',
             language: 'html',
             parentFolderId: '01:src',
-            value: BOILER_PLATES.jsxHtml,
+            value: getBolierPlate('jsxHtml'),
           },
         ],
         folders: [],
@@ -312,7 +314,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'jsx',
             language: 'javascript',
             parentFolderId: '02:src',
-            value: BOILER_PLATES.jsx,
+            value: getBolierPlate('jsx'),
           },
           {
             id: '021:styles.css',
@@ -320,7 +322,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'css',
             language: 'css',
             parentFolderId: '02:src',
-            value: BOILER_PLATES.jsxCSS,
+            value: getBolierPlate('jsxCSS'),
           },
           {
             id: '022:index.jsx',
@@ -328,7 +330,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'jsx',
             language: 'javascript',
             parentFolderId: '02:src',
-            value: BOILER_PLATES.jsxIndex,
+            value: getBolierPlate('jsxIndex'),
           },
         ],
         folders: [],
@@ -353,7 +355,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
         type: 'json',
         language: 'json',
         parentFolderId: '0:', // Update on initialization w.r.t parent's id
-        value: BOILER_PLATES.reactPackageJSON,
+        value: getBolierPlate('reactPackageJSON'),
       },
       {
         id: '02:tsconfig.json',
@@ -361,7 +363,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
         type: 'json',
         language: 'json',
         parentFolderId: '0:', // Update on initialization w.r.t parent's id
-        value: BOILER_PLATES.tsconfig,
+        value: getBolierPlate('tsconfig'),
       },
     ],
     folders: [
@@ -375,7 +377,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'html',
             language: 'html',
             parentFolderId: '01:src',
-            value: BOILER_PLATES.jsxHtml,
+            value: getBolierPlate('jsxHtml'),
           },
         ],
         folders: [],
@@ -394,7 +396,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'tsx',
             language: 'typescript',
             parentFolderId: '02:src',
-            value: BOILER_PLATES.jsx,
+            value: getBolierPlate('jsx'),
           },
           {
             id: '021:styles.css',
@@ -402,15 +404,15 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'css',
             language: 'css',
             parentFolderId: '02:src',
-            value: BOILER_PLATES.jsxCSS,
+            value: getBolierPlate('jsxCSS'),
           },
           {
             id: '022:index.tsx',
             name: 'index.tsx',
             type: 'tsx',
             language: 'javascript',
-            parentFolderId: '01:tsx',
-            value: BOILER_PLATES.jsxIndex,
+            parentFolderId: '02:src',
+            value: getBolierPlate('jsxIndex'),
           },
         ],
         folders: [],

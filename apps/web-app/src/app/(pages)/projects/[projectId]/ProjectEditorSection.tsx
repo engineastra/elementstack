@@ -56,7 +56,7 @@ function ProjectEditorSection({ selectedFileId }: { selectedFileId: string }) {
         {selectedFileId && fileObj && (
           <div className="flex flex-1 bg-card pl-2 pt-2 rounded-b-md">
             <Editor
-              key={`${isPreviewOn}`}
+              key={`${isPreviewOn} ${fileObj.id}`}
               value={fileObj.value}
               selectedLanguageuage={fileObj.language}
               lineDecorationsWidth={20}
