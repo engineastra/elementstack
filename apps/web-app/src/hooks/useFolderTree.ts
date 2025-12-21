@@ -1,4 +1,11 @@
-import { DragEvent, MouseEvent, useContext, useEffect, useRef } from 'react';
+import {
+  DragEvent,
+  MouseEvent,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
 import {
   FileData,
@@ -11,26 +18,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Regex from '@elementstack/shared-assets/Regex';
 import { FILE_TYPE_TO_LANGUAGE } from '@elementstack/shared-assets/Constants';
-import { getFolderById } from '@web-app/utils/commonUtils';
-
-const zodSchema = z.object({
-  newInputName: z
-    .string()
-    .min(1, 'Enter valid file name')
-    .regex(
-      Regex.FILE_OR_FOLDER_NAME,
-      'Invalid name, only use (a–z, A–Z, 0–9, _, -, .)'
-    ),
-  renameFileOrFolder: z
-    .string()
-    .min(1, 'Enter valid file name')
-    .regex(
-      Regex.FILE_OR_FOLDER_NAME,
-      'Invalid name, only use (a–z, A–Z, 0–9, _, -, .)'
-    ),
-});
-
-type FormData = z.infer<typeof zodSchema>;
+import { getFolderById } from '@web-app/utils/projectUtils';
 
 type MovableFileOrFolderType = {
   movableFileOrFolderId: string;
@@ -38,7 +26,59 @@ type MovableFileOrFolderType = {
   type: FsItemType;
 };
 
-export const useFolderTree = () => {
+const createSchema = (folder: Folder) => {
+  return z.object({
+    newInputName: z
+      .string()
+      .min(1, 'Enter valid file name')
+      .regex(
+        Regex.FILE_OR_FOLDER_NAME,
+        'Invalid name, only use (a–z, A–Z, 0–9, _, -, .)'
+      )
+      .refine(
+        (value) =>
+          !(
+            folder.files.some(
+              (file) =>
+                file.name.toLocaleLowerCase() ===
+                value.trim().toLocaleLowerCase()
+            ) ||
+            folder.folders.some(
+              (fld) =>
+                fld.name.toLocaleLowerCase() ===
+                value.trim().toLocaleLowerCase()
+            )
+          ), // ✅ Duplicate check
+        { message: 'Name already exists' }
+      ),
+
+    renameFileOrFolder: z
+      .string()
+      .min(1, 'Enter valid file name')
+      .regex(
+        Regex.FILE_OR_FOLDER_NAME,
+        'Invalid name, only use (a–z, A–Z, 0–9, _, -, .)'
+      )
+      .refine(
+        (value) =>
+          !(
+            folder.files.some(
+              (file) =>
+                file.name.toLocaleLowerCase() ===
+                value.trim().toLocaleLowerCase()
+            ) ||
+            folder.folders.some(
+              (fld) =>
+                fld.name.toLocaleLowerCase() ===
+                value.trim().toLocaleLowerCase()
+            )
+          ), // ✅ Duplicate check
+        { message: 'Name already exists' }
+      ),
+  });
+};
+
+export const useFolderTree = (folder: Folder) => {
   const { projectDetails, setProjectDetails } = useContext(
     ProjectDetailsContext
   );
@@ -51,13 +91,16 @@ export const useFolderTree = () => {
     multipleItemsSelected,
     selectedFolderId,
   } = projectDetails;
+
+  const zodSchema = useMemo(() => createSchema(folder), [folder]);
+
   const {
     control,
     setValue,
     setError,
     getValues,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<z.infer<typeof zodSchema>>({
     resolver: zodResolver(zodSchema),
     defaultValues: { newInputName: '' },
     mode: 'onChange',

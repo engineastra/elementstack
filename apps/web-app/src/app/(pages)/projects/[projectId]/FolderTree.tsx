@@ -68,7 +68,7 @@ const FolderTree = ({ folder }: { folder: Folder }) => {
     onDragOverFileOrFolder,
     onDropFileOrFolder,
     onFileOrFolderNameDoubleClick,
-  } = useFolderTree();
+  } = useFolderTree(folder);
   return (
     <div
       className={`flex flex-col ${folder.isRoot ? 'flex-1' : ''}`}

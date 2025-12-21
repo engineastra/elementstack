@@ -1,10 +1,10 @@
 import { Folder } from './Types';
 
-export const BOILER_PLATES: Record<string, string> = {
+export const BOILER_PLATES = {
   html: `<!DOCTYPE html>
 <html>
   <head>
-    <title>JavaScript Sandbox</title>
+    <title>Sandbox</title>
     <meta charset="UTF-8" />
   </head>
 
@@ -13,22 +13,6 @@ export const BOILER_PLATES: Record<string, string> = {
     <script type="module"></script>
   </body>
 </html>`,
-  json: `{
-  "name": "javascript",
-  "version": "1.0.0",
-  "description": "The JavaScript template",
-  "scripts": {
-    "start": "parcel ./src/index.html",
-    "build": "parcel build ./src/index.html"
-  },
-  "devDependencies": {
-    "parcel": "^2.0.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.2.0"
-  },
-  "keywords": ["css", "javascript"]
-}
-`,
   js: `import "./styles.css";
 
 document.getElementById("app").innerHTML = \`
@@ -43,14 +27,13 @@ document.getElementById("app").innerHTML = \`
 document.getElementById("app").innerHTML = \`
 <h1>Hello JavaScript!</h1>
 \`;`,
-  jsx: `import React from 'react';
-import "./styles.css";
+  jsx: `import "./styles.css";
 
 export default function App() {
   return (
     <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
+      <h1>Hi There!</h1>
+      <h2>Start building something great</h2>
     </div>
   );
 }
@@ -62,40 +45,11 @@ export default function App() {
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="theme-color" content="#000000">
-	<!--
-      manifest.json provides metadata used when your web app is added to the
-      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
-    -->
-	<link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-	<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-	<!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the \`public\` folder during the build.
-      Only files inside the \`public\` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running \`npm run build\`.
-    -->
-	<title>React App</title>
 </head>
 
 <body>
-	<noscript>
-		You need to enable JavaScript to run this app.
-	</noscript>
 	<div id="root"></div>
   <script type="module"></script>
-	<!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfon'ts') meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run \`npm start\` or \`yarn start\`.
-      To create a production bundle, use \`npm run build \` or \`yarn build\`.
-    -->
 </body>
 
 </html>`,
@@ -115,49 +69,34 @@ root.render(<App />);
   font-family: sans-serif;
   text-align: center;
 }`,
-  reactPackageJSON: `{
-  "name": "react",
-  "version": "1.0.0",
-  "description": "",
-  "keywords": [],
-  "main": "src/index.tsx",
-  "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-scripts": "^5.0.0"
-  },
-  "devDependencies": {
-    "@types/react": "19.0.0",
-    "@types/react-dom": "19.0.0",
-    "loader-utils": "3.2.1",
-    "typescript": "5.7.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  },
-  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"]
+  jsPackageJSON: `{
+  "name": "Javascript",
+  "version": "ES2022",
+  "description": "The Javascript Template",
+  "main": "src/index.js"
 }
 `,
-  tsconfig: `{
-    "include": [
-        "./src/**/*"
-    ],
-    "compilerOptions": {
-        "strict": true,
-        "esModuleInterop": true,
-        "lib": [
-            "dom",
-            "es2015"
-        ],
-        "jsx": "react-jsx"
-    }
-}`,
-};
-const getBolierPlate = (type: string): string => {
-  return structuredClone(BOILER_PLATES[type]);
+  tsPackageJSON: `{
+  "name": "Typescript",
+  "version": "ES2022",
+  "description": "The Typescript Template",
+  "main": "src/index.ts"
+}
+`,
+  jsxPackageJSON: `{
+  "name": "React-Javascript",
+  "version": "^19",
+  "description": "The React Template",
+  "main": "src/index.jsx"
+}
+`,
+  tsxPackageJSON: `{
+  "name": "React-Typescript",
+  "version": "^19",
+  "description": "The React Template",
+  "main": "src/index.tsx"
+}
+`,
 };
 
 export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
@@ -171,7 +110,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
         type: 'json',
         language: 'json',
         parentFolderId: '0:', // Update on initialization w.r.t parent's id
-        value: getBolierPlate('json'),
+        value: BOILER_PLATES.jsPackageJSON,
       },
     ],
     folders: [
@@ -185,7 +124,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'html',
             language: 'html',
             parentFolderId: '01:src',
-            value: getBolierPlate('html'),
+            value: BOILER_PLATES.html,
           },
           {
             id: '011:styles.css',
@@ -193,7 +132,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'css',
             language: 'css',
             parentFolderId: '01:src',
-            value: getBolierPlate('css'),
+            value: BOILER_PLATES.css,
           },
           {
             id: '012:index.js',
@@ -201,7 +140,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'js',
             language: 'javascript',
             parentFolderId: '01:js',
-            value: getBolierPlate('js'),
+            value: BOILER_PLATES.js,
           },
         ],
         folders: [],
@@ -226,7 +165,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
         type: 'json',
         language: 'json',
         parentFolderId: '0:', // Update on initialization w.r.t parent's id
-        value: getBolierPlate('json'),
+        value: BOILER_PLATES.tsPackageJSON,
       },
     ],
     folders: [
@@ -240,7 +179,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'html',
             language: 'html',
             parentFolderId: '01:src',
-            value: getBolierPlate('html'),
+            value: BOILER_PLATES.html,
           },
           {
             id: '011:styles.css',
@@ -248,7 +187,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'css',
             language: 'css',
             parentFolderId: '01:src',
-            value: getBolierPlate('css'),
+            value: BOILER_PLATES.css,
           },
           {
             id: '012:index.ts',
@@ -256,7 +195,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'ts',
             language: 'typescript',
             parentFolderId: '01:ts',
-            value: getBolierPlate('ts'),
+            value: BOILER_PLATES.ts,
           },
         ],
         folders: [],
@@ -281,7 +220,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
         type: 'json',
         language: 'json',
         parentFolderId: '0:', // Update on initialization w.r.t parent's id
-        value: getBolierPlate('reactPackageJSON'),
+        value: BOILER_PLATES.jsx,
       },
     ],
     folders: [
@@ -295,7 +234,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'html',
             language: 'html',
             parentFolderId: '01:src',
-            value: getBolierPlate('jsxHtml'),
+            value: BOILER_PLATES.jsxHtml,
           },
         ],
         folders: [],
@@ -314,7 +253,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'jsx',
             language: 'javascript',
             parentFolderId: '02:src',
-            value: getBolierPlate('jsx'),
+            value: BOILER_PLATES.jsx,
           },
           {
             id: '021:styles.css',
@@ -322,7 +261,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'css',
             language: 'css',
             parentFolderId: '02:src',
-            value: getBolierPlate('jsxCSS'),
+            value: BOILER_PLATES.jsxCSS,
           },
           {
             id: '022:index.jsx',
@@ -330,7 +269,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'jsx',
             language: 'javascript',
             parentFolderId: '02:src',
-            value: getBolierPlate('jsxIndex'),
+            value: BOILER_PLATES.jsxIndex,
           },
         ],
         folders: [],
@@ -355,15 +294,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
         type: 'json',
         language: 'json',
         parentFolderId: '0:', // Update on initialization w.r.t parent's id
-        value: getBolierPlate('reactPackageJSON'),
-      },
-      {
-        id: '02:tsconfig.json',
-        name: 'tsconfig.json',
-        type: 'json',
-        language: 'json',
-        parentFolderId: '0:', // Update on initialization w.r.t parent's id
-        value: getBolierPlate('tsconfig'),
+        value: BOILER_PLATES.tsxPackageJSON,
       },
     ],
     folders: [
@@ -377,7 +308,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'html',
             language: 'html',
             parentFolderId: '01:src',
-            value: getBolierPlate('jsxHtml'),
+            value: BOILER_PLATES.jsxHtml,
           },
         ],
         folders: [],
@@ -396,7 +327,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'tsx',
             language: 'typescript',
             parentFolderId: '02:src',
-            value: getBolierPlate('jsx'),
+            value: BOILER_PLATES.jsx,
           },
           {
             id: '021:styles.css',
@@ -404,7 +335,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'css',
             language: 'css',
             parentFolderId: '02:src',
-            value: getBolierPlate('jsxCSS'),
+            value: BOILER_PLATES.jsxCSS,
           },
           {
             id: '022:index.tsx',
@@ -412,7 +343,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             type: 'tsx',
             language: 'javascript',
             parentFolderId: '02:src',
-            value: getBolierPlate('jsxIndex'),
+            value: BOILER_PLATES.jsxIndex,
           },
         ],
         folders: [],

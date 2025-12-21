@@ -12,8 +12,8 @@ import {
 } from '@elementstack/shared-assets/Types';
 import {
   defaultStateReducer,
-  setProjectsInLocalStorage,
 } from '../utils/commonUtils';
+import { setProjectsInLocalStorage } from '@web-app/utils/projectUtils';
 
 const initialState: ProjectDetailsSchema = {
   id: '',

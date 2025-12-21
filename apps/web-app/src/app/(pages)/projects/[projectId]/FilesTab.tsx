@@ -14,7 +14,7 @@ const FilesTab = () => {
   const { projectDetails, setProjectDetails } = useContext(
     ProjectDetailsContext
   );
-  const { tabs, selectedFileId } = projectDetails;
+  const { tabs, selectedFileId, multipleItemsSelected } = projectDetails;
 
   const onSelectFile = (fileObj: FileData) => {
     setProjectDetails({
@@ -29,17 +29,27 @@ const FilesTab = () => {
   const onCloseFile = (e: MouseEvent<HTMLImageElement>, obj: FileData) => {
     e.stopPropagation();
     const newList = [...tabs].filter((file) => file != obj);
-    const newSelectedFile =
-      obj.id === selectedFileId ? newList.at(-1) || { ...EmptyFile } : obj;
-    setProjectDetails({
-      payload: {
-        tabs: newList,
-        selectedFileId: newSelectedFile.id,
-        selectedFolderId: newSelectedFile.parentFolderId,
-        currentSelectedId: newSelectedFile.id,
-        multipleItemsSelected: newSelectedFile.id ? [newSelectedFile.id] : [],
-      },
-    });
+    if (obj.id === selectedFileId) {
+      const newSelectedFile = newList.at(-1) || { ...EmptyFile };
+      setProjectDetails({
+        payload: {
+          tabs: newList,
+          selectedFileId: newSelectedFile.id,
+          selectedFolderId: newSelectedFile.parentFolderId,
+          currentSelectedId: newSelectedFile.id,
+          multipleItemsSelected: newSelectedFile.id ? [newSelectedFile.id] : [],
+        },
+      });
+    } else {
+      setProjectDetails({
+        payload: {
+          tabs: newList,
+          multipleItemsSelected: multipleItemsSelected.filter(
+            (val) => val != obj.id
+          ),
+        },
+      });
+    }
   };
 
   return (

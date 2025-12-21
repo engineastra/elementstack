@@ -4,8 +4,15 @@ import { CREATE_PROJECT_OPTIONS } from '@elementstack/shared-assets/Constants';
 import { oxanium } from '@web-app/constants/Common';
 import Image from 'next/image';
 import { useCreateProject } from '@web-app/hooks/useCreateProject';
+import { ProjectDetailsSchema } from '@elementstack/shared-assets/Types';
 
-const CreateProject = ({ onClose }: { onClose: () => void }) => {
+const CreateProject = ({
+  projects,
+  onClose,
+}: {
+  projects: Array<ProjectDetailsSchema>;
+  onClose: () => void;
+}) => {
   const {
     control,
     projectType,
@@ -13,7 +20,7 @@ const CreateProject = ({ onClose }: { onClose: () => void }) => {
     errors,
     handleProjectTypeSelection,
     handleCreateClick,
-  } = useCreateProject(onClose);
+  } = useCreateProject(onClose, projects);
 
   return (
     <div

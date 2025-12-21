@@ -6,14 +6,20 @@ import {
 import { ProjectDetailsSchema } from '@elementstack/shared-assets/Types';
 import Routes from '@web-app/constants/Routes';
 import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
-import { getAllProjectsFromLocalStorage } from '@web-app/utils/commonUtils';
+import { getAllProjectsFromLocalStorage } from '@web-app/utils/projectUtils';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
+import { Dispatch, useContext, useEffect, useState } from 'react';
 
-const AllProjects = () => {
+const AllProjects = ({
+  projects,
+  setProjects,
+}: {
+  projects: Array<ProjectDetailsSchema>;
+  setProjects: Dispatch<Array<ProjectDetailsSchema>>;
+}) => {
   const router = useRouter();
-  const [projects, setProjects] = useState<Array<ProjectDetailsSchema>>([]);
+
   const [isClient, setIsClient] = useState(false);
   const { setProjectDetails } = useContext(ProjectDetailsContext);
 
@@ -32,7 +38,7 @@ const AllProjects = () => {
   }
 
   return (
-    <div className="flex w-full max-w-[100vw] flex-wrap md:mt-[50px] pt-6 gap-2">
+    <div className="flex w-full max-w-[100vw] flex-wrap gap-2 pt-[40px]">
       {projects.map((project) => {
         return (
           <div

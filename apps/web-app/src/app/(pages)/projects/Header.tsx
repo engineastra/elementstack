@@ -7,11 +7,16 @@ import SearchBar from '@web-app/components/SearchBar';
 import { useProject } from '@web-app/hooks/useProject';
 import Modal from '@web-app/components/Modal';
 import CreateProject from './CreateProject';
+import { ProjectDetailsSchema } from '@elementstack/shared-assets/Types';
 
 const TitleTag = ({ name }: { name: string }) => {
   return (
     <div
-      className={`flex flex-shrink-0 w-fit gap-1 items-center h-fit px-8 py-2 rounded-lg ${OPTION_CARDS[name].bgGrad}`}
+      className={`flex flex-shrink-0 w-fit gap-1 items-center h-fit px-8 py-2 rounded-lg`}
+      style={{
+        border: `1px solid #e02f2f`,
+        backgroundColor: `#e02f2f19`,
+      }}
     >
       <Image
         className="inline w-4 h-4"
@@ -27,29 +32,26 @@ const TitleTag = ({ name }: { name: string }) => {
   );
 };
 
-const Header = () => {
+const Header = ({ projects }: { projects: Array<ProjectDetailsSchema> }) => {
   const { enableCreateModel, onOpenCreateModel, onCloseCreateModel } =
     useProject();
 
   return (
     <>
-      <div
-        className={`flex flex-col lg:flex-row justify-between items-center gap-3`}
-      >
-        <div className='hidden lg:flex'><Branding /></div>
+      <div className={`flex flex-col lg:flex-row items-start gap-3`}>
         <div
-          className={`flex flex-1 w-full justify-between md:justify-start gap-2`}
+          className={`flex flex-row lg:flex-col flex-1 w-full justify-between md:justify-start gap-10`}
         >
           <div className="flex lg:hidden mr-auto">
             <Branding hideName />
           </div>
-          <TitleTag name="project" />
-          <div
-            id="project-header"
-            className="flex justify-between items-center"
-          >
+          <div className="hidden lg:flex">
+            <Branding />
+          </div>
+          <div id="project-header" className="flex items-center gap-3">
+            <TitleTag name="project" />
             <button
-              className="flex py-2 px-3 text-[12px] w-fit max-h-[40px] md:text-[14px] bg-success rounded-full text-black font-medium border-none hover:scale-105 items-center justify-center"
+              className={`flex py-2 px-3 text-[12px] w-fit max-h-[40px] md:text-[14px] bg-success rounded-full text-project font-medium border-none hover:scale-105 items-center justify-center ${OPTION_CARDS['project'].bgGrad}`}
               onClick={onOpenCreateModel}
             >
               {COMMON_TEXTS.NEW_PROJECT}
@@ -59,7 +61,7 @@ const Header = () => {
         <SearchBar placeholder="Search your projects" />
       </div>
       <Modal isOpen={enableCreateModel} onClose={onCloseCreateModel}>
-        <CreateProject onClose={onCloseCreateModel} />
+        <CreateProject onClose={onCloseCreateModel} projects={projects} />
       </Modal>
     </>
   );

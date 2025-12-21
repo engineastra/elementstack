@@ -3,7 +3,7 @@ import React, { use, useContext, useEffect } from 'react';
 import SideBar from './SideBar';
 import ProjectEditorSection from './ProjectEditorSection';
 import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
-import { getProjectFromLocalStorageById } from '@web-app/utils/commonUtils';
+import { getProjectFromLocalStorageById } from '@web-app/utils/projectUtils';
 
 const SingleProject = ({
   params,

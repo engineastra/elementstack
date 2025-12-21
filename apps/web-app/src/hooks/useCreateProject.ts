@@ -13,14 +13,7 @@ import {
   ProjectDetailsContext,
   ProjectDetailsInitialState,
 } from '@web-app/contexts/ProjectDetailsProvider';
-
-const zodSchema = z.object({
-  projectName: z
-    .string()
-    .regex(Regex.PROJECT_NAME, 'Project name can only be alphanumeric'),
-});
-
-type FormData = z.infer<typeof zodSchema>;
+import { ProjectDetailsSchema } from '@elementstack/shared-assets/Types';
 
 type InitialStateSchema = {
   projectType: string;
@@ -34,7 +27,10 @@ const initialState: InitialStateSchema = {
 
 type Action = { payload: Partial<InitialStateSchema> };
 
-export const useCreateProject = (onClose: () => void) => {
+export const useCreateProject = (
+  onClose: () => void,
+  projects: Array<ProjectDetailsSchema>
+) => {
   const router = useRouter();
   const { setProjectDetails } = useContext(ProjectDetailsContext);
   const [state, dispatch] = useReducer(
@@ -42,13 +38,29 @@ export const useCreateProject = (onClose: () => void) => {
     initialState
   );
   const { projectType } = state;
+
+  const zodSchema = z.object({
+    projectName: z
+      .string()
+      .regex(Regex.PROJECT_NAME, 'Project name can only be alphanumeric')
+      .refine(
+        (value) =>
+          !projects.some(
+            (proj) =>
+              proj.name.toLocaleLowerCase() === value.trim().toLocaleLowerCase()
+          ), // ✅ Duplicate check
+        { message: 'Project name already exists' }
+      ),
+  });
+
   const {
     control,
     setError,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<z.infer<typeof zodSchema>>({
     resolver: zodResolver(zodSchema),
     defaultValues: { projectName: '' },
+    mode: 'onChange', // ← ADD THIS
   });
   const projectName = useWatch({
     control,

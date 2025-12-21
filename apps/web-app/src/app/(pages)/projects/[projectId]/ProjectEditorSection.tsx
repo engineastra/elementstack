@@ -4,11 +4,11 @@ import Editor from '@web-app/components/Editor';
 import { SandboxPreview } from '@web-app/components/Preview';
 import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
 import closeSVG from '@elementstack/shared-assets/icons/close.svg';
-import { getFileById } from '@web-app/utils/commonUtils';
 import { useContext, useRef, useState } from 'react';
 import FilesTab from './FilesTab';
 import Image from 'next/image';
 import HorizontalResizeDivider from '@web-app/components/HorizontalResizeDivider';
+import { getFileById } from '@web-app/utils/projectUtils';
 
 function ProjectEditorSection({ selectedFileId }: { selectedFileId: string }) {
   const { projectDetails, setProjectDetails } = useContext(

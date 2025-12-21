@@ -18,7 +18,7 @@ self.onmessage = async (e) => {
 
   try {
     const result = await esbuild.build({
-      entryPoints: [entryPoint], // e.g. "/src/index.jsx"
+      entryPoints: [entryPoint],
       bundle: true,
       write: false,
       outdir: 'out',
@@ -26,15 +26,15 @@ self.onmessage = async (e) => {
       treeShaking: false,
       format: 'esm',
       target: ['es2022'],
-      // Use classic JSX transform so JSX becomes React.createElement(...)
-      jsx: 'transform',
-      jsxFactory: 'React.createElement',
-      jsxFragment: 'React.Fragment',
+
+      // React 17+ / 18 / 19 JSX runtime – no default React import needed
+      jsx: 'automatic',
+      jsxImportSource: 'react',
+
       define: {
         'process.env.NODE_ENV': '"development"',
         global: 'window',
       },
-      pure: [], // disable intrinsic call-pure marking
       plugins: [vfsPlugin(files, entryPoint)],
     });
 

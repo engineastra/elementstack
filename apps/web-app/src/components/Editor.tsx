@@ -32,13 +32,15 @@ const Editor = ({
       jsx: monaco.languages.typescript.JsxEmit.React,
       allowJs: true,
       target: monaco.languages.typescript.ScriptTarget.Latest,
+      moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
     });
 
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
       jsx: monaco.languages.typescript.JsxEmit.React,
-      allowNonTsExtensions: true,
+      allowNonTsExtensions: false,
       allowJs: true,
       target: monaco.languages.typescript.ScriptTarget.Latest,
+      moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
     });
 
     // Set editor ref
