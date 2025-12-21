@@ -67,12 +67,12 @@ export const CREATE_PROJECT_OPTIONS: Record<
   tsx: {
     id: 1,
     icon: tsxSVG,
-    title: 'React + Typescript',
+    title: 'React(TS)',
   },
   jsx: {
     id: 2,
     icon: jsxSVG,
-    title: 'React + Javascript',
+    title: 'React(JS)',
   },
   ts: {
     id: 3,

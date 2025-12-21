@@ -53,7 +53,7 @@ const FilesTab = () => {
   };
 
   return (
-    <div className="flex h-[40px] min-h-[40px] w-full bg-pannel rounded-md rounded-b-none overflow-y-scroll">
+    <div className="flex pl-[40px] md:pl-[0px] h-[40px] min-h-[40px] w-full bg-pannel rounded-md rounded-b-none overflow-y-scroll">
       {tabs.map((obj: FileData) => {
         return (
           <button

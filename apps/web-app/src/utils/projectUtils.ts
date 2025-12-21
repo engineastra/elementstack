@@ -62,12 +62,11 @@ export const deleteProjectFromLocalStorageById = (id: string) => {
     if (allProjectsB64) {
       const allProjectsJSON = decodeBase64(allProjectsB64);
       allProjects = JSON.parse(allProjectsJSON);
-      const projectDetails = allProjects.filter((proj) => proj.id === id)[0];
-      return projectDetails || [];
+      allProjects = allProjects.filter((proj) => proj.id !== id);
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.projects);
+      allProjects.forEach((proj) => setProjectsInLocalStorage(proj));
     }
-    return allProjects;
   }
-  return {};
 };
 
 export const getFolderById = (fldId: string, root: Folder): Folder | null => {

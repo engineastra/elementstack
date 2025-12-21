@@ -1,3 +1,4 @@
+import SizeProvider from '@web-app/contexts/SizeProvider';
 import './global.css';
 
 export const metadata = {
@@ -16,8 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-backgroundAccent">
-        {children}
-        <div id="modal" className="fixed top-0 left-0"></div>
+        <SizeProvider>
+          {children}
+          <div id="modal" className="fixed top-0 left-0"></div>
+        </SizeProvider>
       </body>
     </html>
   );

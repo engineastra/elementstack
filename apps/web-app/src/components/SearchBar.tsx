@@ -11,7 +11,7 @@ type SearchBarProps = {
 const SearchBar = ({ name, value, placeholder, width }: SearchBarProps) => {
   return (
     <div
-      className={`flex h-[40px] px-4 rounded-full bg-greenishgrey text-[12px] md:text-[14px] min-w-full lg:min-w-[400px] ${
+      className={`flex h-[40px] px-4 rounded-full bg-greenishgrey text-[12px] md:text-[14px] min-w-full md:min-w-[400px] ${
         width || ''
       }`}
     >

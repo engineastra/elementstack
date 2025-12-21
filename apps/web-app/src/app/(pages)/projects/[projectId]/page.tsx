@@ -22,7 +22,7 @@ const SingleProject = ({
 
   if (!projectDetails.id) return <></>;
   return (
-    <div className="flex w-full h-[100vh] max-h-[100vh] p-2 gap-1">
+    <div className="relative flex w-full h-full md:h-[100vh] min-h-[100vh] md:max-h-[100vh] p-2 gap-2">
       <SideBar />
       <ProjectEditorSection selectedFileId={selectedFileId} />
     </div>

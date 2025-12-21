@@ -8,6 +8,12 @@ import { useProject } from '@web-app/hooks/useProject';
 import Modal from '@web-app/components/Modal';
 import CreateProject from './CreateProject';
 import { ProjectDetailsSchema } from '@elementstack/shared-assets/Types';
+import { Dispatch, SetStateAction, useContext } from 'react';
+import DeletePopUp from './DeletePopUp';
+import {
+  DEVICE_SIZES,
+  SizeProviderContext,
+} from '@web-app/contexts/SizeProvider';
 
 const TitleTag = ({ name }: { name: string }) => {
   return (
@@ -15,7 +21,7 @@ const TitleTag = ({ name }: { name: string }) => {
       className={`flex flex-shrink-0 w-fit gap-1 items-center h-fit px-8 py-2 rounded-lg`}
       style={{
         border: `1px solid #e02f2f`,
-        backgroundColor: `#e02f2f19`,
+        backgroundColor: `#a90c0c`,
       }}
     >
       <Image
@@ -32,36 +38,65 @@ const TitleTag = ({ name }: { name: string }) => {
   );
 };
 
-const Header = ({ projects }: { projects: Array<ProjectDetailsSchema> }) => {
-  const { enableCreateModel, onOpenCreateModel, onCloseCreateModel } =
-    useProject();
+const Header = ({
+  projects,
+  selectedProjects,
+  setSelectedProjects,
+}: {
+  projects: Array<ProjectDetailsSchema>;
+  selectedProjects: Array<string>;
+  setSelectedProjects: Dispatch<Array<string> | SetStateAction<Array<string>>>;
+}) => {
+  const { windowSize } = useContext(SizeProviderContext);
+  const {
+    deletePopUp,
+    enableCreateModel,
+    onOpenCreateModel,
+    onCloseCreateModel,
+    onDeleteProjects,
+    setDeletePopUp,
+  } = useProject({ selectedProjects, setSelectedProjects });
+  const isMobile = [DEVICE_SIZES.xsm, DEVICE_SIZES.sm].includes(windowSize);
 
   return (
     <>
-      <div className={`flex flex-col lg:flex-row items-start gap-3`}>
+      <div className={`flex flex-col md:flex-row items-start gap-3`}>
         <div
-          className={`flex flex-row lg:flex-col flex-1 w-full justify-between md:justify-start gap-10`}
+          className={`flex flex-wrap flex-row md:flex-col flex-1 w-full justify-between md:justify-start gap-8`}
         >
-          <div className="flex lg:hidden mr-auto">
-            <Branding hideName />
-          </div>
-          <div className="hidden lg:flex">
-            <Branding />
-          </div>
-          <div id="project-header" className="flex items-center gap-3">
-            <TitleTag name="project" />
+          <Branding />
+          {isMobile && <TitleTag name="project" />}
+          <div
+            id="project-header"
+            className="flex flex-wrap items-center gap-3 w-full"
+          >
+            {!isMobile && <TitleTag name="project" />}
             <button
-              className={`flex py-2 px-3 text-[12px] w-fit max-h-[40px] md:text-[14px] bg-success rounded-full text-project font-medium border-none hover:scale-105 items-center justify-center ${OPTION_CARDS['project'].bgGrad}`}
+              className={`flex py-2 px-3 text-[12px] w-fit max-h-[40px] md:text-[14px] bg-success rounded-full text-black font-medium border-none hover:scale-105 items-center justify-center `}
               onClick={onOpenCreateModel}
             >
               {COMMON_TEXTS.NEW_PROJECT}
             </button>
+            {selectedProjects.length > 0 && (
+              <button
+                className={`flex py-2 px-3 text-[12px] w-fit max-h-[40px] md:text-[14px] bg-red-600 rounded-full text-white font-medium border-none hover:scale-105 items-center justify-center `}
+                onClick={() => setDeletePopUp(true)}
+              >
+                {COMMON_TEXTS.DELETE_PROJECT}
+              </button>
+            )}
           </div>
         </div>
         <SearchBar placeholder="Search your projects" />
       </div>
       <Modal isOpen={enableCreateModel} onClose={onCloseCreateModel}>
         <CreateProject onClose={onCloseCreateModel} projects={projects} />
+      </Modal>
+      <Modal isOpen={deletePopUp} onClose={() => setDeletePopUp(false)}>
+        <DeletePopUp
+          onCancel={() => setDeletePopUp(false)}
+          onConfirm={onDeleteProjects}
+        />
       </Modal>
     </>
   );

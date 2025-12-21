@@ -22,4 +22,5 @@ function App() {
   LOGIN: 'Login',
   NEW_FOLDER: 'New Folder',
   NEW_PROJECT: 'New Project',
+  DELETE_PROJECT: 'Delete',
 };
