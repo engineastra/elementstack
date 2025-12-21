@@ -14,8 +14,11 @@ import {
   CREATE_PROJECT_OPTIONS,
   EmptyFile,
 } from '@elementstack/shared-assets/Constants';
+import { DEVICE_SIZES, SizeProviderContext } from '@web-app/contexts/SizeProvider';
 
 const ProjectHeader = () => {
+  const { windowSize } = useContext(SizeProviderContext);
+  const isMobile = [DEVICE_SIZES.xsm, DEVICE_SIZES.sm].includes(windowSize);
   const { projectDetails, setProjectDetails, deleteFilesAndFolders } =
     useContext(ProjectDetailsContext);
   const {
@@ -131,7 +134,7 @@ const ProjectHeader = () => {
       <Image
         src={sideBarExpanded ? chevLeftSVG : chevRightSVG}
         alt="expand"
-        className="p-[8px] w-[25px] h-[25px] cursor-pointer bg-greenishgrey rounded-lg hover:scale-105 animate-pulse"
+        className={`p-[8px] w-[25px] h-[25px] cursor-pointer bg-greenishgrey rounded-lg hover:scale-105 ${sideBarExpanded && isMobile?'rotate-90':''} animate-pulse`}
         onClick={handleOpenedEvent}
       />
     </div>

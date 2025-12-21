@@ -71,6 +71,7 @@ html {
     animation: rotate-bg 30s linear infinite;
   }
   .codebanner-bg-wrapper {
+    pointer-events: none !important;
     &::before {
       content: '';
       position: absolute;

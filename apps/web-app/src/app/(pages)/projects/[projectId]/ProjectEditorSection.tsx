@@ -62,7 +62,7 @@ function ProjectEditorSection({ selectedFileId }: { selectedFileId: string }) {
         ref={editorRef}
         className={`flex flex-col h-[70vh] md:h-full ${
           isPreviewOn ? '' : 'flex-1'
-        }`}
+        } overflow-hidden`}
       >
         <FilesTab />
         {selectedFileId && fileObj && (
