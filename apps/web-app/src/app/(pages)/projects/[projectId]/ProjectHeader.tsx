@@ -10,7 +10,7 @@ import {
   Preview as PreviewIcon,
 } from '@mui/icons-material';
 import { FsItemType } from '@elementstack/shared-assets/Enums';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
 import {
   CREATE_PROJECT_OPTIONS,
@@ -38,6 +38,12 @@ const ProjectHeader = () => {
     sideBarExpanded,
   } = projectDetails;
   const [deleteConfimPopupToggle, setDeleteConfimPopupToggle] = useState(false);
+
+  useEffect(() => {
+    if (isMobile) {
+      setProjectDetails({ payload: { sideBarExpanded: false } });
+    }
+  }, [isMobile]);
 
   const handleOnAddClick = (type: FsItemType) => {
     setProjectDetails({
