@@ -1,6 +1,11 @@
 'use client';
 import COMMON_TEXTS from '@elementstack/shared-assets/CommonTexts';
 import Image from 'next/image';
+import {
+  AddBox,
+  DeleteSweep,
+  IndeterminateCheckBoxOutlined as Discard,
+} from '@mui/icons-material';
 import { OPTION_CARDS } from '@elementstack/shared-assets/Constants';
 import { Branding } from '@web-app/app/Header';
 import SearchBar from '@web-app/components/SearchBar';
@@ -9,11 +14,12 @@ import Modal from '@web-app/components/Modal';
 import CreateProject from './CreateProject';
 import { ProjectDetailsSchema } from '@elementstack/shared-assets/Types';
 import { Dispatch, SetStateAction, useContext } from 'react';
-import DeletePopUp from './DeletePopUp';
 import {
   DEVICE_SIZES,
   SizeProviderContext,
 } from '@web-app/contexts/SizeProvider';
+import { iconColor } from '@web-app/utils/commonUtils';
+import DeletePopUp from '@web-app/components/DeletePopUp';
 
 const TitleTag = ({ name }: { name: string }) => {
   return (
@@ -54,6 +60,7 @@ const Header = ({
     onOpenCreateModel,
     onCloseCreateModel,
     onDeleteProjects,
+    onDiscardProjects,
     setDeletePopUp,
   } = useProject({ selectedProjects, setSelectedProjects });
   const isMobile = [DEVICE_SIZES.xsm, DEVICE_SIZES.sm].includes(windowSize);
@@ -72,18 +79,56 @@ const Header = ({
           >
             {!isMobile && <TitleTag name="project" />}
             <button
-              className={`flex py-2 px-3 text-[12px] w-fit max-h-[40px] md:text-[14px] bg-success rounded-full text-black font-medium border-none hover:scale-105 items-center justify-center `}
+              className={`flex py-2 px-3 text-[12px] w-fit max-h-[40px] md:text-[14px] border border-primary rounded-full hover:scale-105 items-center justify-center`}
               onClick={onOpenCreateModel}
             >
-              {COMMON_TEXTS.NEW_PROJECT}
+              <AddBox
+                sx={{
+                  height: '20px',
+                  width: '24px',
+                  cursor: 'pointer',
+                  ...iconColor('#71f163'),
+                }}
+              />
+              <p className="text-primary font-medium">
+                {COMMON_TEXTS.NEW_PROJECT}
+              </p>
             </button>
             {selectedProjects.length > 0 && (
-              <button
-                className={`flex py-2 px-3 text-[12px] w-fit max-h-[40px] md:text-[14px] bg-red-600 rounded-full text-white font-medium border-none hover:scale-105 items-center justify-center `}
-                onClick={() => setDeletePopUp(true)}
-              >
-                {COMMON_TEXTS.DELETE_PROJECT}
-              </button>
+              <>
+                <button
+                  className={`flex py-2 px-3 w-fit max-h-[40px] md:text-[14px] border border-red-500 rounded-full text-white font-medium hover:scale-105 items-center justify-center `}
+                  onClick={() => setDeletePopUp(true)}
+                >
+                  <DeleteSweep
+                    sx={{
+                      height: '20px',
+                      width: '24px',
+                      cursor: 'pointer',
+                      ...iconColor('#e54d38'),
+                    }}
+                  />
+                  <p className="text-[#e54d38] font-medium">
+                    {COMMON_TEXTS.DELETE}
+                  </p>
+                </button>
+                <button
+                  className={`flex py-2 px-3 w-fit max-h-[40px] md:text-[14px] border border-[#e5c838] rounded-full text-white font-medium hover:scale-105 items-center justify-center `}
+                  onClick={onDiscardProjects}
+                >
+                  <Discard
+                    sx={{
+                      height: '20px',
+                      width: '24px',
+                      cursor: 'pointer',
+                      ...iconColor('#e5c838'),
+                    }}
+                  />
+                  <p className="text-[#e5c838] font-medium">
+                    {COMMON_TEXTS.DISCARD}
+                  </p>
+                </button>
+              </>
             )}
           </div>
         </div>

@@ -107,7 +107,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
       {
         id: '00:package.json',
         name: 'package.json',
-        type: 'json',
+        extention: 'json',
         language: 'json',
         parentFolderId: '0:', // Update on initialization w.r.t parent's id
         value: BOILER_PLATES.jsPackageJSON,
@@ -121,7 +121,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
           {
             id: '010:index.html',
             name: 'index.html',
-            type: 'html',
+            extention: 'html',
             language: 'html',
             parentFolderId: '01:src',
             value: BOILER_PLATES.html,
@@ -129,7 +129,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
           {
             id: '011:styles.css',
             name: 'styles.css',
-            type: 'css',
+            extention: 'css',
             language: 'css',
             parentFolderId: '01:src',
             value: BOILER_PLATES.css,
@@ -137,7 +137,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
           {
             id: '012:index.js',
             name: 'index.js',
-            type: 'js',
+            extention: 'js',
             language: 'javascript',
             parentFolderId: '01:js',
             value: BOILER_PLATES.js,
@@ -162,7 +162,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
       {
         id: '00:package.json',
         name: 'package.json',
-        type: 'json',
+        extention: 'json',
         language: 'json',
         parentFolderId: '0:', // Update on initialization w.r.t parent's id
         value: BOILER_PLATES.tsPackageJSON,
@@ -176,7 +176,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
           {
             id: '010:index.html',
             name: 'index.html',
-            type: 'html',
+            extention: 'html',
             language: 'html',
             parentFolderId: '01:src',
             value: BOILER_PLATES.html,
@@ -184,7 +184,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
           {
             id: '011:styles.css',
             name: 'styles.css',
-            type: 'css',
+            extention: 'css',
             language: 'css',
             parentFolderId: '01:src',
             value: BOILER_PLATES.css,
@@ -192,7 +192,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
           {
             id: '012:index.ts',
             name: 'index.ts',
-            type: 'ts',
+            extention: 'ts',
             language: 'typescript',
             parentFolderId: '01:ts',
             value: BOILER_PLATES.ts,
@@ -217,7 +217,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
       {
         id: '00:package.json',
         name: 'package.json',
-        type: 'json',
+        extention: 'json',
         language: 'json',
         parentFolderId: '0:', // Update on initialization w.r.t parent's id
         value: BOILER_PLATES.jsx,
@@ -231,7 +231,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
           {
             id: '010:index.html',
             name: 'index.html',
-            type: 'html',
+            extention: 'html',
             language: 'html',
             parentFolderId: '01:src',
             value: BOILER_PLATES.jsxHtml,
@@ -250,7 +250,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
           {
             id: '020:App.jsx',
             name: 'App.jsx',
-            type: 'jsx',
+            extention: 'jsx',
             language: 'javascript',
             parentFolderId: '02:src',
             value: BOILER_PLATES.jsx,
@@ -258,7 +258,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
           {
             id: '021:styles.css',
             name: 'styles.css',
-            type: 'css',
+            extention: 'css',
             language: 'css',
             parentFolderId: '02:src',
             value: BOILER_PLATES.jsxCSS,
@@ -266,7 +266,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
           {
             id: '022:index.jsx',
             name: 'index.jsx',
-            type: 'jsx',
+            extention: 'jsx',
             language: 'javascript',
             parentFolderId: '02:src',
             value: BOILER_PLATES.jsxIndex,
@@ -291,7 +291,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
       {
         id: '00:package.json',
         name: 'package.json',
-        type: 'json',
+        extention: 'json',
         language: 'json',
         parentFolderId: '0:', // Update on initialization w.r.t parent's id
         value: BOILER_PLATES.tsxPackageJSON,
@@ -305,7 +305,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
           {
             id: '010:index.html',
             name: 'index.html',
-            type: 'html',
+            extention: 'html',
             language: 'html',
             parentFolderId: '01:src',
             value: BOILER_PLATES.jsxHtml,
@@ -324,7 +324,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
           {
             id: '020:App.tsx',
             name: 'App.tsx',
-            type: 'tsx',
+            extention: 'tsx',
             language: 'typescript',
             parentFolderId: '02:src',
             value: BOILER_PLATES.jsx,
@@ -332,7 +332,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
           {
             id: '021:styles.css',
             name: 'styles.css',
-            type: 'css',
+            extention: 'css',
             language: 'css',
             parentFolderId: '02:src',
             value: BOILER_PLATES.jsxCSS,
@@ -340,7 +340,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
           {
             id: '022:index.tsx',
             name: 'index.tsx',
-            type: 'tsx',
+            extention: 'tsx',
             language: 'javascript',
             parentFolderId: '02:src',
             value: BOILER_PLATES.jsxIndex,
@@ -361,7 +361,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
 };
 
 export const getFolderTemplate: (
-  type: string,
+  extention: string,
   folderName: string
 ) => Folder | null = (type, folderName) => {
   const newFolder = structuredClone(LANGUAGE_TEMPLATES[type]);

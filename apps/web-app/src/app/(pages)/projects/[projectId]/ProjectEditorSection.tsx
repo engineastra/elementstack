@@ -1,18 +1,17 @@
 'use client';
 import { ProjectType } from '@elementstack/shared-assets/Types';
-import Editor from '@web-app/components/Editor';
 import { SandboxPreview } from '@web-app/components/Preview';
 import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
-import closeSVG from '@elementstack/shared-assets/icons/close.svg';
+import { Close } from '@mui/icons-material';
 import { useContext, useEffect, useRef, useState } from 'react';
 import FilesTab from './FilesTab';
-import Image from 'next/image';
 import HorizontalResizeDivider from '@web-app/components/HorizontalResizeDivider';
 import { getFileById } from '@web-app/utils/projectUtils';
 import {
   DEVICE_SIZES,
   SizeProviderContext,
 } from '@web-app/contexts/SizeProvider';
+import CodemirrorEditor from '@web-app/components/CodemirrorEditor';
 
 function ProjectEditorSection({ selectedFileId }: { selectedFileId: string }) {
   const { windowSize } = useContext(SizeProviderContext);
@@ -55,25 +54,34 @@ function ProjectEditorSection({ selectedFileId }: { selectedFileId: string }) {
 
   return (
     <div
-      className="flex flex-col md:flex-row md:h-full w-full min-w-0 gap-1 justify-start md:justify-between *:select-none"
+      className="flex flex-col md:flex-row md:h-full w-full min-w-0 min-h-0 gap-1 justify-start md:justify-between *:select-none"
       ref={wrapperRef}
     >
       <div
         ref={editorRef}
-        className={`flex flex-col h-[70vh] md:h-full ${
-          isPreviewOn ? '' : 'flex-1'
-        } overflow-hidden`}
+        className={`flex flex-col ${
+          isPreviewOn ? 'min-h-[70vh]' : 'min-h-full'
+        } md:h-full flex-1 min-h-0`}
       >
         <FilesTab />
         {selectedFileId && fileObj && (
-          <div className="flex flex-1 bg-card pl-2 pt-2 rounded-b-md">
-            <Editor
+          <div className="project-editor flex flex-1 pl-2 pt-2 rounded-b-md h-full min-h-0">
+            {/* <Editor
               key={`${isPreviewOn} ${fileObj.id} ${windowSize}`}
               value={fileObj.value}
               selectedLanguageuage={fileObj.language}
               lineDecorationsWidth={20}
               fontSize={14}
               setValue={updateValue}
+            /> */}
+            <CodemirrorEditor
+              key={`${isPreviewOn} ${fileObj.id} ${windowSize}`}
+              value={fileObj.value}
+              extention={fileObj.extention}
+              lineDecorationsWidth={20}
+              fontSize={14}
+              setValue={updateValue}
+              width="100%"
             />
           </div>
         )}
@@ -92,16 +100,18 @@ function ProjectEditorSection({ selectedFileId }: { selectedFileId: string }) {
               windowRef={wrapperRef as React.RefObject<HTMLDivElement>}
             />
           )}
-          <div ref={previewRef} className="flex flex-col h-[70vh] md:h-full">
+          <div
+            ref={previewRef}
+            className="flex flex-col min-h-[70vh] h-[70vh] md:h-full"
+          >
             <div className="relative flex h-[40px] min-h-[40px] w-full bg-pannel rounded-md rounded-b-none items-center justify-center">
               <p>Preview</p>
-              <Image
-                src={closeSVG}
-                alt="close preview"
-                className="absolute right-4 cursor-pointer"
+              <Close
+                sx={{ fontSize: 15 }}
                 onClick={() =>
                   setProjectDetails({ payload: { isPreviewOn: false } })
                 }
+                className="absolute right-4 cursor-pointer"
               />
             </div>
             <SandboxPreview

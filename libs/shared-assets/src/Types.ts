@@ -3,7 +3,7 @@ import { FsItemType } from './Enums';
 export type FileData = {
   id: string; // based on index + depth order + name
   name: string;
-  type: string;
+  extention: string;
   language: string;
   value: string;
   parentFolderId: string;

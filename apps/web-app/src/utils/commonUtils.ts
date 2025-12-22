@@ -1,5 +1,3 @@
-
-
 export const defaultStateReducer = <T, U>(state: T, action: { payload: U }) => {
   const { payload } = action;
   const newState = { ...state, ...payload };
@@ -18,4 +16,6 @@ export const decodeBase64 = (value: string) =>
     Uint8Array.from(atob(value), (c) => c.charCodeAt(0))
   );
 
-
+export const iconColor = (color: string) => ({
+  '& path': { fill: color },
+});

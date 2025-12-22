@@ -90,6 +90,7 @@ export const useFolderTree = (folder: Folder) => {
     renameFileOrFolderObj,
     multipleItemsSelected,
     selectedFolderId,
+    type: projectType,
   } = projectDetails;
 
   const zodSchema = useMemo(() => createSchema(folder), [folder]);
@@ -128,7 +129,7 @@ export const useFolderTree = (folder: Folder) => {
     const { e, fileObj, folderObj } = args;
     const payload: Partial<ProjectDetailsSchema> = {};
     if (folderObj) {
-      folderObj.isExpanded = !folderObj.isExpanded;
+      folderObj.isExpanded = folderObj.isRoot ? true : !folderObj.isExpanded;
       payload.selectedFolderId = folderObj.id;
       payload.currentSelectedId = folderObj.id;
     } else if (fileObj) {
@@ -187,7 +188,7 @@ export const useFolderTree = (folder: Folder) => {
         newFile = {
           id: newId,
           name: getValues().newInputName,
-          type: 'txt',
+          extention: 'txt',
           language: 'text',
           value: '',
           parentFolderId: folderObj.id,
@@ -197,7 +198,7 @@ export const useFolderTree = (folder: Folder) => {
         newFile = {
           id: newId,
           name: getValues().newInputName,
-          type: fileExt as string,
+          extention: fileExt as string,
           language: FILE_TYPE_TO_LANGUAGE[fileExt as string] || 'text',
           value: '',
           parentFolderId: folderObj.id,
@@ -260,6 +261,7 @@ export const useFolderTree = (folder: Folder) => {
     );
     const { movableFileOrFolderId, movableFileOrFolderParentFolderId, type } =
       movableData;
+    if (dropFolder.id.startsWith(movableFileOrFolderId.split(':')[0])) return;
     const prevFolder = getFolderById(
       movableFileOrFolderParentFolderId,
       rootFolder
@@ -315,8 +317,8 @@ export const useFolderTree = (folder: Folder) => {
   const handleFileRenameEnter = (file: FileData) => {
     if (getValues().renameFileOrFolder && !errors.renameFileOrFolder?.message) {
       file.name = getValues().renameFileOrFolder;
-      file.type = file.name.split('.').at(-1) || 'txt';
-      file.language = FILE_TYPE_TO_LANGUAGE[file.type];
+      file.extention = file.name.split('.').at(-1) || 'txt';
+      file.language = FILE_TYPE_TO_LANGUAGE[file.extention];
       setValue('renameFileOrFolder', '');
       setError('renameFileOrFolder', { message: '' });
       setProjectDetails({
@@ -345,6 +347,7 @@ export const useFolderTree = (folder: Folder) => {
     renameFileOrFolderRef,
     multipleItemsSelected,
     selectedFolderId,
+    projectType,
     handleFileOrFolderSelection,
     handleFileRenameEnter,
     handleFolderRenameEnter,

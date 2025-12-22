@@ -1,14 +1,15 @@
 'use client';
 import { useContext, MouseEvent } from 'react';
 import Image from 'next/image';
-import closeSVG from '@elementstack/shared-assets/icons/close.svg';
-import fileSVG from '@elementstack/shared-assets/icons/file.svg';
+import { Close, InsertDriveFile as FileIcon } from '@mui/icons-material';
 import {
   EmptyFile,
   FILE_TYPE_TO_ICON,
+  PROJECT_THEME_BY_TYPE,
 } from '@elementstack/shared-assets/Constants';
 import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
 import { FileData } from '@elementstack/shared-assets/Types';
+import { iconColor } from '@web-app/utils/commonUtils';
 
 const FilesTab = () => {
   const { projectDetails, setProjectDetails } = useContext(
@@ -26,7 +27,7 @@ const FilesTab = () => {
     });
   };
 
-  const onCloseFile = (e: MouseEvent<HTMLImageElement>, obj: FileData) => {
+  const onCloseFile = (e: MouseEvent, obj: FileData) => {
     e.stopPropagation();
     const newList = [...tabs].filter((file) => file != obj);
     if (obj.id === selectedFileId) {
@@ -66,11 +67,21 @@ const FilesTab = () => {
             }  border-r border-r-greenishgrey overflow-cli`}
             onClick={() => onSelectFile(obj)}
           >
-            <Image
-              src={FILE_TYPE_TO_ICON[obj.type] || fileSVG}
-              alt={obj.name}
-              className="w-3 h-3"
-            />
+            {FILE_TYPE_TO_ICON[obj.extention] ? (
+              <Image
+                src={FILE_TYPE_TO_ICON[obj.extention]}
+                alt={obj.id}
+                className="w-[15px] h-[12px]"
+              />
+            ) : (
+              <FileIcon
+                color="warning"
+                sx={{
+                  fontSize: 15,
+                  ...iconColor(PROJECT_THEME_BY_TYPE[projectDetails.type].text),
+                }}
+              />
+            )}
             <p
               className={`text-[12px] ${
                 selectedFileId === obj.id ? 'text-primary' : 'text-white'
@@ -78,12 +89,7 @@ const FilesTab = () => {
             >
               {obj.name}
             </p>
-            <Image
-              src={closeSVG}
-              alt={obj.id}
-              className="w-2 h-2 ml-2"
-              onClick={(e) => onCloseFile(e, obj)}
-            />
+            <Close sx={{ fontSize: 15 }} onClick={(e) => onCloseFile(e, obj)} />
           </button>
         );
       })}

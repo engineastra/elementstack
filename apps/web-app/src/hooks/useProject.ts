@@ -19,12 +19,18 @@ export const useProject = ({
     setSelectedProjects([]);
   };
 
+  const onDiscardProjects = () => {
+    setDeletePopUp(false);
+    setSelectedProjects([]);
+  };
+
   return {
     deletePopUp,
     enableCreateModel,
     onOpenCreateModel: () => setEnableCretateModel(true),
     onCloseCreateModel: () => setEnableCretateModel(false),
     onDeleteProjects,
+    onDiscardProjects,
     setDeletePopUp,
   };
 };

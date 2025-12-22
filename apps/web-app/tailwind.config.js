@@ -36,6 +36,7 @@ module.exports = {
         problems: '#7EBBF8',
         peer: '#22C55E',
         greenishgrey: '#1F2933',
+        codeMirrorBg: '#002351',
       },
     },
   },

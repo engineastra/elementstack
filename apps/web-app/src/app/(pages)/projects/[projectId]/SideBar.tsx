@@ -18,7 +18,7 @@ const SideBar = () => {
         <div className="flex flex-col h-full w-full">
           <ProjectHeader />
           {sideBarExpanded && (
-            <div className="flex min-w-[250px] flex-col pl-5 pt-2 h-full pb-[20px]">
+            <div className="flex min-w-[280px] flex-col pl-5 pt-2 h-full pb-[20px]">
               <FolderTree folder={rootFolder} />
             </div>
           )}

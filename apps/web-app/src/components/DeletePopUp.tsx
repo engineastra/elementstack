@@ -12,15 +12,17 @@ const DeletePopUp = ({
     <div
       className={`flex flex-col ${oxanium.variable} w-[90vw] lg:max-w-[250px] gap-3 items-center`}
     >
-      <p className="oxanium-font text-primary text-[24px]">Confirm Deletion</p>
+      <p className="oxanium-font text-error text-[24px] font-semibold">
+        Confirm Deletion
+      </p>
       <button
-        className="w-full oxanium-font py-2 px-5 text-[14px] project-grad rounded-full text-white font-medium border-none"
+        className="w-full oxanium-font py-2 px-5 text-[14px] bg-error rounded-full text-white font-medium border-none"
         onClick={onConfirm}
       >
         Delete
       </button>
       <button
-        className="w-full oxanium-font py-2 px-5 text-[14px] theme-grad rounded-full text-black font-medium border-none"
+        className="w-full oxanium-font py-2 px-5 text-[14px] bg-success rounded-full text-black font-medium border-none"
         onClick={onCancel}
       >
         Cancel
