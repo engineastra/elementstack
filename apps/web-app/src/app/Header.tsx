@@ -15,7 +15,7 @@ export const Branding = ({
   if (hide) return;
   return (
     <div id="full-logo" className={`flex gap-1 md:gap-2 items-center`}>
-      <Image className="inline w-6 md:w-7" src={logo} alt="app-logo" />
+      <Image className="inline w-4 md:w-6" src={logo} alt="app-logo" />
       {!hideName && (
         <p className="text-primary text-[16px] md:text-[20px] font-medium tracking-wide">
           {COMMON_TEXTS.APP_NAME}

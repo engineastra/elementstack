@@ -46,3 +46,29 @@ export enum ProjectType {
   'jsx' = 'jsx',
   'tsx' = 'tsx',
 }
+
+export enum QuestionLevel {
+  EASY = 'Easy',
+  MEDIUM = 'Medium',
+  HARD = 'Hard',
+}
+
+export type MachineQuestionMeta = {
+  id: string;
+  title: string;
+  techStack: Array<string>;
+  level: QuestionLevel;
+  questionDescription: string;
+  hints: Array<string>;
+  solution: Record<string, string>;
+  nextQuestions: {
+    id: string;
+    title: string;
+    level: QuestionLevel;
+  };
+};
+
+export type MachineQuestionData = {
+  metaData: MachineQuestionMeta;
+  solutionFiles: Array<FileData>;
+};

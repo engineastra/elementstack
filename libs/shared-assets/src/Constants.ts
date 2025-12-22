@@ -34,7 +34,7 @@ export const OPTION_CARDS: Record<string, OptionCardConfig> = {
     title: 'Machine Coding',
     bgGrad: 'machine-grad',
     textColor: 'machine',
-    pathName: 'machine',
+    pathName: 'machine-code',
   },
   problems: {
     id: 3,
