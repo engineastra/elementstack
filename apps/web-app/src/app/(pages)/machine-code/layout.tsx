@@ -1,8 +1,8 @@
-import ProjectDetailsProvider from '@web-app/contexts/ProjectDetailsProvider';
+import MachineQuestionProvider from '@web-app/contexts/MachineQuestionProvider';
 import React, { ReactNode } from 'react';
 
 const ProjectLayout = ({ children }: { children: ReactNode }) => {
-  return <ProjectDetailsProvider>{children}</ProjectDetailsProvider>;
+  return <MachineQuestionProvider>{children}</MachineQuestionProvider>;
 };
 
 export default ProjectLayout;

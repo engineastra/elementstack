@@ -25,7 +25,7 @@ export const OPTION_CARDS: Record<string, OptionCardConfig> = {
     icon: ProjectBoxSVG,
     title: 'Projects',
     bgGrad: 'project-grad',
-    textColor: 'project',
+    textColor: 'project-500',
     pathName: 'projects',
   },
   machine: {
@@ -33,15 +33,15 @@ export const OPTION_CARDS: Record<string, OptionCardConfig> = {
     icon: MachineCodeSVG,
     title: 'Machine Coding',
     bgGrad: 'machine-grad',
-    textColor: 'machine',
+    textColor: 'machine-500',
     pathName: 'machine-code',
   },
   problems: {
     id: 3,
     icon: ProblemIdeaSVG,
-    title: 'Problems',
+    title: 'DSA Problems',
     bgGrad: 'problems-grad',
-    textColor: 'problems',
+    textColor: 'problems-500',
     pathName: 'problems',
   },
   peer: {
@@ -49,7 +49,7 @@ export const OPTION_CARDS: Record<string, OptionCardConfig> = {
     icon: PeerSVG,
     title: 'Peer Code',
     bgGrad: 'peer-grad',
-    textColor: 'peer',
+    textColor: 'peer-500',
     pathName: 'peercode',
   },
 };

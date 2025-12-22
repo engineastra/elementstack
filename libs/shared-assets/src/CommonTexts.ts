@@ -23,5 +23,9 @@ function App() {
   NEW_FOLDER: 'New Folder',
   NEW_PROJECT: 'New Project',
   DELETE: 'Delete',
-  DISCARD: 'Discard',
+  CANCEL: 'Cancel',
+  ALL_PROJECTS: 'All Projects',
+  MACHINE_CODING: 'Machine Coding Questions',
+  DSA_PROBLEMS: 'DSA Problems',
+  PEER_CODE: 'Connect with your friends',
 };

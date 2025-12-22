@@ -1,14 +1,10 @@
 'use client';
 import COMMON_TEXTS from '@elementstack/shared-assets/CommonTexts';
-import Image from 'next/image';
 import {
   AddBox,
   DeleteSweep,
   IndeterminateCheckBoxOutlined as Discard,
 } from '@mui/icons-material';
-import { OPTION_CARDS } from '@elementstack/shared-assets/Constants';
-import { Branding } from '@web-app/app/Header';
-import SearchBar from '@web-app/components/SearchBar';
 import { useProject } from '@web-app/hooks/useProject';
 import Modal from '@web-app/components/Modal';
 import CreateProject from './CreateProject';
@@ -20,25 +16,7 @@ import {
 } from '@web-app/contexts/SizeProvider';
 import { iconColor } from '@web-app/utils/commonUtils';
 import DeletePopUp from '@web-app/components/DeletePopUp';
-
-const TitleTag = ({ name }: { name: string }) => {
-  return (
-    <div
-    className={`flex flex-shrink-0 w-fit gap-1 items-center h-fit px-8 py-2 rounded-sm project-grad border border-project`}
-    >
-      <Image
-        className="inline w-4 h-4"
-        src={OPTION_CARDS[name].icon}
-        alt={OPTION_CARDS[name].title}
-      />
-      <p
-        className={`text-center text-[12px] md:text-[14px] font-semibold text-${OPTION_CARDS[name].textColor}`}
-      >
-        {OPTION_CARDS[name].title}
-      </p>
-    </div>
-  );
-};
+import { oxanium } from '@web-app/constants/Common';
 
 const Header = ({
   projects,
@@ -63,72 +41,77 @@ const Header = ({
 
   return (
     <>
-      <div className={`flex flex-col md:flex-row items-start gap-3`}>
-        <div
-          className={`flex flex-wrap flex-row md:flex-col flex-1 w-full justify-between md:justify-start gap-8`}
+      <div
+        className={`flex flex-wrap md:flex-row items-center gap-3 justify-between`}
+      >
+        {/* <SearchBar placeholder="Search your projects" /> */}
+        <p
+          className={`w-fit ${oxanium.className} ${
+            isMobile ? 'text-[18px]' : 'text-[24px]'
+          } text-primary font-medium`}
         >
-          <Branding />
-          {isMobile && <TitleTag name="project" />}
-          <div
-            id="project-header"
-            className="flex flex-wrap items-center gap-3 w-full"
+          {COMMON_TEXTS.ALL_PROJECTS}
+        </p>
+        <div id="project-header" className="flex items-center gap-3">
+          <button
+            className={`flex py-2 px-3 text-[12px] w-fit max-h-[40px] md:text-[14px] border border-[#f1b863] rounded-full hover:scale-105 items-center justify-center`}
+            onClick={onOpenCreateModel}
           >
-            {!isMobile && <TitleTag name="project" />}
-            <button
-              className={`flex py-2 px-3 text-[12px] w-fit max-h-[40px] md:text-[14px] border border-primary rounded-full hover:scale-105 items-center justify-center`}
-              onClick={onOpenCreateModel}
-            >
-              <AddBox
-                sx={{
-                  height: '20px',
-                  width: '24px',
-                  cursor: 'pointer',
-                  ...iconColor('#71f163'),
-                }}
-              />
-              <p className="text-primary font-medium">
+            <AddBox
+              sx={{
+                height: '20px',
+                width: '24px',
+                cursor: 'pointer',
+                ...iconColor('#f1b863'),
+              }}
+            />
+            {!isMobile && (
+              <p className="text-[#f1b863] font-medium">
                 {COMMON_TEXTS.NEW_PROJECT}
               </p>
-            </button>
-            {selectedProjects.length > 0 && (
-              <>
-                <button
-                  className={`flex py-2 px-3 w-fit max-h-[40px] md:text-[14px] border border-red-500 rounded-full text-white font-medium hover:scale-105 items-center justify-center `}
-                  onClick={() => setDeletePopUp(true)}
-                >
-                  <DeleteSweep
-                    sx={{
-                      height: '20px',
-                      width: '24px',
-                      cursor: 'pointer',
-                      ...iconColor('#e54d38'),
-                    }}
-                  />
+            )}
+          </button>
+          {selectedProjects.length > 0 && (
+            <>
+              <button
+                className={`flex py-2 px-3 w-fit max-h-[40px] md:text-[14px] border border-red-500 rounded-full text-white font-medium hover:scale-105 items-center justify-center `}
+                onClick={() => setDeletePopUp(true)}
+              >
+                <DeleteSweep
+                  sx={{
+                    height: '20px',
+                    width: '24px',
+                    cursor: 'pointer',
+                    ...iconColor('#e54d38'),
+                  }}
+                />
+                {!isMobile && (
                   <p className="text-[#e54d38] font-medium">
                     {COMMON_TEXTS.DELETE}
                   </p>
-                </button>
-                <button
-                  className={`flex py-2 px-3 w-fit max-h-[40px] md:text-[14px] border border-[#e5c838] rounded-full text-white font-medium hover:scale-105 items-center justify-center `}
-                  onClick={onDiscardProjects}
-                >
-                  <Discard
-                    sx={{
-                      height: '20px',
-                      width: '24px',
-                      cursor: 'pointer',
-                      ...iconColor('#e5c838'),
-                    }}
-                  />
+                )}
+              </button>
+              <button
+                className={`flex py-2 px-3 w-fit max-h-[40px] md:text-[14px] border border-[#e5c838] rounded-full text-white font-medium hover:scale-105 items-center justify-center `}
+                onClick={onDiscardProjects}
+              >
+                <Discard
+                  sx={{
+                    height: '20px',
+                    width: '24px',
+                    cursor: 'pointer',
+                    ...iconColor('#e5c838'),
+                  }}
+                />
+                {!isMobile && (
                   <p className="text-[#e5c838] font-medium">
-                    {COMMON_TEXTS.DISCARD}
+                    {COMMON_TEXTS.CANCEL}
                   </p>
-                </button>
-              </>
-            )}
-          </div>
+                )}
+              </button>
+            </>
+          )}
         </div>
-        <SearchBar placeholder="Search your projects" />
       </div>
       <Modal isOpen={enableCreateModel} onClose={onCloseCreateModel}>
         <CreateProject onClose={onCloseCreateModel} projects={projects} />

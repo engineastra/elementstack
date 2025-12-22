@@ -22,7 +22,7 @@ const Header = () => {
             isMobile ? 'text-[18px]' : 'text-[24px]'
           } text-primary font-medium`}
         >
-          {COMMON_TEXTS.MACHINE_CODING}
+          {COMMON_TEXTS.DSA_PROBLEMS}
         </p>
       </div>
     </>

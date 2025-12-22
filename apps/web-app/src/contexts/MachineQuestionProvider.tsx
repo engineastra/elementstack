@@ -43,7 +43,7 @@ export const MachineQuestionDetailsContext =
     },
   });
 
-const ProjectDetailsProvider = ({ children }: { children: ReactNode }) => {
+const MachineQuestionProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(
     defaultStateReducer<MachineQuestionData, Partial<MachineQuestionData>>,
     initialState
@@ -68,4 +68,4 @@ const ProjectDetailsProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default ProjectDetailsProvider;
+export default MachineQuestionProvider;
