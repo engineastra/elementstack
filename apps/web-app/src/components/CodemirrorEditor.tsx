@@ -1,7 +1,6 @@
 'use client';
 import CodeMirror from '@uiw/react-codemirror';
 import { editorEssentials } from '@web-app/utils/editorEssentials';
-import { useRef } from 'react';
 import { tomorrowNightBlue } from '@uiw/codemirror-theme-tomorrow-night-blue';
 import { getLanguageByExtension } from '@web-app/utils/languageRegistry';
 import {

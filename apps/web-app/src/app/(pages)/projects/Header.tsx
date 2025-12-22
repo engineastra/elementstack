@@ -24,10 +24,10 @@ import DeletePopUp from '@web-app/components/DeletePopUp';
 const TitleTag = ({ name }: { name: string }) => {
   return (
     <div
-      className={`flex flex-shrink-0 w-fit gap-1 items-center h-fit px-8 py-2 rounded-lg`}
+      className={`flex flex-shrink-0 w-fit gap-1 items-center h-fit px-8 py-2 rounded-sm`}
       style={{
-        border: `1px solid #e02f2f`,
-        backgroundColor: `#a90c0c`,
+        border: `1px solid #F8977C`,
+        backgroundColor: `#a90c0c7f`,
       }}
     >
       <Image

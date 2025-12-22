@@ -4,7 +4,7 @@ import {
   autocompletion,
 } from '@codemirror/autocomplete';
 
-type LanguageKey =
+export type LanguageKey =
   | 'javascript'
   | 'typescript'
   | 'python'
