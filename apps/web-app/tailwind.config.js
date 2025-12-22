@@ -31,7 +31,7 @@ module.exports = {
         success: '#22C55E',
         warning: '#F59E0B',
         error: '#EF4444',
-        project: '#F8977C',
+        project: '#FFCA9B',
         machine: '#B69FE9',
         problems: '#7EBBF8',
         peer: '#22C55E',
