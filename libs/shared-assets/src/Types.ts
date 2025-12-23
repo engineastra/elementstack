@@ -56,11 +56,12 @@ export enum QuestionLevel {
 export type MachineQuestionMeta = {
   id: string;
   title: string;
-  techStack: Array<string>;
+  techStack: string;
   level: QuestionLevel;
-  questionDescription: string;
+  quickDescription: string;
+  detailedDescription: string;
   hints: Array<string>;
-  solution: Record<string, string>;
+  solution?: Record<string, string>;
   nextQuestions: {
     id: string;
     title: string;

@@ -10,9 +10,10 @@ const initialState: MachineQuestionData = {
   metaData: {
     id: '',
     title: '',
-    techStack: [],
+    techStack: '',
     level: QuestionLevel.EASY,
-    questionDescription: '',
+    quickDescription: '',
+    detailedDescription: '',
     hints: [],
     solution: {},
     nextQuestions: {

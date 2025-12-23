@@ -14,13 +14,13 @@ const Header = () => {
   return (
     <>
       <div
-        className={`flex flex-wrap md:flex-row items-center gap-3 justify-between`}
+        className={`flex flex-wrap md:flex-row items-center gap-3 justify-between py-2 pl-3`}
       >
         {/* <SearchBar placeholder="Search questions" /> */}
         <p
           className={`w-fit ${oxanium.className} ${
             isMobile ? 'text-[18px]' : 'text-[24px]'
-          } text-primary font-medium`}
+          } text-machine-500 font-medium`}
         >
           {COMMON_TEXTS.MACHINE_CODING}
         </p>

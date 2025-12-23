@@ -21,7 +21,7 @@ const CommonLayout = ({ children }: { children: ReactNode }) => {
   )
     return children;
   return (
-    <div className="flex flex-col items-stretch md:items-start md:flex-row h-[100vh] max-h-[100vh] p-3 gap-2">
+    <div className="feature-grad flex flex-col items-stretch md:items-start md:flex-row h-[100vh] overflow-y-scroll md:overflow-y-hidden p-3 gap-2">
       {isMobile && (
         <div className="flex w-full justify-center py-[15px]">
           <Branding full />
@@ -60,7 +60,7 @@ const CommonLayout = ({ children }: { children: ReactNode }) => {
           })}
         </nav>
       </div>
-      <div className="flex flex-1 min-w-0">{children}</div>
+      <div className="flex flex-1 h-full min-w-0">{children}</div>
     </div>
   );
 };

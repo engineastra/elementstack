@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-backgroundAccent">
+      <body className="bg-backgroundAccent md:max-h-[100vh]">
         <SizeProvider>
           {children}
           <div id="modal" className="fixed top-0 left-0 z-10"></div>

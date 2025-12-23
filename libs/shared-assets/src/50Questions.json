@@ -5,319 +5,1100 @@
       "title": "Todo List Application",
       "techStack": "React based",
       "level": "Easy",
-      "questionDescription": "Build a complete Todo application with add, edit, delete, mark complete, filter by status, drag & drop reordering, and localStorage persistence.",
+      "quickDescription": "Build a production-like Todo app with CRUD, filters, drag & drop, and persistence.",
+      "detailedDescription": "Build a complete Todo application where users can add, edit, delete, and mark tasks as completed, filter todos by status (all, active, completed), reorder items using drag & drop, and persist the state in localStorage so the list survives page reloads. The app should feel like a real-world productivity tool with clean UI, keyboard shortcuts (for example, Ctrl+K for search), and robust state management using hooks like useReducer and custom utilities such as a useLocalStorage hook.",
       "hints": [
         "Use useReducer for complex state management",
         "Implement HTML5 Drag & Drop API",
         "Create custom useLocalStorage hook",
         "Add keyboard shortcuts (Ctrl+K for search)"
       ],
-      "solution": {
-        "src/App.js": "import { useState, useEffect, useCallback, useReducer } from 'react';\nimport TodoList from './components/TodoList';\nimport TodoForm from './components/TodoForm';\n\nconst todoReducer = (state, action) => {\n  switch (action.type) {\n    case 'ADD_TODO':\n      return [...state, { id: Date.now(), text: action.payload, completed: false }];\n    case 'TOGGLE_TODO':\n      return state.map(todo => todo.id === action.payload ? {...todo, completed: !todo.completed} : todo);\n    case 'DELETE_TODO':\n      return state.filter(todo => todo.id !== action.payload);\n    case 'EDIT_TODO':\n      return state.map(todo => todo.id === action.payload.id ? {...todo, text: action.payload.text} : todo);\n    default:\n      return state;\n  }\n};\n\nfunction App() {\n  const [todos, dispatch] = useReducer(todoReducer, []);\n  const [filter, setFilter] = useState('all');\n\n  useEffect(() => {\n    const saved = localStorage.getItem('todos');\n    if (saved) {\n      JSON.parse(saved).forEach(todo => {\n        dispatch({type: 'ADD_TODO', payload: todo.text});\n      });\n    }\n  }, []);\n\n  useEffect(() => {\n    localStorage.setItem('todos', JSON.stringify(todos));\n  }, [todos]);\n\n  const filteredTodos = todos.filter(todo => {\n    if (filter === 'active') return !todo.completed;\n    if (filter === 'completed') return todo.completed;\n    return true;\n  });\n\n  return (\n    <div style={{maxWidth: '600px', margin: '0 auto', padding: '20px'}}>\n      <h1>Todo App</h1>\n      <TodoForm dispatch={dispatch} />\n      <div style={{marginBottom: '20px'}}>\n        <button onClick={() => setFilter('all')} style={{marginRight: '10px'}}>All ({todos.length})</button>\n        <button onClick={() => setFilter('active')} style={{marginRight: '10px'}}>Active ({todos.filter(t => !t.completed).length})</button>\n        <button onClick={() => setFilter('completed')}>Completed ({todos.filter(t => t.completed).length})</button>\n      </div>\n      <TodoList todos={filteredTodos} dispatch={dispatch} />\n    </div>\n  );\n}\n\nexport default App;",
-        "src/components/TodoForm.js": "import { useState, useRef } from 'react';\n\nconst TodoForm = ({ dispatch }) => {\n  const [text, setText] = useState('');\n  const inputRef = useRef();\n\n  const handleSubmit = (e) => {\n    e.preventDefault();\n    if (text.trim()) {\n      dispatch({ type: 'ADD_TODO', payload: text });\n      setText('');\n      inputRef.current.focus();\n    }\n  };\n\n  return (\n    <form onSubmit={handleSubmit} style={{marginBottom: '20px', display: 'flex', gap: '10px'}}>\n      <input\n        ref={inputRef}\n        type=\"text\"\n        value={text}\n        onChange={(e) => setText(e.target.value)}\n        placeholder=\"Add new todo...\"\n        style={{flex: 1, padding: '10px', borderRadius: '4px', border: '1px solid #ddd'}}\n      />\n      <button type=\"submit\" style={{padding: '10px 20px', borderRadius: '4px', background: '#007bff', color: 'white', border: 'none', cursor: 'pointer'}}>Add</button>\n    </form>\n  );\n};\n\nexport default TodoForm;",
-        "src/components/TodoList.js": "const TodoList = ({ todos, dispatch }) => (\n  <ul style={{listStyle: 'none', padding: 0}}>\n    {todos.map(todo => (\n      <li key={todo.id} style={{display: 'flex', alignItems: 'center', padding: '10px', marginBottom: '8px', background: '#f5f5f5', borderRadius: '4px'}}>\n        <input\n          type=\"checkbox\"\n          checked={todo.completed}\n          onChange={() => dispatch({ type: 'TOGGLE_TODO', payload: todo.id })}\n          style={{marginRight: '10px'}}\n        />\n        <span style={{flex: 1, textDecoration: todo.completed ? 'line-through' : 'none', opacity: todo.completed ? 0.6 : 1}}>{todo.text}</span>\n        <button onClick={() => dispatch({ type: 'DELETE_TODO', payload: todo.id })} style={{padding: '5px 10px', background: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer'}}>Delete</button>\n      </li>\n    ))}\n  </ul>\n);\n\nexport default TodoList;"
-      },
-      "nextQuestions": [
-        { "id": "q11-kanban-board", "title": "Kanban Board", "level": "Hard" },
-        {
-          "id": "q6-multi-step-form",
-          "title": "Multi-step Form",
-          "level": "Medium"
-        },
-        {
-          "id": "q28-admin-dashboard",
-          "title": "Admin Dashboard",
-          "level": "Hard"
-        }
-      ]
+      "keyFeatures": [
+        "CRUD Operations",
+        "State Management",
+        "Persistence",
+        "Filtering",
+        "Drag & Drop"
+      ],
+      "timeEstimate": "45-60 minutes"
     },
     {
       "id": "q2-image-carousel",
       "title": "Image Carousel/Slider",
-      "techStack": "vanilla JS based",
+      "techStack": "Vanilla JS based",
       "level": "Medium",
-      "questionDescription": "Create responsive image carousel with navigation arrows, dot indicators, autoplay, swipe gestures, keyboard navigation, and lazy loading.",
+      "quickDescription": "Build a responsive image slider with autoplay, navigation controls, and lazy loading.",
+      "detailedDescription": "Create a responsive image carousel that supports navigation arrows, dot indicators, autoplay with pause on hover, touch and swipe gestures for mobile, keyboard navigation using arrow keys, and lazy loading for images to optimize performance. The component should handle edge cases like rapid user interaction, maintain smooth CSS transitions using translateX, and expose a clean API so it can be dropped into any landing page or gallery.",
       "hints": [
         "Use CSS transform: translateX for smooth transitions",
         "Implement IntersectionObserver for lazy loading",
         "Add touch/swipe event handlers",
         "Handle edge cases like rapid clicking"
       ],
-      "solution": {
-        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n  <div class=\"carousel\">\n    <div class=\"carousel-container\">\n      <img data-src=\"https://via.placeholder.com/800x400/FF6B6B/FFFFFF?text=Slide+1\" alt=\"Slide 1\">\n      <img data-src=\"https://via.placeholder.com/800x400/4ECDC4/FFFFFF?text=Slide+2\" alt=\"Slide 2\">\n      <img data-src=\"https://via.placeholder.com/800x400/45B7D1/FFFFFF?text=Slide+3\" alt=\"Slide 3\">\n      <img data-src=\"https://via.placeholder.com/800x400/F7DC6F/000000?text=Slide+4\" alt=\"Slide 4\">\n    </div>\n    <button class=\"carousel-prev\">❮</button>\n    <button class=\"carousel-next\">❯</button>\n    <div class=\"carousel-dots\"></div>\n  </div>\n  <script src=\"script.js\"></script>\n</body>\n</html>",
-        "style.css": ".carousel { position: relative; max-width: 800px; margin: 50px auto; overflow: hidden; border-radius: 10px; }\n.carousel-container { display: flex; transition: transform 0.5s ease; }\n.carousel-container img { min-width: 100%; height: 400px; object-fit: cover; }\n.carousel-prev, .carousel-next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px; cursor: pointer; font-size: 18px; }\n.carousel-prev { left: 10px; } .carousel-next { right: 10px; }\n.carousel-dots { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }\n.carousel-dots span { width: 12px; height: 12px; border-radius: 50%; background: #ccc; cursor: pointer; }\n.carousel-dots span.active { background: #007bff; }",
-        "script.js": "document.addEventListener('DOMContentLoaded', () => {\n  const container = document.querySelector('.carousel-container');\n  const slides = Array.from(container.querySelectorAll('img'));\n  const prevBtn = document.querySelector('.carousel-prev');\n  const nextBtn = document.querySelector('.carousel-next');\n  const dotsContainer = document.querySelector('.carousel-dots');\n  \n  let currentIndex = 0;\n  let autoPlayInterval;\n  const totalSlides = slides.length;\n\n  const createDots = () => {\n    dotsContainer.innerHTML = '';\n    slides.forEach((_, index) => {\n      const dot = document.createElement('span');\n      dot.addEventListener('click', () => goToSlide(index));\n      dotsContainer.appendChild(dot);\n    });\n  };\n\n  const updateDots = () => {\n    document.querySelectorAll('.carousel-dots span').forEach((dot, index) => {\n      dot.classList.toggle('active', index === currentIndex);\n    });\n  };\n\n  const goToSlide = (index) => {\n    currentIndex = index;\n    container.style.transform = `translateX(-${currentIndex * 100}%)`;\n    updateDots();\n  };\n\n  const nextSlide = () => goToSlide((currentIndex + 1) % totalSlides);\n  const prevSlide = () => goToSlide((currentIndex - 1 + totalSlides) % totalSlides);\n\n  const startAutoPlay = () => {\n    autoPlayInterval = setInterval(nextSlide, 4000);\n  };\n\n  const pauseAutoPlay = () => clearInterval(autoPlayInterval);\n\n  nextBtn.addEventListener('click', nextSlide);\n  prevBtn.addEventListener('click', prevSlide);\n  container.addEventListener('mouseenter', pauseAutoPlay);\n  container.addEventListener('mouseleave', startAutoPlay);\n\n  document.addEventListener('keydown', (e) => {\n    if (e.key === 'ArrowRight') nextSlide();\n    if (e.key === 'ArrowLeft') prevSlide();\n  });\n\n  createDots();\n  updateDots();\n  startAutoPlay();\n});"
-      },
-      "nextQuestions": [
-        { "id": "q12-video-player", "title": "Video Player", "level": "Hard" },
-        {
-          "id": "q18-lightbox-gallery",
-          "title": "Lightbox Gallery",
-          "level": "Medium"
-        },
-        {
-          "id": "q20-product-image-viewer",
-          "title": "Product Image Viewer",
-          "level": "Medium"
-        }
-      ]
+      "keyFeatures": [
+        "Autoplay",
+        "Touch Gestures",
+        "Lazy Loading",
+        "Keyboard Navigation",
+        "Responsive Design"
+      ],
+      "timeEstimate": "50-70 minutes"
     },
     {
       "id": "q3-modal-dialog",
       "title": "Modal Dialog",
       "techStack": "React based",
       "level": "Easy",
-      "questionDescription": "Build accessible modal with backdrop, ESC key support, focus trap, nested modals support, animations, and multiple sizes (sm, md, lg).",
+      "quickDescription": "Implement an accessible modal component with focus management and keyboard support.",
+      "detailedDescription": "Build an accessible modal dialog component that opens on user action, traps focus inside the dialog, supports closing via ESC, backdrop click, and close button, and can render different sizes like small, medium, and large. Use React Portals to correctly layer the modal above other content, add proper ARIA roles and attributes, and implement subtle open/close animations so it can be reused across forms, confirmation flows, and detail views.",
       "hints": [
         "Use React Portal for proper stacking",
         "Implement focus management with useEffect",
         "Add ARIA attributes and roles",
         "Handle backdrop click vs escape key differently"
       ],
-      "solution": {
-        "src/components/Modal.js": "import { useEffect, useRef, useCallback } from 'react';\nimport { createPortal } from 'react-dom';\n\nconst Modal = ({ isOpen, onClose, children, size = 'md', title }) => {\n  const overlayRef = useRef();\n  const contentRef = useRef();\n\n  const handleKeyDown = useCallback((e) => {\n    if (e.key === 'Escape') {\n      e.preventDefault();\n      onClose();\n    }\n  }, [onClose]);\n\n  useEffect(() => {\n    if (!isOpen) return;\n\n    const overlay = overlayRef.current;\n    overlay.addEventListener('click', onClose);\n    overlay.addEventListener('keydown', handleKeyDown);\n\n    return () => {\n      overlay.removeEventListener('click', onClose);\n      overlay.removeEventListener('keydown', handleKeyDown);\n    };\n  }, [isOpen, onClose, handleKeyDown]);\n\n  if (!isOpen) return null;\n\n  const sizeClasses = {\n    sm: '384px',\n    md: '448px',\n    lg: '512px',\n  };\n\n  return createPortal(\n    <div style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000}} ref={overlayRef}>\n      <div style={{background: 'white', borderRadius: '8px', maxWidth: sizeClasses[size], maxHeight: '90vh', overflow: 'auto'}} ref={contentRef} role=\"dialog\" aria-modal=\"true\">\n        {title && <div style={{padding: '24px', borderBottom: '1px solid #e5e7eb', display: 'flex', justifyContent: 'space-between'}}>\n          <h2>{title}</h2>\n          <button onClick={onClose} style={{background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer'}}>✕</button>\n        </div>}\n        <div style={{padding: '24px'}}>{children}</div>\n      </div>\n    </div>,\n    document.body\n  );\n};\n\nexport default Modal;",
-        "src/App.js": "import { useState } from 'react';\nimport Modal from './components/Modal';\n\nfunction App() {\n  const [isOpen, setIsOpen] = useState(false);\n\n  return (\n    <div style={{padding: '40px'}}>\n      <button onClick={() => setIsOpen(true)} style={{padding: '10px 20px', background: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer'}}>Open Modal</button>\n      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title=\"Sample Modal\" size=\"md\">\n        <p>This is a modal dialog with focus trap and keyboard navigation.</p>\n        <button onClick={() => setIsOpen(false)} style={{padding: '8px 16px', background: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer'}}>Close</button>\n      </Modal>\n    </div>\n  );\n}\n\nexport default App;"
-      },
-      "nextQuestions": [
-        {
-          "id": "q14-drawer-sidebar",
-          "title": "Drawer/Sidebar",
-          "level": "Medium"
-        },
-        {
-          "id": "q27-toast-notifications",
-          "title": "Toast Notifications",
-          "level": "Medium"
-        },
-        { "id": "q17-popover", "title": "Popover", "level": "Easy" }
-      ]
-    },
-    {
-      "id": "q4-tabs-component",
-      "title": "Tabs Component",
-      "techStack": "vanilla JS based",
-      "level": "Easy",
-      "questionDescription": "Create accessible tabs with keyboard navigation (arrow keys), lazy loading content, scrollable tab list, and smooth height transitions.",
-      "hints": [
-        "Use role='tablist' and proper ARIA attributes",
-        "Implement roving tabindex for keyboard nav",
-        "Use ResizeObserver for dynamic content height",
-        "Handle overflow with horizontal scroll"
+      "keyFeatures": [
+        "Accessibility",
+        "Focus Trap",
+        "Portal",
+        "Keyboard Support",
+        "Animations"
       ],
-      "solution": {
-        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n  <div class=\"tabs-container\">\n    <div class=\"tabs-header\">\n      <button role=\"tab\" aria-selected=\"true\" aria-controls=\"tab-1\" tabindex=\"0\">Tab 1</button>\n      <button role=\"tab\" aria-selected=\"false\" aria-controls=\"tab-2\" tabindex=\"-1\">Tab 2</button>\n      <button role=\"tab\" aria-selected=\"false\" aria-controls=\"tab-3\" tabindex=\"-1\">Tab 3</button>\n    </div>\n    <div class=\"tabs-content\">\n      <div id=\"tab-1\" role=\"tabpanel\" class=\"tab-panel active\"><h3>Tab 1</h3><p>Content 1</p></div>\n      <div id=\"tab-2\" role=\"tabpanel\" class=\"tab-panel\" hidden><h3>Tab 2</h3><p>Content 2 with more text.</p></div>\n      <div id=\"tab-3\" role=\"tabpanel\" class=\"tab-panel\" hidden><h3>Tab 3</h3><p>Content 3</p></div>\n    </div>\n  </div>\n  <script src=\"script.js\"></script>\n</body>\n</html>",
-        "style.css": ".tabs-container { max-width: 600px; margin: 20px auto; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }\n.tabs-header { display: flex; background: #f8f9fa; border-bottom: 1px solid #dee2e6; }\n.tabs-header button { flex: 1; padding: 1rem; background: none; border: none; font-size: 1rem; cursor: pointer; border-bottom: 3px solid transparent; }\n.tabs-header button[aria-selected='true'] { background: white; border-bottom-color: #007bff; color: #007bff; }\n.tab-panel { padding: 2rem; opacity: 0; max-height: 0; overflow: hidden; transition: all 0.3s; }\n.tab-panel.active { opacity: 1; max-height: 500px; }",
-        "script.js": "const tabs = Array.from(document.querySelectorAll('[role=\"tab\"]'));\nconst panels = Array.from(document.querySelectorAll('[role=\"tabpanel\"]'));\n\ntabs.forEach((tab, index) => {\n  tab.addEventListener('click', () => activateTab(index));\n  tab.addEventListener('keydown', (e) => {\n    if (e.key === 'ArrowRight') activateTab((index + 1) % tabs.length);\n    if (e.key === 'ArrowLeft') activateTab((index - 1 + tabs.length) % tabs.length);\n  });\n});\n\nfunction activateTab(index) {\n  tabs.forEach((tab, i) => {\n    tab.setAttribute('aria-selected', i === index);\n    tab.setAttribute('tabindex', i === index ? '0' : '-1');\n  });\n  panels.forEach((panel, i) => {\n    panel.classList.toggle('active', i === index);\n    panel.hidden = i !== index;\n  });\n  tabs[index].focus();\n}"
-      },
-      "nextQuestions": [
-        { "id": "q5-accordion", "title": "Accordion", "level": "Easy" },
-        { "id": "q24-stepper", "title": "Stepper", "level": "Easy" },
-        { "id": "q25-wizard", "title": "Wizard", "level": "Medium" }
-      ]
+      "timeEstimate": "40-50 minutes"
     },
     {
-      "id": "q5-accordion",
-      "title": "Accordion",
-      "techStack": "React based",
-      "level": "Easy",
-      "questionDescription": "Build multi-level accordion with single/multiple open modes, animations, nested accordions, keyboard navigation, and custom icons.",
-      "hints": [
-        "Use max-height: 0 to max-height: content for animation",
-        "Implement event delegation for nested accordions",
-        "Add aria-expanded and aria-controls attributes",
-        "Support allowMultiple prop"
-      ],
-      "solution": {
-        "src/components/Accordion.js": "import { useState, useRef, useEffect } from 'react';\n\nconst AccordionItem = ({ id, title, children, isOpen, onToggle }) => {\n  const contentRef = useRef();\n  const [height, setHeight] = useState(0);\n\n  useEffect(() => {\n    if (contentRef.current) {\n      setHeight(isOpen ? contentRef.current.scrollHeight : 0);\n    }\n  }, [isOpen]);\n\n  return (\n    <div style={{borderBottom: '1px solid #e5e7eb'}}>\n      <button\n        onClick={() => onToggle(id)}\n        aria-expanded={isOpen}\n        style={{\n          width: '100%',\n          padding: '16px',\n          background: 'white',\n          border: 'none',\n          textAlign: 'left',\n          cursor: 'pointer',\n          fontSize: '1rem',\n          fontWeight: '500',\n          display: 'flex',\n          alignItems: 'center',\n          justifyContent: 'space-between'\n        }}\n      >\n        <span>{title}</span>\n        <span style={{transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.3s'}}>▶</span>\n      </button>\n      <div\n        ref={contentRef}\n        style={{\n          maxHeight: `${height}px`,\n          overflow: 'hidden',\n          transition: 'max-height 0.3s',\n          background: '#f9fafb'\n        }}\n      >\n        <div style={{padding: '16px'}}>{children}</div>\n      </div>\n    </div>\n  );\n};\n\nconst Accordion = ({ items, allowMultiple = false }) => {\n  const [openItems, setOpenItems] = useState([items[0]?.id]);\n\n  const handleToggle = (id) => {\n    if (allowMultiple) {\n      setOpenItems(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);\n    } else {\n      setOpenItems(prev => prev.includes(id) ? [] : [id]);\n    }\n  };\n\n  return (\n    <div style={{border: '1px solid #e5e7eb', borderRadius: '8px', overflow: 'hidden'}}>\n      {items.map(item => (\n        <AccordionItem\n          key={item.id}\n          id={item.id}\n          title={item.title}\n          children={item.children}\n          isOpen={openItems.includes(item.id)}\n          onToggle={handleToggle}\n        />\n      ))}\n    </div>\n  );\n};\n\nexport default Accordion;",
-        "src/App.js": "import Accordion from './components/Accordion';\n\nfunction App() {\n  const items = [\n    { id: 'item-1', title: 'Section 1', children: 'Content for section 1' },\n    { id: 'item-2', title: 'Section 2', children: 'Content for section 2 with more details.' },\n    { id: 'item-3', title: 'Section 3', children: 'Content for section 3' },\n  ];\n\n  return (\n    <div style={{maxWidth: '600px', margin: '40px auto', padding: '20px'}}>\n      <h1>Accordion Component</h1>\n      <Accordion items={items} allowMultiple={false} />\n    </div>\n  );\n}\n\nexport default App;"
-      },
-      "nextQuestions": [
-        {
-          "id": "q14-collapsible-sidebar",
-          "title": "Collapsible Sidebar",
-          "level": "Medium"
-        },
-        { "id": "q31-tree-view", "title": "Tree View", "level": "Medium" },
-        {
-          "id": "q19-expandable-table",
-          "title": "Expandable Table",
-          "level": "Medium"
-        }
-      ]
-    },
-    {
-      "id": "q6-multi-step-form",
-      "title": "Multi-step Form/Wizard",
+      "id": "q4-search-autocomplete",
+      "title": "Search Autocomplete Component",
       "techStack": "React based",
       "level": "Medium",
-      "questionDescription": "Create multi-step form with progress indicator, validation per step, back/forward navigation, form data persistence, and conditional fields.",
+      "quickDescription": "Build a search input with autocomplete suggestions, debouncing, and keyboard navigation.",
+      "detailedDescription": "Create a search autocomplete component that fetches suggestions from an API with debounced input, displays filtered results in a dropdown, supports arrow key navigation and Enter to select, highlights matching text, shows loading and error states, and handles edge cases like empty input and no results. Implement caching to avoid redundant API calls and use useCallback to optimize performance.",
       "hints": [
-        "Use useReducer with complex state shape",
-        "Implement custom useFormValidation hook",
-        "Create Stepper component with progress line",
-        "Handle conditional field rendering"
+        "Implement debouncing with useCallback or custom hook",
+        "Cache API responses to reduce requests",
+        "Handle keyboard navigation with arrow keys and Enter",
+        "Implement proper loading and error states"
       ],
-      "solution": {
-        "src/components/MultiStepForm.js": "import { useReducer, useState } from 'react';\n\nconst formReducer = (state, action) => {\n  switch (action.type) {\n    case 'UPDATE_FIELD':\n      return {...state, [action.payload.field]: action.payload.value};\n    case 'NEXT_STEP':\n      return state;\n    default:\n      return state;\n  }\n};\n\nconst MultiStepForm = () => {\n  const [step, setStep] = useState(1);\n  const [formData, dispatch] = useReducer(formReducer, { firstName: '', lastName: '', email: '', address: '' });\n  const [submitted, setSubmitted] = useState(false);\n\n  const handleNext = () => {\n    if (step < 3) setStep(step + 1);\n  };\n\n  const handlePrev = () => {\n    if (step > 1) setStep(step - 1);\n  };\n\n  const handleSubmit = () => {\n    setSubmitted(true);\n  };\n\n  if (submitted) {\n    return <div style={{maxWidth: '500px', margin: '40px auto', textAlign: 'center'}}><h2>✓ Form Submitted!</h2></div>;\n  }\n\n  return (\n    <div style={{maxWidth: '500px', margin: '40px auto', padding: '40px', background: 'white', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'}}>\n      <div style={{marginBottom: '30px'}}>\n        <div style={{display: 'flex', gap: '10px'}}>\n          {[1,2,3].map(i => (\n            <div key={i} style={{\n              width: '40px',\n              height: '40px',\n              borderRadius: '50%',\n              background: i <= step ? '#007bff' : '#e5e7eb',\n              color: 'white',\n              display: 'flex',\n              alignItems: 'center',\n              justifyContent: 'center',\n              fontWeight: '600'\n            }}>{i}</div>\n          ))}\n        </div>\n      </div>\n\n      {step === 1 && (\n        <div>\n          <h3>Personal Information</h3>\n          <input placeholder=\"First Name\" value={formData.firstName} onChange={(e) => dispatch({type: 'UPDATE_FIELD', payload: {field: 'firstName', value: e.target.value}})} style={{width: '100%', padding: '10px', marginBottom: '10px', borderRadius: '4px', border: '1px solid #ddd'}} />\n          <input placeholder=\"Last Name\" value={formData.lastName} onChange={(e) => dispatch({type: 'UPDATE_FIELD', payload: {field: 'lastName', value: e.target.value}})} style={{width: '100%', padding: '10px', marginBottom: '10px', borderRadius: '4px', border: '1px solid #ddd'}} />\n        </div>\n      )}\n\n      {step === 2 && (\n        <div>\n          <h3>Contact Information</h3>\n          <input placeholder=\"Email\" value={formData.email} onChange={(e) => dispatch({type: 'UPDATE_FIELD', payload: {field: 'email', value: e.target.value}})} style={{width: '100%', padding: '10px', marginBottom: '10px', borderRadius: '4px', border: '1px solid #ddd'}} />\n        </div>\n      )}\n\n      {step === 3 && (\n        <div>\n          <h3>Address Information</h3>\n          <input placeholder=\"Address\" value={formData.address} onChange={(e) => dispatch({type: 'UPDATE_FIELD', payload: {field: 'address', value: e.target.value}})} style={{width: '100%', padding: '10px', marginBottom: '10px', borderRadius: '4px', border: '1px solid #ddd'}} />\n          <div style={{background: '#f3f4f6', padding: '16px', borderRadius: '6px', marginTop: '20px'}}>\n            <p><strong>Review:</strong></p>\n            <p>Name: {formData.firstName} {formData.lastName}</p>\n            <p>Email: {formData.email}</p>\n            <p>Address: {formData.address}</p>\n          </div>\n        </div>\n      )}\n\n      <div style={{display: 'flex', gap: '12px', marginTop: '30px'}}>\n        <button onClick={handlePrev} disabled={step === 1} style={{flex: 1, padding: '12px', background: '#e5e7eb', border: 'none', borderRadius: '6px', cursor: 'pointer'}}>Previous</button>\n        {step < 3 ? (\n          <button onClick={handleNext} style={{flex: 1, padding: '12px', background: '#007bff', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer'}}>Next</button>\n        ) : (\n          <button onClick={handleSubmit} style={{flex: 1, padding: '12px', background: '#28a745', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer'}}>Submit</button>\n        )}\n      </div>\n    </div>\n  );\n};\n\nexport default MultiStepForm;",
-        "src/App.js": "import MultiStepForm from './components/MultiStepForm';\n\nfunction App() {\n  return <MultiStepForm />;\n}\n\nexport default App;"
-      },
-      "nextQuestions": [
-        {
-          "id": "q22-dynamic-form-builder",
-          "title": "Dynamic Form Builder",
-          "level": "Hard"
-        },
-        { "id": "q23-survey-form", "title": "Survey Form", "level": "Medium" },
-        {
-          "id": "q32-registration-flow",
-          "title": "Registration Flow",
-          "level": "Medium"
-        }
-      ]
+      "keyFeatures": [
+        "Debouncing",
+        "API Integration",
+        "Keyboard Navigation",
+        "Caching",
+        "Error Handling"
+      ],
+      "timeEstimate": "55-75 minutes"
     },
     {
-      "id": "q7-infinite-scroll",
-      "title": "Infinite Scroll",
-      "techStack": "React based",
-      "level": "Hard",
-      "questionDescription": "Implement infinite scroll with IntersectionObserver, loading states, error handling, skeleton loading, and pull-to-refresh support.",
-      "hints": [
-        "Create useInfiniteScroll custom hook",
-        "Use React Query/SWR for data fetching",
-        "Implement overscan for smooth scrolling",
-        "Add window resize handler"
-      ],
-      "solution": {
-        "src/hooks/useInfiniteScroll.js": "import { useState, useCallback, useRef, useEffect } from 'react';\n\nconst useInfiniteScroll = (fetchFn, initialPageSize = 10) => {\n  const [items, setItems] = useState([]);\n  const [isLoading, setIsLoading] = useState(false);\n  const [error, setError] = useState(null);\n  const [hasMore, setHasMore] = useState(true);\n  const [page, setPage] = useState(1);\n  const observerTarget = useRef(null);\n\n  const loadMore = useCallback(async () => {\n    if (isLoading || !hasMore) return;\n    setIsLoading(true);\n    setError(null);\n    try {\n      const newItems = await fetchFn(page, initialPageSize);\n      if (newItems.length < initialPageSize) setHasMore(false);\n      setItems(prev => [...prev, ...newItems]);\n      setPage(prev => prev + 1);\n    } catch (err) {\n      setError(err.message);\n    } finally {\n      setIsLoading(false);\n    }\n  }, [page, isLoading, hasMore, fetchFn, initialPageSize]);\n\n  useEffect(() => {\n    const observer = new IntersectionObserver(\n      entries => {\n        if (entries[0].isIntersecting && hasMore && !isLoading) loadMore();\n      },\n      { threshold: 0.1 }\n    );\n    if (observerTarget.current) observer.observe(observerTarget.current);\n    return () => {\n      if (observerTarget.current) observer.unobserve(observerTarget.current);\n    };\n  }, [loadMore, hasMore, isLoading]);\n\n  return { items, isLoading, error, hasMore, observerTarget };\n};\n\nexport default useInfiniteScroll;",
-        "src/App.js": "import { useState } from 'react';\nimport useInfiniteScroll from './hooks/useInfiniteScroll';\n\nconst mockFetch = async (page, pageSize) => {\n  await new Promise(resolve => setTimeout(resolve, 500));\n  const items = [];\n  for (let i = 0; i < pageSize; i++) {\n    items.push({\n      id: (page - 1) * pageSize + i,\n      title: `Item ${(page - 1) * pageSize + i + 1}`,\n      description: `Description for item ${(page - 1) * pageSize + i + 1}`,\n    });\n  }\n  return items;\n};\n\nfunction App() {\n  const { items, isLoading, error, hasMore, observerTarget } = useInfiniteScroll(mockFetch, 10);\n\n  return (\n    <div style={{maxWidth: '600px', margin: '0 auto', padding: '20px'}}>\n      <h1>Infinite Scroll List</h1>\n      <div>\n        {items.map(item => (\n          <div key={item.id} style={{padding: '16px', marginBottom: '12px', background: 'white', borderRadius: '8px', border: '1px solid #e5e7eb'}}>\n            <h3>{item.title}</h3>\n            <p>{item.description}</p>\n          </div>\n        ))}\n      </div>\n      {isLoading && <div style={{textAlign: 'center', padding: '20px'}}>Loading...</div>}\n      {error && <div style={{textAlign: 'center', padding: '20px', color: 'red'}}>Error: {error}</div>}\n      {hasMore && <div ref={observerTarget} style={{padding: '20px', textAlign: 'center'}}>Scroll to load more</div>}\n      {!hasMore && <div style={{padding: '20px', textAlign: 'center'}}>No more items</div>}\n    </div>\n  );\n}\n\nexport default App;"
-      },
-      "nextQuestions": [
-        {
-          "id": "q8-virtualized-list",
-          "title": "Virtualized List",
-          "level": "Hard"
-        },
-        { "id": "q29-pagination", "title": "Pagination", "level": "Easy" },
-        {
-          "id": "q26-feed-timeline",
-          "title": "Feed Timeline",
-          "level": "Medium"
-        }
-      ]
-    },
-    {
-      "id": "q8-virtualized-list",
-      "title": "Virtualized List",
-      "techStack": "React based",
-      "level": "Hard",
-      "questionDescription": "Build virtualized list for 100k+ items with variable heights, overscan, smooth scrolling, dynamic item measurement, and section headers.",
-      "hints": [
-        "Use fixed-size container with absolute positioned items",
-        "Measure item heights with ResizeObserver",
-        "Implement overscan buffer (typically 5-10 items)",
-        "Cache measurements for performance"
-      ],
-      "solution": {
-        "src/components/VirtualizedList.js": "import { useState, useEffect, useRef, useCallback } from 'react';\n\nconst VirtualizedList = ({ items, itemHeight = 60, overscan = 5, renderItem }) => {\n  const [visibleRange, setVisibleRange] = useState({ start: 0, end: overscan });\n  const [scrollTop, setScrollTop] = useState(0);\n  const containerRef = useRef();\n\n  const totalHeight = items.length * itemHeight;\n  const visibleHeight = containerRef.current?.clientHeight || 600;\n\n  const handleScroll = useCallback((e) => {\n    const scrollValue = e.target.scrollTop;\n    setScrollTop(scrollValue);\n    const startIndex = Math.max(0, Math.floor(scrollValue / itemHeight) - overscan);\n    const endIndex = Math.min(items.length, Math.ceil((scrollValue + visibleHeight) / itemHeight) + overscan);\n    setVisibleRange({ start: startIndex, end: endIndex });\n  }, [items.length, itemHeight, overscan, visibleHeight]);\n\n  const visibleItems = items.slice(visibleRange.start, visibleRange.end);\n  const offsetY = visibleRange.start * itemHeight;\n\n  return (\n    <div\n      ref={containerRef}\n      onScroll={handleScroll}\n      style={{ height: '600px', overflow: 'auto', position: 'relative', border: '1px solid #e5e7eb', borderRadius: '8px' }}\n    >\n      <div style={{ height: `${totalHeight}px`, position: 'relative' }}>\n        <div style={{ transform: `translateY(${offsetY}px)`, position: 'absolute', top: 0, left: 0, right: 0 }}>\n          {visibleItems.map((item, index) => (\n            <div key={visibleRange.start + index} style={{ height: `${itemHeight}px`, overflow: 'hidden' }}>\n              {renderItem(item, visibleRange.start + index)}\n            </div>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n};\n\nexport default VirtualizedList;",
-        "src/App.js": "import VirtualizedList from './components/VirtualizedList';\n\nfunction App() {\n  const items = Array.from({ length: 100000 }, (_, i) => ({\n    id: i,\n    title: `Item ${i + 1}`,\n    description: `Description for item ${i + 1}`,\n  }));\n\n  const renderItem = (item) => (\n    <div style={{padding: '12px 16px', borderBottom: '1px solid #f3f4f6', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%'}}>\n      <div style={{fontWeight: '600', color: '#1f2937'}}>{item.title}</div>\n      <div style={{fontSize: '0.9rem', color: '#6b7280'}}>{item.description}</div>\n    </div>\n  );\n\n  return (\n    <div style={{maxWidth: '800px', margin: '0 auto', padding: '40px 20px'}}>\n      <h1>Virtualized List (100k+ items)</h1>\n      <VirtualizedList items={items} itemHeight={60} overscan={5} renderItem={renderItem} />\n    </div>\n  );\n}\n\nexport default App;"
-      },
-      "nextQuestions": [
-        {
-          "id": "q7-infinite-scroll",
-          "title": "Infinite Scroll",
-          "level": "Hard"
-        },
-        {
-          "id": "q33-virtualized-table",
-          "title": "Virtualized Table",
-          "level": "Hard"
-        },
-        { "id": "q34-masonry-grid", "title": "Masonry Grid", "level": "Hard" }
-      ]
-    },
-    {
-      "id": "q9-drag-drop-list",
-      "title": "Drag & Drop List",
-      "techStack": "vanilla JS based",
-      "level": "Hard",
-      "questionDescription": "Build sortable drag & drop list with smooth animations, drag preview, drop zones, nested lists, keyboard accessibility, and touch support.",
-      "hints": [
-        "Use HTML5 Drag & Drop API with custom ghost",
-        "Calculate drop position with getBoundingClientRect",
-        "Implement drag over visual feedback",
-        "Add keyboard drag with arrow keys"
-      ],
-      "solution": {
-        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n  <div style=\"max-width: 500px; margin: 40px auto;\">\n    <h1>Drag & Drop Sortable List</h1>\n    <ul id=\"mainList\" style=\"list-style: none; padding: 0;\">\n      <li draggable=\"true\" style=\"padding: 16px; margin-bottom: 8px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: move;\">Item 1</li>\n      <li draggable=\"true\" style=\"padding: 16px; margin-bottom: 8px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: move;\">Item 2</li>\n      <li draggable=\"true\" style=\"padding: 16px; margin-bottom: 8px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: move;\">Item 3</li>\n      <li draggable=\"true\" style=\"padding: 16px; margin-bottom: 8px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: move;\">Item 4</li>\n      <li draggable=\"true\" style=\"padding: 16px; margin-bottom: 8px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: move;\">Item 5</li>\n    </ul>\n  </div>\n  <script src=\"script.js\"></script>\n</body>\n</html>",
-        "style.css": "body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f0f0; }",
-        "script.js": "const list = document.getElementById('mainList');\nlet draggedItem = null;\n\nlist.addEventListener('dragstart', (e) => {\n  draggedItem = e.target;\n  e.target.style.opacity = '0.5';\n});\n\nlist.addEventListener('dragend', (e) => {\n  e.target.style.opacity = '1';\n});\n\nlist.addEventListener('dragover', (e) => {\n  e.preventDefault();\n  const afterElement = getDragAfterElement(list, e.clientY);\n  if (afterElement == null) {\n    list.appendChild(draggedItem);\n  } else {\n    list.insertBefore(draggedItem, afterElement);\n  }\n});\n\nfunction getDragAfterElement(container, y) {\n  const draggableElements = [...container.querySelectorAll('li:not(.dragging)')];\n  return draggableElements.reduce((closest, child) => {\n    const box = child.getBoundingClientRect();\n    const offset = y - box.top - box.height / 2;\n    if (offset < 0 && offset > closest.offset) {\n      return { offset: offset, element: child };\n    } else {\n      return closest;\n    }\n  }, { offset: Number.NEGATIVE_INFINITY }).element;\n}"
-      },
-      "nextQuestions": [
-        { "id": "q11-kanban-board", "title": "Kanban Board", "level": "Hard" },
-        { "id": "q39-file-manager", "title": "File Manager", "level": "Hard" },
-        {
-          "id": "q40-task-organizer",
-          "title": "Task Organizer",
-          "level": "Hard"
-        }
-      ]
-    },
-    {
-      "id": "q10-autocomplete-search",
-      "title": "Autocomplete/Search",
+      "id": "q5-form-validation",
+      "title": "Form Validation System",
       "techStack": "React based",
       "level": "Medium",
-      "questionDescription": "Create advanced autocomplete with debounced API calls, keyboard navigation, match highlighting, categories, recent searches, and empty states.",
+      "quickDescription": "Build a reusable form validation system with real-time error display.",
+      "detailedDescription": "Create a flexible form validation system that supports multiple field types (text, email, password, checkbox), real-time and submit-time validation, custom validation rules, async validators (like email uniqueness checks), and displays inline error messages. Implement a useForm hook that manages form state, touched fields, and validation errors, supporting both synchronous and asynchronous validation chains.",
       "hints": [
-        "Implement useDebounce and useAsyncList hooks",
-        "Use virtual scrolling for large result sets",
-        "Highlight matches with <mark> or custom span",
-        "Persist recent searches in localStorage"
+        "Create a custom useForm hook",
+        "Support async validators",
+        "Track touched fields separately",
+        "Implement validation schemas"
       ],
-      "solution": {
-        "src/hooks/useDebounce.js": "import { useState, useEffect } from 'react';\n\nconst useDebounce = (value, delay = 300) => {\n  const [debouncedValue, setDebouncedValue] = useState(value);\n  useEffect(() => {\n    const handler = setTimeout(() => setDebouncedValue(value), delay);\n    return () => clearTimeout(handler);\n  }, [value, delay]);\n  return debouncedValue;\n};\n\nexport default useDebounce;",
-        "src/components/Autocomplete.js": "import { useState, useEffect } from 'react';\nimport useDebounce from '../hooks/useDebounce';\n\nconst Autocomplete = ({ onSelect }) => {\n  const [inputValue, setInputValue] = useState('');\n  const [suggestions, setSuggestions] = useState([]);\n  const [isLoading, setIsLoading] = useState(false);\n  const [selectedIndex, setSelectedIndex] = useState(-1);\n  const debouncedValue = useDebounce(inputValue, 300);\n\n  const mockFetch = async (query) => {\n    await new Promise(resolve => setTimeout(resolve, 300));\n    const items = [\n      { id: 1, title: 'Apple', category: 'Fruits' },\n      { id: 2, title: 'Apricot', category: 'Fruits' },\n      { id: 3, title: 'Avocado', category: 'Fruits' },\n      { id: 4, title: 'Artichoke', category: 'Vegetables' },\n    ];\n    return items.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));\n  };\n\n  useEffect(() => {\n    if (!debouncedValue.trim()) {\n      setSuggestions([]);\n      return;\n    }\n    setIsLoading(true);\n    mockFetch(debouncedValue).then(results => {\n      setSuggestions(results);\n      setIsLoading(false);\n    });\n  }, [debouncedValue]);\n\n  const handleSelect = (item) => {\n    onSelect(item);\n    setInputValue('');\n    setSuggestions([]);\n  };\n\n  const handleKeyDown = (e) => {\n    if (e.key === 'ArrowDown') {\n      setSelectedIndex(Math.min(selectedIndex + 1, suggestions.length - 1));\n    } else if (e.key === 'ArrowUp') {\n      setSelectedIndex(Math.max(selectedIndex - 1, -1));\n    } else if (e.key === 'Enter' && selectedIndex >= 0) {\n      handleSelect(suggestions[selectedIndex]);\n    }\n  };\n\n  return (\n    <div style={{position: 'relative'}}>\n      <input\n        type=\"text\"\n        value={inputValue}\n        onChange={(e) => setInputValue(e.target.value)}\n        onKeyDown={handleKeyDown}\n        placeholder=\"Search...\"\n        style={{width: '100%', padding: '12px 16px', fontSize: '1rem', border: '2px solid #e5e7eb', borderRadius: '8px', outline: 'none'}}\n      />\n      {isLoading && <span style={{position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', animation: 'spin 1s linear infinite'}}>⏳</span>}\n      {suggestions.length > 0 && (\n        <ul style={{position: 'absolute', top: '100%', left: 0, right: 0, marginTop: '8px', background: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', maxHeight: '400px', overflow: 'auto', listStyle: 'none', padding: 0}}>\n          {suggestions.map((item, index) => (\n            <li\n              key={item.id}\n              onClick={() => handleSelect(item)}\n              style={{\n                padding: '12px 16px',\n                background: index === selectedIndex ? '#f3f4f6' : 'white',\n                cursor: 'pointer'\n              }}\n            >\n              {item.title} <span style={{color: '#6b7280', fontSize: '0.85rem'}}>({item.category})</span>\n            </li>\n          ))}\n        </ul>\n      )}\n    </div>\n  );\n};\n\nexport default Autocomplete;",
-        "src/App.js": "import { useState } from 'react';\nimport Autocomplete from './components/Autocomplete';\n\nfunction App() {\n  const [selected, setSelected] = useState(null);\n  return (\n    <div style={{maxWidth: '600px', margin: '40px auto', padding: '20px'}}>\n      <h1>Advanced Autocomplete</h1>\n      <Autocomplete onSelect={setSelected} />\n      {selected && <div style={{marginTop: '24px', padding: '16px', background: '#dbeafe', borderRadius: '8px'}}>Selected: <strong>{selected.title}</strong></div>}\n    </div>\n  );\n}\n\nexport default App;"
-      },
-      "nextQuestions": [
-        { "id": "q15-typeahead", "title": "Typeahead", "level": "Medium" },
-        { "id": "q16-combobox", "title": "Combobox", "level": "Medium" },
-        {
-          "id": "q21-advanced-autocomplete",
-          "title": "Advanced Autocomplete",
-          "level": "Hard"
-        }
-      ]
+      "keyFeatures": [
+        "Custom Hooks",
+        "Async Validation",
+        "Error Display",
+        "Reusability",
+        "Field State Management"
+      ],
+      "timeEstimate": "60-80 minutes"
+    },
+    {
+      "id": "q6-infinite-scroll",
+      "title": "Infinite Scroll List",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Implement infinite scroll pagination with loading states and performance optimization.",
+      "detailedDescription": "Build an infinite scroll component that loads more items as the user scrolls near the bottom using IntersectionObserver, shows loading spinners during fetch, prevents duplicate requests, handles errors gracefully with retry buttons, and optimizes rendering with virtual scrolling for large lists. Support both scroll-based and button-triggered loading patterns.",
+      "hints": [
+        "Use IntersectionObserver API",
+        "Implement virtual scrolling or windowing",
+        "Prevent race conditions with AbortController",
+        "Add loading and error states"
+      ],
+      "keyFeatures": [
+        "IntersectionObserver",
+        "Virtual Scrolling",
+        "Loading States",
+        "Error Handling",
+        "Performance"
+      ],
+      "timeEstimate": "65-85 minutes"
+    },
+    {
+      "id": "q7-star-rating",
+      "title": "Star Rating Component",
+      "techStack": "React based",
+      "level": "Easy",
+      "quickDescription": "Build an interactive star rating component with hover effects and accessibility.",
+      "detailedDescription": "Create a star rating component that displays 5 stars, allows users to click and hover to rate, shows the current rating value, supports different sizes and colors through props, includes accessibility attributes (aria-label, role), and triggers onChange callbacks. Add features like partial star ratings, read-only mode, and smooth hover animations.",
+      "hints": [
+        "Use SVG or Unicode stars",
+        "Handle both click and hover states",
+        "Add proper ARIA labels",
+        "Support partial ratings"
+      ],
+      "keyFeatures": [
+        "Interactivity",
+        "Accessibility",
+        "Hover Effects",
+        "Props-based Customization",
+        "Animations"
+      ],
+      "timeEstimate": "30-40 minutes"
+    },
+    {
+      "id": "q8-pagination",
+      "title": "Pagination Component",
+      "techStack": "React based",
+      "level": "Easy",
+      "quickDescription": "Build a pagination component with page navigation and smart ellipsis display.",
+      "detailedDescription": "Create a reusable pagination component that displays page numbers with previous/next buttons, handles current page state, shows ellipsis for skipped pages, disables navigation at boundaries, and accepts callbacks for page changes. Support customizable page ranges and implement smart ellipsis logic to show relevant pages around the current page.",
+      "hints": [
+        "Calculate visible page range intelligently",
+        "Handle edge cases at start/end",
+        "Use disabled state for boundary buttons",
+        "Optimize re-renders with memoization"
+      ],
+      "keyFeatures": [
+        "Smart Ellipsis",
+        "Boundary Handling",
+        "Callback Props",
+        "Responsive Design",
+        "Accessibility"
+      ],
+      "timeEstimate": "35-45 minutes"
+    },
+    {
+      "id": "q9-tabs-component",
+      "title": "Tabs Navigation Component",
+      "techStack": "React based",
+      "level": "Easy",
+      "quickDescription": "Implement a tabs component with tab switching and keyboard navigation.",
+      "detailedDescription": "Build a flexible tabs component that displays multiple tab panels, switches content on tab click, supports keyboard navigation (arrow keys and tab key), manages active tab state, and supports lazy loading of tab content. Add smooth transitions between tabs and implement proper ARIA roles for accessibility. Support both controlled and uncontrolled component patterns.",
+      "hints": [
+        "Use keyboard arrow navigation",
+        "Add ARIA attributes for accessibility",
+        "Support lazy loading of content",
+        "Implement smooth transitions"
+      ],
+      "keyFeatures": [
+        "Keyboard Navigation",
+        "Accessibility",
+        "Lazy Loading",
+        "State Management",
+        "Animations"
+      ],
+      "timeEstimate": "40-50 minutes"
+    },
+    {
+      "id": "q10-dropdown-menu",
+      "title": "Dropdown Menu",
+      "techStack": "React based",
+      "level": "Easy",
+      "quickDescription": "Build a dropdown menu with nested items and keyboard support.",
+      "detailedDescription": "Create a dropdown menu component that opens on click, closes on item selection or outside click, supports nested submenu items, handles keyboard navigation (arrow keys, Enter, Escape), displays icons alongside menu items, and positions intelligently to avoid going off-screen. Include accessibility features like ARIA menus and focus management.",
+      "hints": [
+        "Use useRef for detecting outside clicks",
+        "Handle nested menu navigation",
+        "Implement keyboard shortcuts",
+        "Add smart positioning logic"
+      ],
+      "keyFeatures": [
+        "Nested Items",
+        "Keyboard Navigation",
+        "Click-outside Detection",
+        "Smart Positioning",
+        "Accessibility"
+      ],
+      "timeEstimate": "45-55 minutes"
     },
     {
       "id": "q11-kanban-board",
       "title": "Kanban Board",
       "techStack": "React based",
       "level": "Hard",
-      "questionDescription": "Create full Kanban board with multiple columns, drag & drop between columns, add/edit tasks, real-time collaboration, and persistence.",
+      "quickDescription": "Build a drag-and-drop Kanban board with multiple columns and card management.",
+      "detailedDescription": "Create a full-featured Kanban board with multiple columns (To Do, In Progress, Done), draggable cards between columns, add/edit/delete cards within columns, persist state to localStorage, undo/redo functionality, card filtering by assignee or label, and smooth animations. Handle edge cases like drag over boundaries, rapid interactions, and mobile touch support.",
       "hints": [
-        "Use react-beautiful-dnd or @dnd-kit/core",
-        "Implement optimistic updates",
-        "Sync state with localStorage or WebSocket",
-        "Handle column reordering and task limits"
+        "Use React DnD library or implement custom drag-drop",
+        "Manage complex state with useReducer",
+        "Implement undo/redo stack",
+        "Add touch support for mobile"
       ],
-      "solution": {
-        "src/components/KanbanBoard.js": "import { useState, useEffect } from 'react';\n\nconst KanbanBoard = () => {\n  const [columns, setColumns] = useState({\n    'todo': { id: 'todo', title: 'To Do', taskIds: ['1', '2', '3'] },\n    'in-progress': { id: 'in-progress', title: 'In Progress', taskIds: ['4', '5'] },\n    'done': { id: 'done', title: 'Done', taskIds: ['6'] },\n  });\n  const [tasks, setTasks] = useState({\n    '1': { id: '1', title: 'Task 1' },\n    '2': { id: '2', title: 'Task 2' },\n    '3': { id: '3', title: 'Task 3' },\n    '4': { id: '4', title: 'Task 4' },\n    '5': { id: '5', title: 'Task 5' },\n    '6': { id: '6', title: 'Task 6' },\n  });\n\n  useEffect(() => {\n    localStorage.setItem('kanban', JSON.stringify({columns, tasks}));\n  }, [columns, tasks]);\n\n  const handleAddTask = (columnId) => {\n    const newTaskId = Date.now().toString();\n    const newTask = { id: newTaskId, title: `New Task` };\n    setTasks(prev => ({...prev, [newTaskId]: newTask}));\n    setColumns(prev => ({\n      ...prev,\n      [columnId]: {...prev[columnId], taskIds: [...prev[columnId].taskIds, newTaskId]}\n    }));\n  };\n\n  return (\n    <div style={{padding: '40px 20px'}}>\n      <h1>Kanban Board</h1>\n      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px'}}>\n        {Object.values(columns).map(column => (\n          <div key={column.id} style={{background: 'white', borderRadius: '12px', padding: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)'}}>\n            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', paddingBottom: '12px', borderBottom: '2px solid #e5e7eb'}}>\n              <h2 style={{margin: 0}}>{column.title}</h2>\n              <span style={{background: '#e5e7eb', padding: '4px 8px', borderRadius: '12px', fontSize: '0.85rem'}}>{column.taskIds.length}</span>\n            </div>\n            <div style={{display: 'flex', flexDirection: 'column', gap: '12px'}}>\n              {column.taskIds.map(taskId => (\n                <div key={taskId} style={{background: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', padding: '12px', cursor: 'grab'}}>\n                  {tasks[taskId].title}\n                </div>\n              ))}\n              <button onClick={() => handleAddTask(column.id)} style={{padding: '12px', background: '#f3f4f6', border: '2px dashed #d1d5db', borderRadius: '8px', cursor: 'pointer', color: '#6b7280'}}>+ Add Task</button>\n            </div>\n          </div>\n        ))}\n      </div>\n    </div>\n  );\n};\n\nexport default KanbanBoard;",
-        "src/App.js": "import KanbanBoard from './components/KanbanBoard';\n\nfunction App() {\n  return <KanbanBoard />;\n}\n\nexport default App;"
-      },
-      "nextQuestions": [
-        { "id": "q1-todo-list-app", "title": "Todo List", "level": "Easy" },
-        {
-          "id": "q9-drag-drop-list",
-          "title": "Drag & Drop List",
-          "level": "Hard"
-        },
-        {
-          "id": "q28-admin-dashboard",
-          "title": "Admin Dashboard",
-          "level": "Hard"
-        }
-      ]
+      "keyFeatures": [
+        "Drag & Drop",
+        "Complex State",
+        "Undo/Redo",
+        "Persistence",
+        "Touch Support"
+      ],
+      "timeEstimate": "90-120 minutes"
+    },
+    {
+      "id": "q12-video-player",
+      "title": "Custom Video Player",
+      "techStack": "HTML5 & JS based",
+      "level": "Hard",
+      "quickDescription": "Build a custom video player with controls, playback speed, and quality selection.",
+      "detailedDescription": "Develop a full-featured video player with custom controls (play/pause, seek, volume, fullscreen), multiple quality options with adaptive streaming, playback speed selection, progress bar with preview thumbnails, subtitles/captions support, keyboard shortcuts, and analytics tracking. Implement smooth buffering indicators and optimize for mobile with responsive controls.",
+      "hints": [
+        "Use HTML5 Video API",
+        "Implement custom progress bar with seek preview",
+        "Handle multiple quality streams",
+        "Add keyboard shortcut support"
+      ],
+      "keyFeatures": [
+        "Video API",
+        "Quality Switching",
+        "Custom Controls",
+        "Subtitles",
+        "Keyboard Shortcuts"
+      ],
+      "timeEstimate": "100-130 minutes"
+    },
+    {
+      "id": "q13-date-picker",
+      "title": "Date Picker Component",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build an interactive date picker with calendar and keyboard support.",
+      "detailedDescription": "Create a date picker component that displays a calendar grid, allows selecting single or date ranges, navigates months/years, supports keyboard shortcuts (arrow keys, Enter), highlights today and selected dates, and handles edge cases like disabled dates and month boundaries. Add keyboard support for quick navigation and implement efficient rendering for large date ranges.",
+      "hints": [
+        "Use Date APIs for calendar logic",
+        "Implement keyboard navigation",
+        "Support date range selection",
+        "Handle month/year transitions"
+      ],
+      "keyFeatures": [
+        "Calendar Grid",
+        "Range Selection",
+        "Keyboard Navigation",
+        "Date Logic",
+        "Disabled Dates"
+      ],
+      "timeEstimate": "70-90 minutes"
+    },
+    {
+      "id": "q14-drawer-sidebar",
+      "title": "Drawer/Sidebar Component",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a slide-out drawer component with animations and overlay backdrop.",
+      "detailedDescription": "Create a drawer/sidebar component that slides in from the edge with smooth animations, includes a semi-transparent backdrop, closes on backdrop click or ESC key, traps focus while open, supports different sizes and directions (left, right, top, bottom), and is fully accessible with ARIA attributes. Implement smooth transitions and prevent body scroll when drawer is open.",
+      "hints": [
+        "Use CSS transforms for smooth animations",
+        "Implement focus trap",
+        "Prevent body overflow when open",
+        "Support multiple directions"
+      ],
+      "keyFeatures": [
+        "Slide Animations",
+        "Backdrop",
+        "Focus Trap",
+        "Multiple Directions",
+        "Accessibility"
+      ],
+      "timeEstimate": "50-65 minutes"
+    },
+    {
+      "id": "q15-slider-input",
+      "title": "Range Slider Component",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a range slider with dual handles and label display.",
+      "detailedDescription": "Create a range slider component that allows selecting a range between min and max values, supports single or dual handles, displays current values with labels above handles, updates smoothly on drag, handles edge cases like inverted ranges, includes keyboard support for arrow keys, and works with different step values.",
+      "hints": [
+        "Calculate position based on value",
+        "Handle overlapping handles correctly",
+        "Support keyboard navigation",
+        "Add smooth animations"
+      ],
+      "keyFeatures": [
+        "Dual Handles",
+        "Keyboard Navigation",
+        "Value Labels",
+        "Smooth Dragging",
+        "Edge Cases"
+      ],
+      "timeEstimate": "55-70 minutes"
+    },
+    {
+      "id": "q16-toast-notification",
+      "title": "Toast Notification System",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a toast notification system with auto-dismiss and queue management.",
+      "detailedDescription": "Create a toast notification system that displays temporary notifications with different types (success, error, warning, info), auto-dismisses after a timeout, stacks multiple toasts, allows manual dismissal with a close button, uses React Context for global access, and includes animation on enter/exit. Support custom durations and priority-based ordering.",
+      "hints": [
+        "Use React Context for global state",
+        "Implement auto-dismiss with useEffect",
+        "Handle toast queuing and stacking",
+        "Add animation classes"
+      ],
+      "keyFeatures": [
+        "Global State",
+        "Auto-dismiss",
+        "Stacking",
+        "Context API",
+        "Animations"
+      ],
+      "timeEstimate": "50-65 minutes"
+    },
+    {
+      "id": "q17-popover",
+      "title": "Popover Component",
+      "techStack": "React based",
+      "level": "Easy",
+      "quickDescription": "Build a popover that displays content relative to a trigger element.",
+      "detailedDescription": "Create a popover component that displays content in a popup near a trigger element, positions intelligently (top, bottom, left, right with fallback), closes on outside click or ESC key, animates smoothly, and supports custom content. Use React Portals for proper layering and implement smart positioning to avoid going off-screen.",
+      "hints": [
+        "Use React Portal",
+        "Calculate position dynamically",
+        "Implement smart positioning fallbacks",
+        "Add click-outside detection"
+      ],
+      "keyFeatures": [
+        "Smart Positioning",
+        "Portal",
+        "Animations",
+        "Click-outside Detection",
+        "Accessibility"
+      ],
+      "timeEstimate": "40-50 minutes"
+    },
+    {
+      "id": "q18-lightbox-gallery",
+      "title": "Lightbox Gallery",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a full-screen image lightbox with navigation and keyboard support.",
+      "detailedDescription": "Create a lightbox gallery component that displays images in full-screen mode, allows navigating between images with arrow buttons and keyboard arrows, shows image counter, includes a close button, disables body scroll when open, supports touch swipe gestures, and includes smooth fade/zoom animations. Add keyboard shortcuts for common actions.",
+      "hints": [
+        "Use Portal for full-screen display",
+        "Implement keyboard and swipe navigation",
+        "Add smooth zoom/fade animations",
+        "Handle body scroll prevention"
+      ],
+      "keyFeatures": [
+        "Full-screen Display",
+        "Navigation",
+        "Swipe Gestures",
+        "Keyboard Shortcuts",
+        "Animations"
+      ],
+      "timeEstimate": "60-75 minutes"
+    },
+    {
+      "id": "q19-accordion",
+      "title": "Accordion Component",
+      "techStack": "React based",
+      "level": "Easy",
+      "quickDescription": "Build an accordion with expandable/collapsible sections.",
+      "detailedDescription": "Create an accordion component with multiple sections that expand and collapse, supports single or multiple open sections simultaneously, includes smooth height animations, displays icons for expand/collapse state, and implements keyboard navigation for accessibility. Support lazy loading of accordion content and manage state efficiently.",
+      "hints": [
+        "Use useRef for measuring content height",
+        "Animate height with CSS transitions",
+        "Support single/multi expand modes",
+        "Add keyboard navigation"
+      ],
+      "keyFeatures": [
+        "Smooth Animations",
+        "Keyboard Navigation",
+        "Flexible State",
+        "Lazy Loading",
+        "Accessibility"
+      ],
+      "timeEstimate": "40-50 minutes"
+    },
+    {
+      "id": "q20-product-image-viewer",
+      "title": "Product Image Viewer",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a product image viewer with zoom and thumbnail navigation.",
+      "detailedDescription": "Create a product image viewer with a large main image display, thumbnail navigation, zoom-in capability on hover or button click, smooth image transitions, keyboard navigation between images, and responsive design that works on mobile. Support different image formats and implement efficient image loading with proper fallbacks.",
+      "hints": [
+        "Implement zoom on hover with mouse position",
+        "Load high-res images on demand",
+        "Support touch gestures for mobile",
+        "Optimize image loading"
+      ],
+      "keyFeatures": [
+        "Zoom Functionality",
+        "Thumbnail Navigation",
+        "Responsive Design",
+        "Image Optimization",
+        "Touch Support"
+      ],
+      "timeEstimate": "55-70 minutes"
+    },
+    {
+      "id": "q21-chat-interface",
+      "title": "Real-time Chat Interface",
+      "techStack": "React based",
+      "level": "Hard",
+      "quickDescription": "Build a chat interface with real-time messaging and user presence.",
+      "detailedDescription": "Create a chat application interface with real-time message updates using WebSocket, displays user avatar and timestamps, shows typing indicators, marks messages as sent/delivered/read, implements infinite scroll for message history, supports emoji and rich text, and includes user presence indicators. Handle connection loss gracefully and implement message persistence with IndexedDB.",
+      "hints": [
+        "Use WebSocket for real-time updates",
+        "Implement typing indicators",
+        "Handle connection loss and reconnection",
+        "Use IndexedDB for offline support"
+      ],
+      "keyFeatures": [
+        "WebSocket Integration",
+        "Typing Indicators",
+        "Message Status",
+        "Infinite Scroll",
+        "Offline Support"
+      ],
+      "timeEstimate": "120-150 minutes"
+    },
+    {
+      "id": "q22-file-upload",
+      "title": "File Upload Component",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a drag-and-drop file upload with progress tracking.",
+      "detailedDescription": "Create a file upload component with drag-and-drop support, displays upload progress with percentage, supports multiple file formats with validation, shows file preview thumbnails for images, includes cancel upload functionality, and handles errors gracefully. Implement chunked upload for large files and add retry logic for failed uploads.",
+      "hints": [
+        "Implement drag-and-drop listeners",
+        "Use FormData for file uploads",
+        "Display upload progress with ProgressEvent",
+        "Add chunking for large files"
+      ],
+      "keyFeatures": [
+        "Drag & Drop",
+        "Progress Tracking",
+        "File Validation",
+        "Chunked Upload",
+        "Error Handling"
+      ],
+      "timeEstimate": "70-90 minutes"
+    },
+    {
+      "id": "q23-multi-select",
+      "title": "Multi-Select Component",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a searchable multi-select dropdown with tags display.",
+      "detailedDescription": "Create a multi-select component that displays selected items as removable tags, includes a searchable dropdown for finding options, supports grouping options by category, allows selecting/deselecting all options, shows selected count, and handles keyboard navigation. Implement efficient filtering and support for large option lists with virtual scrolling.",
+      "hints": [
+        "Implement efficient search filtering",
+        "Use virtual scrolling for large lists",
+        "Display tags with remove buttons",
+        "Support keyboard navigation"
+      ],
+      "keyFeatures": [
+        "Search Filtering",
+        "Virtual Scrolling",
+        "Tag Display",
+        "Keyboard Navigation",
+        "Grouping"
+      ],
+      "timeEstimate": "65-80 minutes"
+    },
+    {
+      "id": "q24-code-editor",
+      "title": "Code Editor with Syntax Highlighting",
+      "techStack": "React based",
+      "level": "Hard",
+      "quickDescription": "Build a code editor with syntax highlighting and line numbers.",
+      "detailedDescription": "Create a code editor component with real-time syntax highlighting using Prism or highlight.js, displays line numbers, supports multiple programming languages, includes code copying functionality, implements keyboard shortcuts (Ctrl+A, Ctrl+C), handles large files efficiently, and includes a dark/light theme toggle. Add features like auto-indentation and bracket matching.",
+      "hints": [
+        "Use Prism or highlight.js for syntax highlighting",
+        "Sync scroll between code and line numbers",
+        "Implement keyboard shortcuts",
+        "Handle large files efficiently"
+      ],
+      "keyFeatures": [
+        "Syntax Highlighting",
+        "Line Numbers",
+        "Keyboard Shortcuts",
+        "Theme Support",
+        "Performance"
+      ],
+      "timeEstimate": "100-120 minutes"
+    },
+    {
+      "id": "q25-progress-bar",
+      "title": "Progress Bar Component",
+      "techStack": "React based",
+      "level": "Easy",
+      "quickDescription": "Build a flexible progress bar with different states and animations.",
+      "detailedDescription": "Create a progress bar component that displays progress as percentage, supports different variants (success, warning, danger, info), includes smooth animated transitions, displays text label with percentage, handles different heights/sizes, and includes optional stripe animation. Support both determinate and indeterminate states.",
+      "hints": [
+        "Use CSS width transitions for animation",
+        "Support different color variants",
+        "Add stripe animation with CSS",
+        "Handle edge cases like 0% or 100%"
+      ],
+      "keyFeatures": [
+        "Smooth Animation",
+        "Variants",
+        "Text Label",
+        "Different States",
+        "Customization"
+      ],
+      "timeEstimate": "30-40 minutes"
+    },
+    {
+      "id": "q26-breadcrumb",
+      "title": "Breadcrumb Navigation",
+      "techStack": "React based",
+      "level": "Easy",
+      "quickDescription": "Build a breadcrumb navigation component with proper semantics.",
+      "detailedDescription": "Create a breadcrumb navigation component that shows the current page hierarchy, displays clickable links for parent pages, uses proper separators (typically '/'), includes proper ARIA attributes and semantic HTML, and highlights the current page. Support dynamic breadcrumb generation from URL or prop-based configuration.",
+      "hints": [
+        "Use proper semantic HTML with nav",
+        "Add ARIA attributes for accessibility",
+        "Support dynamic breadcrumb generation",
+        "Handle active state styling"
+      ],
+      "keyFeatures": [
+        "Semantic HTML",
+        "Accessibility",
+        "Dynamic Generation",
+        "Responsive Design",
+        "Styling Flexibility"
+      ],
+      "timeEstimate": "25-35 minutes"
+    },
+    {
+      "id": "q27-notification-badge",
+      "title": "Notification Badge Component",
+      "techStack": "React based",
+      "level": "Easy",
+      "quickDescription": "Build a notification badge with animation and different states.",
+      "detailedDescription": "Create a notification badge component that displays count or status on top-right of an element, supports different colors and sizes, includes pulse animation, handles zero count hiding, and includes optional dot variant. Support both numeric and status-based badges with smooth animations.",
+      "hints": [
+        "Use CSS positioning for badge placement",
+        "Implement pulse animation",
+        "Support different variants",
+        "Handle responsive sizing"
+      ],
+      "keyFeatures": [
+        "CSS Animation",
+        "Multiple Variants",
+        "Flexible Positioning",
+        "Responsive",
+        "Easy Integration"
+      ],
+      "timeEstimate": "25-35 minutes"
+    },
+    {
+      "id": "q28-admin-dashboard",
+      "title": "Admin Dashboard",
+      "techStack": "React based",
+      "level": "Hard",
+      "quickDescription": "Build a comprehensive admin dashboard with charts, tables, and filters.",
+      "detailedDescription": "Create a full admin dashboard with data visualization charts (line, bar, pie), interactive data tables with sorting and filtering, search functionality, date range filtering, export to CSV/PDF, responsive design, and dark/light theme. Include real-time data updates with WebSocket and implement proper data caching strategies for performance.",
+      "hints": [
+        "Use charting library like Chart.js or Recharts",
+        "Implement efficient table rendering",
+        "Add advanced filtering options",
+        "Handle real-time data updates"
+      ],
+      "keyFeatures": [
+        "Data Visualization",
+        "Sorting/Filtering",
+        "Export Functionality",
+        "Real-time Updates",
+        "Theme Support"
+      ],
+      "timeEstimate": "150-180 minutes"
+    },
+    {
+      "id": "q29-expense-tracker",
+      "title": "Expense Tracker App",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build an expense tracking app with categories and visualization.",
+      "detailedDescription": "Create an expense tracker application that allows adding expenses with amount, category, date, and description, displays expenses in a list with edit/delete options, shows summary statistics by category, filters expenses by date range and category, and includes pie chart visualization. Persist data to localStorage and implement budget alerts.",
+      "hints": [
+        "Use useReducer for expense state",
+        "Implement category-based aggregation",
+        "Add date range filtering",
+        "Create pie chart visualization"
+      ],
+      "keyFeatures": [
+        "Category Management",
+        "Date Filtering",
+        "Data Visualization",
+        "Edit/Delete",
+        "Persistence"
+      ],
+      "timeEstimate": "70-90 minutes"
+    },
+    {
+      "id": "q30-weather-app",
+      "title": "Weather Application",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a weather app with location search and forecast display.",
+      "detailedDescription": "Create a weather application that fetches weather data from an API based on user location, displays current weather with icon and description, shows 5-day forecast with temperature trends, includes search functionality for different cities, caches location data, handles errors gracefully, and includes unit toggle (Celsius/Fahrenheit). Add weather alerts and real-time updates.",
+      "hints": [
+        "Use weather API like OpenWeather",
+        "Implement geolocation detection",
+        "Cache location data",
+        "Handle API errors gracefully"
+      ],
+      "keyFeatures": [
+        "API Integration",
+        "Geolocation",
+        "Data Caching",
+        "Unit Conversion",
+        "Error Handling"
+      ],
+      "timeEstimate": "60-80 minutes"
+    },
+    {
+      "id": "q31-calculator",
+      "title": "Advanced Calculator",
+      "techStack": "Vanilla JS based",
+      "level": "Medium",
+      "quickDescription": "Build a scientific calculator with keyboard support.",
+      "detailedDescription": "Create a calculator that supports basic operations (+, -, *, /), handles decimal numbers, includes clear and delete buttons, implements keyboard input support, shows calculation history, supports scientific functions (sin, cos, square root), handles order of operations correctly, and prevents invalid operations. Include memory functions (M+, M-, MR, MC) and calculation history display.",
+      "hints": [
+        "Use proper order of operations",
+        "Handle decimal arithmetic carefully",
+        "Implement keyboard event listeners",
+        "Store calculation history"
+      ],
+      "keyFeatures": [
+        "Scientific Functions",
+        "Keyboard Support",
+        "History Display",
+        "Memory Functions",
+        "Error Handling"
+      ],
+      "timeEstimate": "50-70 minutes"
+    },
+    {
+      "id": "q32-stopwatch",
+      "title": "Stopwatch Timer Application",
+      "techStack": "React based",
+      "level": "Easy",
+      "quickDescription": "Build a stopwatch with lap times and reset functionality.",
+      "detailedDescription": "Create a stopwatch application with start/pause/stop controls, records lap times with comparison to previous lap, displays time in MM:SS:MS format, includes visual feedback on button states, handles edge cases like restarting from paused state, and includes keyboard shortcuts (spacebar for start/pause). Persist lap history and support export of timing data.",
+      "hints": [
+        "Use setInterval for timing",
+        "Track lap times in state",
+        "Format time properly",
+        "Handle pause/resume states"
+      ],
+      "keyFeatures": [
+        "Lap Tracking",
+        "Proper Formatting",
+        "Keyboard Shortcuts",
+        "Export Functionality",
+        "State Management"
+      ],
+      "timeEstimate": "40-55 minutes"
+    },
+    {
+      "id": "q33-markdown-editor",
+      "title": "Markdown to HTML Preview Editor",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a markdown editor with live preview.",
+      "detailedDescription": "Create a split-pane markdown editor with real-time HTML preview, supports markdown syntax highlighting in editor, handles all common markdown elements (headers, lists, code blocks, links, images), includes a toolbar with formatting shortcuts, supports custom CSS for preview styling, and includes export to HTML/PDF. Implement auto-save to localStorage and keyboard shortcuts for formatting.",
+      "hints": [
+        "Use markdown parsing library like marked",
+        "Implement sanitization for HTML output",
+        "Add toolbar buttons for formatting",
+        "Support keyboard shortcuts"
+      ],
+      "keyFeatures": [
+        "Live Preview",
+        "Syntax Highlighting",
+        "Toolbar",
+        "Custom Styling",
+        "Export Functionality"
+      ],
+      "timeEstimate": "70-90 minutes"
+    },
+    {
+      "id": "q34-password-manager",
+      "title": "Password Manager UI",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a password manager interface with encryption visualization.",
+      "detailedDescription": "Create a password manager interface that displays saved passwords in a table with website, username, and encrypted password, includes add new password dialog, edit/delete functionality, password strength indicator, search and filtering capabilities, copy password functionality with confirmation, and shows password generation tool. Add security features like master password verification and encryption simulation.",
+      "hints": [
+        "Implement password strength checker",
+        "Add password generation logic",
+        "Support search and filtering",
+        "Add copy-to-clipboard functionality"
+      ],
+      "keyFeatures": [
+        "Password Generation",
+        "Strength Indicator",
+        "Search/Filter",
+        "Edit/Delete",
+        "Copy Functionality"
+      ],
+      "timeEstimate": "65-80 minutes"
+    },
+    {
+      "id": "q35-music-player",
+      "title": "Music Player Application",
+      "techStack": "React based",
+      "level": "Hard",
+      "quickDescription": "Build a music player with playlist management and visualizer.",
+      "detailedDescription": "Create a music player with HTML5 audio support, displays currently playing song with album art and metadata, implements play/pause/next/previous controls, includes volume control and progress bar with seek functionality, supports playlist creation and management, includes shuffle and repeat modes, and adds audio visualizer. Implement keyboard shortcuts and support both local files and streaming.",
+      "hints": [
+        "Use HTML5 Audio API",
+        "Implement audio visualization with Canvas",
+        "Support playlist management",
+        "Add keyboard shortcuts"
+      ],
+      "keyFeatures": [
+        "Audio API",
+        "Visualization",
+        "Playlist Management",
+        "Keyboard Shortcuts",
+        "Metadata Display"
+      ],
+      "timeEstimate": "100-120 minutes"
+    },
+    {
+      "id": "q36-todo-with-groups",
+      "title": "Todo List with Categories and Tags",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a todo app with advanced organization features.",
+      "detailedDescription": "Create an advanced todo application with categories/groups, tag system for better organization, filter todos by category or tags, includes priority levels with visual indicators, shows today's tasks vs future tasks, supports recurring todos, includes statistics dashboard showing completion rates, and implements focus mode hiding non-essential UI. Add collaboration features like sharing and due date notifications.",
+      "hints": [
+        "Manage complex nested state",
+        "Implement efficient filtering",
+        "Add priority-based sorting",
+        "Create statistics calculations"
+      ],
+      "keyFeatures": [
+        "Categories & Tags",
+        "Priority System",
+        "Recurring Tasks",
+        "Statistics",
+        "Focus Mode"
+      ],
+      "timeEstimate": "85-105 minutes"
+    },
+    {
+      "id": "q37-poll-voting",
+      "title": "Poll/Voting System",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a poll application with real-time results visualization.",
+      "detailedDescription": "Create a poll application that displays poll questions with multiple options, allows users to vote (with prevention of duplicate voting using device ID or cookie), shows real-time vote counts and percentages, displays results as progress bars or pie chart, includes share functionality, and supports creating new polls. Implement proper state management for voting and results updates.",
+      "hints": [
+        "Track votes using unique identifiers",
+        "Calculate vote percentages efficiently",
+        "Visualize results with charts",
+        "Prevent duplicate voting"
+      ],
+      "keyFeatures": [
+        "Vote Tracking",
+        "Results Visualization",
+        "Real-time Updates",
+        "Share Functionality",
+        "Create Polls"
+      ],
+      "timeEstimate": "60-75 minutes"
+    },
+    {
+      "id": "q38-email-client-ui",
+      "title": "Email Client Interface",
+      "techStack": "React based",
+      "level": "Hard",
+      "quickDescription": "Build an email client UI with folder management and search.",
+      "detailedDescription": "Create an email client interface with folder hierarchy (Inbox, Sent, Drafts, Archive), email list with sorting (date, sender, subject), individual email preview, search with filters (from, date range, subject), includes compose email dialog, marks email as read/starred, supports bulk actions on multiple emails, and includes responsive layout. Add real-time new mail notifications and support for multiple accounts.",
+      "hints": [
+        "Implement hierarchical folder structure",
+        "Add advanced search filtering",
+        "Support bulk email actions",
+        "Add real-time notifications"
+      ],
+      "keyFeatures": [
+        "Folder Management",
+        "Advanced Search",
+        "Bulk Actions",
+        "Email Preview",
+        "Responsive Layout"
+      ],
+      "timeEstimate": "120-150 minutes"
+    },
+    {
+      "id": "q39-drawing-canvas",
+      "title": "Drawing Canvas Application",
+      "techStack": "Vanilla JS based",
+      "level": "Hard",
+      "quickDescription": "Build a drawing application with tools and color picker.",
+      "detailedDescription": "Create a drawing canvas application with multiple drawing tools (pencil, brush, eraser, shapes), color picker with color history, adjustable brush size and opacity, includes undo/redo functionality, supports saving drawings as image, implements layer system for advanced drawing, includes preset brushes and textures. Add keyboard shortcuts for tool selection and implement smooth drawing with mouse or touch input.",
+      "hints": [
+        "Use Canvas API for drawing",
+        "Implement undo/redo stack",
+        "Add touch support for mobile",
+        "Support multiple drawing tools"
+      ],
+      "keyFeatures": [
+        "Multiple Tools",
+        "Undo/Redo",
+        "Color Picker",
+        "Layer System",
+        "Touch Support"
+      ],
+      "timeEstimate": "110-140 minutes"
+    },
+    {
+      "id": "q40-movie-search",
+      "title": "Movie Search Application",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a movie search app with filters and ratings.",
+      "detailedDescription": "Create a movie search application that fetches data from TMDB or similar API, displays movie cards with posters and ratings, includes search by title with debouncing, filters by genre, year, and rating, shows detailed movie information in modal, supports sorting by popularity/rating/release date, includes watchlist functionality with localStorage, and displays trending movies. Add infinite scroll for search results and movie recommendations.",
+      "hints": [
+        "Use movie database API",
+        "Implement debounced search",
+        "Add advanced filtering",
+        "Show detailed information in modal"
+      ],
+      "keyFeatures": [
+        "API Integration",
+        "Debounced Search",
+        "Filtering",
+        "Watchlist",
+        "Infinite Scroll"
+      ],
+      "timeEstimate": "75-95 minutes"
+    },
+    {
+      "id": "q41-recipe-app",
+      "title": "Recipe App with Filtering",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a recipe application with search and favorites.",
+      "detailedDescription": "Create a recipe application that displays recipe cards with images, ingredients, and instructions, includes search by recipe name or ingredient, filters by cuisine type and cooking time, allows users to save favorite recipes to localStorage, scales ingredient quantities based on servings, generates shopping list from selected recipes, and includes nutritional information display. Add recipe rating system and user comments.",
+      "hints": [
+        "Implement efficient search filtering",
+        "Calculate scaled ingredients",
+        "Support favorite management",
+        "Generate shopping lists"
+      ],
+      "keyFeatures": [
+        "Search & Filter",
+        "Favorites System",
+        "Ingredient Scaling",
+        "Shopping List",
+        "Ratings"
+      ],
+      "timeEstimate": "70-90 minutes"
+    },
+    {
+      "id": "q42-e-commerce-cart",
+      "title": "E-Commerce Shopping Cart",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a shopping cart with product filtering and checkout.",
+      "detailedDescription": "Create an e-commerce cart system with product listing, add/remove items from cart, quantity adjustment with stock validation, applies discounts and coupon codes, calculates shipping and taxes automatically, shows order summary with breakdown, supports multiple payment methods (mock), includes order confirmation page, and persists cart to localStorage. Add recommendation system and saved items feature.",
+      "hints": [
+        "Manage cart state efficiently",
+        "Calculate totals with taxes/shipping",
+        "Support coupon validation",
+        "Implement payment flow"
+      ],
+      "keyFeatures": [
+        "Cart Management",
+        "Discount Application",
+        "Checkout Flow",
+        "Payment Integration",
+        "Order Summary"
+      ],
+      "timeEstimate": "85-105 minutes"
+    },
+    {
+      "id": "q43-job-board",
+      "title": "Job Board Application",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a job listing board with filters and saved jobs.",
+      "detailedDescription": "Create a job board that displays job listings from API, includes filtering by location, job type, experience level, and salary range, implements search functionality with debouncing, shows detailed job description in modal or separate page, allows users to save job postings, includes company profiles, shows similar job recommendations, and supports job alerts. Add pagination for job listings and proper error handling.",
+      "hints": [
+        "Use job API for data",
+        "Implement advanced filtering",
+        "Add saved jobs functionality",
+        "Show related recommendations"
+      ],
+      "keyFeatures": [
+        "API Integration",
+        "Advanced Filtering",
+        "Saved Jobs",
+        "Job Details",
+        "Recommendations"
+      ],
+      "timeEstimate": "75-95 minutes"
+    },
+    {
+      "id": "q44-note-taking-app",
+      "title": "Note-Taking Application",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a note app with rich text and organization.",
+      "detailedDescription": "Create a note-taking application with rich text editing (bold, italic, lists), organizes notes in folders or notebooks, supports tags for better organization, includes search across notes with highlighting, implements auto-save to localStorage, supports dark mode, includes trash/archive functionality, and exports notes as PDF or Markdown. Add collaborative features like sharing notes and real-time sync.",
+      "hints": [
+        "Use rich text editor library",
+        "Implement efficient search",
+        "Support auto-save functionality",
+        "Add folder management"
+      ],
+      "keyFeatures": [
+        "Rich Text Editor",
+        "Folder Organization",
+        "Search",
+        "Auto-save",
+        "Export Functionality"
+      ],
+      "timeEstimate": "80-100 minutes"
+    },
+    {
+      "id": "q45-quiz-application",
+      "title": "Quiz Application",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a quiz app with questions, scoring, and results.",
+      "detailedDescription": "Create a quiz application that displays questions one at a time, supports multiple choice, true/false, and fill-in-the-blank questions, implements timer for timed quizzes, calculates score and shows results with performance breakdown, includes review mode to see correct answers, stores quiz history, supports creating custom quizzes, and generates certificates for passing scores. Add difficulty levels and category-based quizzes.",
+      "hints": [
+        "Manage quiz state properly",
+        "Implement timer functionality",
+        "Calculate scores accurately",
+        "Support quiz creation"
+      ],
+      "keyFeatures": [
+        "Quiz Management",
+        "Timer",
+        "Scoring System",
+        "Results Analysis",
+        "Quiz Creation"
+      ],
+      "timeEstimate": "80-100 minutes"
+    },
+    {
+      "id": "q46-portfolio-website",
+      "title": "Portfolio Website Generator",
+      "techStack": "React based",
+      "level": "Hard",
+      "quickDescription": "Build a portfolio website builder with customizable templates.",
+      "detailedDescription": "Create a portfolio website generator that allows users to input their information (name, bio, skills, projects, experience), provides multiple design templates to choose from, generates professional portfolio with project showcase, includes contact form with email integration, supports social media links, implements responsive design for all devices, allows exporting or deploying website, and includes SEO optimization. Add theme customization and domain setup.",
+      "hints": [
+        "Support multiple templates",
+        "Implement customization options",
+        "Generate responsive design",
+        "Add deployment options"
+      ],
+      "keyFeatures": [
+        "Multiple Templates",
+        "Customization",
+        "Responsive Design",
+        "Export/Deploy",
+        "SEO Optimization"
+      ],
+      "timeEstimate": "140-170 minutes"
+    },
+    {
+      "id": "q47-real-estate-search",
+      "title": "Real Estate Listing Browser",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a real estate app with map integration and filters.",
+      "detailedDescription": "Create a real estate property search application with listings display, advanced filtering (price, bedrooms, location, property type), integrates maps (Google Maps) showing property locations, includes detailed property view with images gallery, calculates mortgage estimates, supports saving favorite properties, shows property history and price trends, and includes agent contact information. Add neighborhood information and school ratings.",
+      "hints": [
+        "Integrate Google Maps API",
+        "Implement advanced filtering",
+        "Show property gallery",
+        "Calculate mortgage estimates"
+      ],
+      "keyFeatures": [
+        "Map Integration",
+        "Advanced Filters",
+        "Image Gallery",
+        "Calculations",
+        "Favorites"
+      ],
+      "timeEstimate": "100-130 minutes"
+    },
+    {
+      "id": "q48-team-collaboration-board",
+      "title": "Team Collaboration Board",
+      "techStack": "React based",
+      "level": "Hard",
+      "quickDescription": "Build a collaboration tool with real-time updates.",
+      "detailedDescription": "Create a team collaboration board for task management and communication, includes task creation with assignments and due dates, supports comments and @mentions on tasks, shows real-time activity feed, implements notifications for updates, supports file attachments, includes team member profiles, shows project progress with burndown chart, and enables video chat integration. Add permission levels and audit logs.",
+      "hints": [
+        "Use WebSocket for real-time updates",
+        "Implement notification system",
+        "Support file attachments",
+        "Add activity tracking"
+      ],
+      "keyFeatures": [
+        "Real-time Updates",
+        "Notifications",
+        "File Attachments",
+        "Activity Feed",
+        "Progress Tracking"
+      ],
+      "timeEstimate": "150-180 minutes"
+    },
+    {
+      "id": "q49-fitness-tracker",
+      "title": "Fitness Tracker Application",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a fitness tracker with workout logging and progress.",
+      "detailedDescription": "Create a fitness tracking application that logs workouts with exercise type, duration, and calories burned, tracks personal records, displays progress charts (weight, strength, endurance), includes workout plans with exercise instructions, supports different fitness goals, calculates BMI and daily calorie intake, includes nutrition tracking, and provides motivational achievements/badges. Add integration with fitness APIs and support for wearable devices.",
+      "hints": [
+        "Implement data visualization",
+        "Calculate fitness metrics",
+        "Support workout logging",
+        "Add progress tracking"
+      ],
+      "keyFeatures": [
+        "Workout Logging",
+        "Progress Charts",
+        "Goal Tracking",
+        "Nutrition Integration",
+        "Achievements"
+      ],
+      "timeEstimate": "90-110 minutes"
+    },
+    {
+      "id": "q50-translation-tool",
+      "title": "Text Translation Tool",
+      "techStack": "React based",
+      "level": "Medium",
+      "quickDescription": "Build a translation app with language detection.",
+      "detailedDescription": "Create a translation application that translates text between multiple languages, includes language detection for source text, supports batch translation of multiple items, shows translation history, includes pronunciation guide with audio, supports copying translated text, implements favorites for frequently used translations, includes text-to-speech for both languages, and shows alternative translations or context. Add document translation support and translation memory.",
+      "hints": [
+        "Use translation API (Google Translate, etc)",
+        "Implement language detection",
+        "Add text-to-speech functionality",
+        "Support translation history"
+      ],
+      "keyFeatures": [
+        "Multi-language Support",
+        "Language Detection",
+        "Text-to-Speech",
+        "History",
+        "Copy Functionality"
+      ],
+      "timeEstimate": "70-90 minutes"
     }
   ]
 }

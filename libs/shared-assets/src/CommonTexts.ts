@@ -25,7 +25,7 @@ function App() {
   DELETE: 'Delete',
   CANCEL: 'Cancel',
   ALL_PROJECTS: 'All Projects',
-  MACHINE_CODING: 'Machine Coding Questions',
+  MACHINE_CODING: 'All Questions',
   DSA_PROBLEMS: 'DSA Problems',
   PEER_CODE: 'Connect with your friends',
 };
