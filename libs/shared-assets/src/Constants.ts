@@ -54,6 +54,31 @@ export const OPTION_CARDS: Record<string, OptionCardConfig> = {
   },
 };
 
+export const COMMON_COLORS = {
+  primary: '#71f163',
+  backgroundAccent: '#050816',
+  backgroundAccentTransparent: '#050816af',
+  card: '#0B1020',
+  pannel: '#111827',
+  primaryText: '#F9FAFB',
+  secondaryText: '#9CA3AF',
+  disabled: '#4B5563',
+  divider: '#1F2933',
+  success: '#22C55E',
+  warning: '#F59E0B',
+  error: '#EF4444',
+  project: { 500: '#FFCA9B' },
+  machine: { 500: '#B69FE9' },
+  problems: { 500: '#7EBBF8' },
+  peer: { 500: '#22C55E' },
+  greenishgrey: '#1F2933',
+  codeMirrorBg: '#002351',
+  ts: '#2c78c7',
+  js: '#F6DE22',
+  tsx: '#2cbef5',
+  jsx: '#f99e04',
+};
+
 export type CreateProjectOptionsConfig = {
   id: number;
   icon: string;

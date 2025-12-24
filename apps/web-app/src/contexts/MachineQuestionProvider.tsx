@@ -5,12 +5,13 @@ import {
   QuestionLevel,
 } from '@elementstack/shared-assets/Types';
 import { defaultStateReducer } from '../utils/commonUtils';
+import { MachineTabs, TechStack } from '@elementstack/shared-assets/Enums';
 
 const initialState: MachineQuestionData = {
   metaData: {
     id: '',
     title: '',
-    techStack: '',
+    techStack: TechStack.VanilaJS,
     level: QuestionLevel.EASY,
     quickDescription: '',
     detailedDescription: '',
@@ -24,6 +25,8 @@ const initialState: MachineQuestionData = {
     },
   },
   solutionFiles: [],
+  selectedLeftTab: MachineTabs.Desc,
+  selectedRightTab: undefined,
 };
 
 export const MachineQuestionDetailsInitialState = Object.freeze({
@@ -50,7 +53,6 @@ const MachineQuestionProvider = ({ children }: { children: ReactNode }) => {
     defaultStateReducer<MachineQuestionData, Partial<MachineQuestionData>>,
     initialState
   );
-  // const {  } = state;
 
   const setMachineQuestionDetails = (action: {
     payload: Partial<MachineQuestionData>;

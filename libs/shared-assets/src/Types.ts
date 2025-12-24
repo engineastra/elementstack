@@ -1,4 +1,4 @@
-import { FsItemType } from './Enums';
+import { FsItemType, MachineTabs, TechStack } from './Enums';
 
 export type FileData = {
   id: string; // based on index + depth order + name
@@ -56,14 +56,14 @@ export enum QuestionLevel {
 export type MachineQuestionMeta = {
   id: string;
   title: string;
-  techStack: string;
+  techStack: TechStack;
   level: QuestionLevel;
   quickDescription: string;
   detailedDescription: string;
   hints: Array<string>;
   solution?: Record<string, string>;
   keyFeatures: Array<string>;
-  nextQuestions: {
+  nextQuestions?: {
     id: string;
     title: string;
     level: QuestionLevel;
@@ -73,4 +73,6 @@ export type MachineQuestionMeta = {
 export type MachineQuestionData = {
   metaData: MachineQuestionMeta;
   solutionFiles: Array<FileData>;
+  selectedLeftTab: MachineTabs | undefined;
+  selectedRightTab: MachineTabs | undefined;
 };

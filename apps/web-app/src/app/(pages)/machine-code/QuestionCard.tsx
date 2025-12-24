@@ -1,11 +1,11 @@
 'use client';
+import { COMMON_COLORS } from '@elementstack/shared-assets/Constants';
+import { TechStack } from '@elementstack/shared-assets/Enums';
 import {
   MachineQuestionMeta,
   QuestionLevel,
 } from '@elementstack/shared-assets/Types';
-import { MachineQuestionDetailsContext } from '@web-app/contexts/MachineQuestionProvider';
 import { usePathname, useRouter } from 'next/navigation';
-import { useContext } from 'react';
 
 const getLevelColor = (type: QuestionLevel) => {
   if (QuestionLevel.EASY === type) {
@@ -17,6 +17,15 @@ const getLevelColor = (type: QuestionLevel) => {
   }
 };
 
+const getTechStackColor = (tech: TechStack) => {
+  if (TechStack.VanilaJS === tech) {
+    return COMMON_COLORS.js;
+  } else if (TechStack.React === tech) {
+    return COMMON_COLORS.tsx;
+  }
+  return 'machine-500';
+};
+
 const QuestionCard = ({
   questionData,
 }: {
@@ -24,15 +33,11 @@ const QuestionCard = ({
 }) => {
   const router = useRouter();
   const pathName = usePathname();
-  const { setMachineQuestionDetails } = useContext(
-    MachineQuestionDetailsContext
-  );
   return (
     <>
       <div
         className={`flex flex-col min-w-[120px] justify-center gap-1 p-5 bg-pannel rounded-lg cursor-pointer border border-transparent hover:border-machine-500 transition-all`}
         onClick={() => {
-          setMachineQuestionDetails({ payload: { metaData: questionData } });
           router.push(pathName.slice(1) + '/' + questionData.id);
         }}
       >
@@ -41,7 +46,7 @@ const QuestionCard = ({
             {questionData.title}
           </p>
           <p
-            className={`ml-auto w-fit text-[12px] text-${getLevelColor(
+            className={`ml-auto w-fit h-fit text-[12px] text-${getLevelColor(
               questionData.level
             )} px-2 py-1 rounded-2xl border border-${getLevelColor(
               questionData.level
@@ -54,7 +59,13 @@ const QuestionCard = ({
           {questionData.quickDescription}
         </p>
         <div className="flex w-full gap-2 mt-2">
-          <p className="w-fit text-[12px] text-machine-500 px-2 py-1 rounded-2xl border border-machine-500">
+          <p
+            className={`w-fit text-[12px] px-2 py-1 rounded-2xl border`}
+            style={{
+              color: getTechStackColor(questionData.techStack),
+              borderColor: getTechStackColor(questionData.techStack),
+            }}
+          >
             {questionData.techStack}
           </p>
         </div>
