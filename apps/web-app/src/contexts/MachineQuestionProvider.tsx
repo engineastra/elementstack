@@ -65,8 +65,8 @@ export const MachineQuestionDetailsContext =
     setMachineQuestionDetails: () => {
       return;
     },
-    deleteFilesAndFolders: () => {
-      return;
+    deleteFilesAndFolders: (_: Folder | undefined) => {
+      return _;
     },
   });
 
