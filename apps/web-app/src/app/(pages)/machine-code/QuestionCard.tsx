@@ -1,15 +1,11 @@
 'use client';
-import COMMON_TEXTS from '@elementstack/shared-assets/CommonTexts';
-import { useContext } from 'react';
-import {
-  DEVICE_SIZES,
-  SizeProviderContext,
-} from '@web-app/contexts/SizeProvider';
-import { oxanium } from '@web-app/constants/Common';
 import {
   MachineQuestionMeta,
   QuestionLevel,
 } from '@elementstack/shared-assets/Types';
+import { MachineQuestionDetailsContext } from '@web-app/contexts/MachineQuestionProvider';
+import { usePathname, useRouter } from 'next/navigation';
+import { useContext } from 'react';
 
 const getLevelColor = (type: QuestionLevel) => {
   if (QuestionLevel.EASY === type) {
@@ -26,13 +22,19 @@ const QuestionCard = ({
 }: {
   questionData: MachineQuestionMeta;
 }) => {
-  const { windowSize } = useContext(SizeProviderContext);
-  const isMobile = [DEVICE_SIZES.xsm, DEVICE_SIZES.sm].includes(windowSize);
-
+  const router = useRouter();
+  const pathName = usePathname();
+  const { setMachineQuestionDetails } = useContext(
+    MachineQuestionDetailsContext
+  );
   return (
     <>
       <div
         className={`flex flex-col min-w-[120px] justify-center gap-1 p-5 bg-pannel rounded-lg cursor-pointer border border-transparent hover:border-machine-500 transition-all`}
+        onClick={() => {
+          setMachineQuestionDetails({ payload: { metaData: questionData } });
+          router.push(pathName.slice(1) + '/' + questionData.id);
+        }}
       >
         <div className="flex w-full gap-2">
           <p className={`w-fit text-[16px] text-primaryText`}>

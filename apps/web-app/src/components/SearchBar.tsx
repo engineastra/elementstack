@@ -1,28 +1,39 @@
-import Image from 'next/image';
-import searchIcon from '@elementstack/shared-assets/icons/Search.svg';
+import { Search as SearchIcon } from '@mui/icons-material';
 
 type SearchBarProps = {
   name?: string;
   value?: string;
   placeholder?: string;
+  height?: string;
   width?: string;
+  themeColor?: string;
+  bgColor?: string;
+  onSearch: (val: string) => void;
 };
 
-const SearchBar = ({ name, value, placeholder, width }: SearchBarProps) => {
+const SearchBar = ({
+  name,
+  value,
+  placeholder,
+  height = '45px',
+  width = '100%',
+  themeColor = 'primary',
+  bgColor = 'greenishgrey',
+  onSearch,
+}: SearchBarProps) => {
   return (
     <div
-      className={`flex h-[40px] px-4 rounded-full bg-greenishgrey text-[12px] md:text-[14px] md:min-w-[400px] ${
-        width || ''
-      }`}
+      className={`flex shrink-0 w-[${width}] min-h-[${height}] h-[45px] px-5 rounded-full bg-${bgColor} *:text-[13px] items-center`}
     >
       <input
         type="text"
-        className="flex flex-1 bg-transparent outline-none placeholder:text-secondaryText"
+        className={`flex flex-1 bg-transparent outline-none text-${themeColor} placeholder:text-secondaryText`}
         name={name}
         value={value}
         placeholder={placeholder}
+        onChange={(e) => onSearch(e.target.value)}
       />
-      <Image className="w-4" src={searchIcon} alt="search" />
+      <SearchIcon sx={{ fontSize: 20 }} />
     </div>
   );
 };

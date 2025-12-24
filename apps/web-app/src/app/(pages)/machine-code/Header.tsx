@@ -14,9 +14,8 @@ const Header = () => {
   return (
     <>
       <div
-        className={`flex flex-wrap md:flex-row items-center gap-3 justify-between py-2 pl-3`}
+        className={`flex flex-wrap md:flex-row items-center gap-3 justify-between`}
       >
-        {/* <SearchBar placeholder="Search questions" /> */}
         <p
           className={`w-fit ${oxanium.className} ${
             isMobile ? 'text-[18px]' : 'text-[24px]'

@@ -145,3 +145,231 @@ export const PROJECT_THEME_BY_TYPE: Record<
     shadow: 'inset 0 0 10px #ff9700',
   },
 };
+
+export const TOPICS_TO_FEATURES: Array<{
+  id: string;
+  topic: string;
+  features: string[];
+}> = [
+  {
+    id: 't1-state-management',
+    topic: 'State Management',
+    features: [
+      'State Management',
+      'Complex State',
+      'Global State',
+      'Context API',
+      'Field State Management',
+      'Flexible State',
+    ],
+  },
+  {
+    id: 't2-data-persistence',
+    topic: 'Data Persistence & Storage',
+    features: [
+      'Persistence',
+      'Data Caching',
+      'Offline Support',
+      'Auto-save',
+      'History',
+    ],
+  },
+  {
+    id: 't3-crud-data-ops',
+    topic: 'CRUD & Data Operations',
+    features: [
+      'CRUD Operations',
+      'Edit/Delete',
+      'Category Management',
+      'Cart Management',
+      'Vote Tracking',
+      'Quiz Management',
+    ],
+  },
+  {
+    id: 't4-ui-interactions',
+    topic: 'User Interaction & Input Handling',
+    features: [
+      'Interactivity',
+      'Hover Effects',
+      'Click-outside Detection',
+      'Touch Support',
+      'Touch Gestures',
+      'Swipe Gestures',
+      'Smooth Dragging',
+    ],
+  },
+  {
+    id: 't5-keyboard-access',
+    topic: 'Keyboard & Accessibility',
+    features: [
+      'Keyboard Navigation',
+      'Keyboard Support',
+      'Keyboard Shortcuts',
+      'Accessibility',
+      'Focus Trap',
+      'ARIA Support',
+    ],
+  },
+  {
+    id: 't6-animations-motion',
+    topic: 'Animations & Motion',
+    features: [
+      'Animations',
+      'Smooth Animations',
+      'Slide Animations',
+      'Smooth Animation',
+      'CSS Animation',
+      'Backdrop',
+    ],
+  },
+  {
+    id: 't7-performance',
+    topic: 'Performance Optimization',
+    features: [
+      'Performance',
+      'Virtual Scrolling',
+      'Lazy Loading',
+      'IntersectionObserver',
+      'Image Optimization',
+    ],
+  },
+  {
+    id: 't8-search-filtering',
+    topic: 'Search, Filtering & Sorting',
+    features: [
+      'Filtering',
+      'Search',
+      'Search Filtering',
+      'Advanced Search',
+      'Sorting/Filtering',
+      'Debounced Search',
+      'Date Filtering',
+    ],
+  },
+  {
+    id: 't9-api-network',
+    topic: 'API & Network Integration',
+    features: [
+      'API Integration',
+      'WebSocket Integration',
+      'Real-time Updates',
+      'Geolocation',
+      'Language Detection',
+    ],
+  },
+  {
+    id: 't10-error-loading',
+    topic: 'Error & Loading Handling',
+    features: [
+      'Error Handling',
+      'Loading States',
+      'Error Display',
+      'Progress Tracking',
+    ],
+  },
+  {
+    id: 't11-drag-drop',
+    topic: 'Drag & Drop Systems',
+    features: [
+      'Drag & Drop',
+      'Nested Items',
+      'Smart Positioning',
+      'Flexible Positioning',
+    ],
+  },
+  {
+    id: 't12-forms-validation',
+    topic: 'Forms & Validation',
+    features: [
+      'Custom Hooks',
+      'Async Validation',
+      'Reusability',
+      'Validation Schemas',
+    ],
+  },
+  {
+    id: 't13-navigation-layout',
+    topic: 'Navigation & Layout',
+    features: [
+      'Responsive Design',
+      'Responsive',
+      'Smart Ellipsis',
+      'Boundary Handling',
+      'Dynamic Generation',
+      'Multiple Directions',
+    ],
+  },
+  {
+    id: 't14-media',
+    topic: 'Media & Rich Content',
+    features: [
+      'Video API',
+      'Audio API',
+      'Subtitles',
+      'Visualization',
+      'Image Gallery',
+      'Full-screen Display',
+    ],
+  },
+  {
+    id: 't15-editor-tools',
+    topic: 'Editors & Developer Tools',
+    features: [
+      'Syntax Highlighting',
+      'Line Numbers',
+      'Live Preview',
+      'Toolbar',
+      'Custom Styling',
+    ],
+  },
+  {
+    id: 't16-charts-analytics',
+    topic: 'Charts & Analytics',
+    features: [
+      'Data Visualization',
+      'Results Visualization',
+      'Progress Charts',
+      'Statistics',
+      'Results Analysis',
+    ],
+  },
+  {
+    id: 't17-notifications',
+    topic: 'Notifications & Feedback',
+    features: ['Notifications', 'Auto-dismiss', 'Stacking', 'Message Status'],
+  },
+  {
+    id: 't18-security-utils',
+    topic: 'Security & Utilities',
+    features: [
+      'Password Generation',
+      'Strength Indicator',
+      'Copy Functionality',
+      'File Validation',
+    ],
+  },
+  {
+    id: 't19-productivity',
+    topic: 'Productivity Features',
+    features: [
+      'Undo/Redo',
+      'Focus Mode',
+      'Recurring Tasks',
+      'Priority System',
+      'Statistics',
+    ],
+  },
+  {
+    id: 't20-deployment-meta',
+    topic: 'Export, Deployment & Meta',
+    features: [
+      'Export Functionality',
+      'Export/Deploy',
+      'Theme Support',
+      'SEO Optimization',
+      'Customization',
+      'Multiple Templates',
+    ],
+  },
+];

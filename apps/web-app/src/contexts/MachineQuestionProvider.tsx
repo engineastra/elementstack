@@ -16,6 +16,7 @@ const initialState: MachineQuestionData = {
     detailedDescription: '',
     hints: [],
     solution: {},
+    keyFeatures: [],
     nextQuestions: {
       id: '',
       title: '',

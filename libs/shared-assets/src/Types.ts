@@ -62,6 +62,7 @@ export type MachineQuestionMeta = {
   detailedDescription: string;
   hints: Array<string>;
   solution?: Record<string, string>;
+  keyFeatures: Array<string>;
   nextQuestions: {
     id: string;
     title: string;
