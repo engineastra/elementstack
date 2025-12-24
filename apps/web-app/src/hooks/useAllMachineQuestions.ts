@@ -1,8 +1,5 @@
 import { MachineQuestionMeta } from '@elementstack/shared-assets/Types';
-import { deleteProjectFromLocalStorageById } from '@web-app/utils/projectUtils';
 import {
-  Dispatch,
-  SetStateAction,
   useEffect,
   useState,
   useTransition,

@@ -26,6 +26,7 @@ const AllQuestions = ({ questions }: { questions: MachineQuestionMeta[] }) => {
   >([]);
   const [filterTopics, setFilterTopics] = useState<ValueListType[]>([]);
   const [filterLevels, setFilterLevels] = useState<ValueListType[]>([]);
+  const [filterFrameWork, setFilterFrameWork] = useState<ValueListType[]>([]);
   const [filterProgresses, setFilterProgresses] = useState<ValueListType[]>([]);
   const [filterQuestionTypes, setFilterQuestionTypes] = useState<
     ValueListType[]
@@ -54,7 +55,9 @@ const AllQuestions = ({ questions }: { questions: MachineQuestionMeta[] }) => {
               )
             )) &&
           (!filterLevels.length ||
-            filterLevels.some((lvlObj) => lvlObj.displayText === ques.level))
+            filterLevels.some((lvlObj) => lvlObj.displayText === ques.level)) &&
+          (!filterFrameWork.length ||
+            filterFrameWork.some((obj) => obj.displayText === ques.techStack))
       ),
     ];
     if (!filterTopics.length && !filterLevels.length && !newList.length) {
@@ -64,6 +67,7 @@ const AllQuestions = ({ questions }: { questions: MachineQuestionMeta[] }) => {
   }, [
     filterTopics,
     filterLevels,
+    filterFrameWork,
     filterProgresses,
     filterQuestionTypes,
     questions,
@@ -107,10 +111,12 @@ const AllQuestions = ({ questions }: { questions: MachineQuestionMeta[] }) => {
               filterLevels={filterLevels}
               filterProgresses={filterProgresses}
               filterQuestionTypes={filterQuestionTypes}
+              filterFrameWork={filterFrameWork}
               setFilterTopics={setFilterTopics}
               setFilterLevels={setFilterLevels}
               setFilterProgresses={setFilterProgresses}
               setFilterQuestionTypes={setFilterQuestionTypes}
+              setFilterFramework={setFilterFrameWork}
             />
           </div>
         </div>

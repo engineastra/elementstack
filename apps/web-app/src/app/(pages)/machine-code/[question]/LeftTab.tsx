@@ -1,7 +1,7 @@
 'use client';
+import { useContext } from 'react';
 import { MachineLeftTabs } from '@elementstack/shared-assets/Enums';
 import { MachineQuestionDetailsContext } from '@web-app/contexts/MachineQuestionProvider';
-import { useContext } from 'react';
 
 const LeftTab = () => {
   const { machineQuestionDetails, setMachineQuestionDetails } = useContext(

@@ -8,7 +8,7 @@ const MachineCode = () => {
   return (
     <div className="flex flex-col w-full overflow-hidden">
       <div
-        className={`flex flex-col w-full min-h-full ${oxanium.variable} pl-2`}
+        className={`flex flex-col w-full min-h-full ${oxanium.variable} px-1`}
       >
         <AllQuestions questions={machineQuestions} />
       </div>

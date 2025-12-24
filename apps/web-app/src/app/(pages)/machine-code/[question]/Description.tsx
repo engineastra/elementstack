@@ -73,9 +73,9 @@ const Description = () => {
               💡 Hints
             </p>
             {hintExpand ? (
-              <ExpandMore sx={{ fontSize: 20 }} />
-            ) : (
               <ExpandLess sx={{ fontSize: 20 }} />
+            ) : (
+              <ExpandMore sx={{ fontSize: 20 }} />
             )}
           </div>
           {hintExpand && (
@@ -102,9 +102,9 @@ const Description = () => {
               📙 Topics
             </p>
             {topicsExpand ? (
-              <ExpandMore sx={{ fontSize: 20 }} />
-            ) : (
               <ExpandLess sx={{ fontSize: 20 }} />
+            ) : (
+              <ExpandMore sx={{ fontSize: 20 }} />
             )}
           </div>
           {topicsExpand && (
