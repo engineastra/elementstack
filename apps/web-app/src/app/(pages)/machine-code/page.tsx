@@ -4,8 +4,7 @@ import AllQuestions from './AllQuestions';
 import { useAllMachineQuestions } from '@web-app/hooks/useAllMachineQuestions';
 
 const MachineCode = () => {
-  const { isQuestionsLoaded, machineQuestions, setMachineQuestions } =
-    useAllMachineQuestions();
+  const { machineQuestions } = useAllMachineQuestions();
   return (
     <div className="flex flex-col w-full overflow-hidden">
       <div

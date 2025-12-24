@@ -78,7 +78,7 @@ const createSchema = (folder: Folder) => {
   });
 };
 
-export const useFolderTree = (folder: Folder) => {
+export const useProjectFolderTree = (folder: Folder) => {
   const { projectDetails, setProjectDetails } = useContext(
     ProjectDetailsContext
   );
@@ -192,6 +192,7 @@ export const useFolderTree = (folder: Folder) => {
           language: 'text',
           value: '',
           parentFolderId: folderObj.id,
+          canBeRemoved: true,
         };
       } else {
         const fileExt = fileAttrs.at(-1);
@@ -202,6 +203,7 @@ export const useFolderTree = (folder: Folder) => {
           language: FILE_TYPE_TO_LANGUAGE[fileExt as string] || 'text',
           value: '',
           parentFolderId: folderObj.id,
+          canBeRemoved: true,
         };
       }
       newTabs.push(newFile);

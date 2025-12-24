@@ -8,10 +8,10 @@ import {
   DEVICE_SIZES,
   SizeProviderContext,
 } from '@web-app/contexts/SizeProvider';
-import MachineQuestionProvider from '@web-app/contexts/MachineQuestionProvider';
 
 const CollectiveProvider = ({ children }: { children: ReactNode }) => {
-  return <MachineQuestionProvider>{children}</MachineQuestionProvider>;
+  // Add global providers here
+  return <>{children}</>;
 };
 
 const CommonLayout = ({ children }: { children: ReactNode }) => {

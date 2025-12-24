@@ -3,13 +3,19 @@ export enum FsItemType {
   FOLDER = 'FOLDER',
 }
 
-export enum MachineTabs {
+export enum MachineLeftTabs {
   Desc = 'Description',
   FileSystem = 'File System',
-  Note = 'Note',
+  // Note = 'Note',
+}
+
+export enum MachineRightTabs {
+  Code = 'Code',
+  Preview = 'Preview',
+  SolutionPreview = 'Solution Preview',
 }
 
 export enum TechStack {
   VanilaJS = 'Vanilla JS based',
-  React='React based'
+  React = 'React based',
 }

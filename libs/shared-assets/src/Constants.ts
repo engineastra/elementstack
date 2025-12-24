@@ -67,7 +67,7 @@ export const COMMON_COLORS = {
   success: '#22C55E',
   warning: '#F59E0B',
   error: '#EF4444',
-  project: { 500: '#FFCA9B' },
+  project: { 500: '#f38a8d' },
   machine: { 500: '#B69FE9' },
   problems: { 500: '#7EBBF8' },
   peer: { 500: '#22C55E' },

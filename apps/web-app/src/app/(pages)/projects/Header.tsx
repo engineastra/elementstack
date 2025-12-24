@@ -17,6 +17,7 @@ import {
 import { iconColor } from '@web-app/utils/commonUtils';
 import DeletePopUp from '@web-app/components/DeletePopUp';
 import { oxanium } from '@web-app/constants/Common';
+import { COMMON_COLORS } from '@elementstack/shared-assets/Constants';
 
 const Header = ({
   projects,
@@ -42,19 +43,18 @@ const Header = ({
   return (
     <>
       <div
-        className={`flex flex-wrap md:flex-row items-center gap-3 justify-between`}
+        className={`flex flex-wrap md:flex-row items-center gap-3 justify-between pt-1 px-1`}
       >
-        {/* <SearchBar placeholder="Search your projects" /> */}
         <p
           className={`w-fit ${oxanium.className} ${
             isMobile ? 'text-[18px]' : 'text-[24px]'
-          } text-primary font-medium`}
+          } text-project-500 font-medium`}
         >
           {COMMON_TEXTS.ALL_PROJECTS}
         </p>
         <div id="project-header" className="flex items-center gap-3">
           <button
-            className={`flex py-2 px-3 text-[12px] w-fit max-h-[40px] md:text-[14px] border border-[#f1b863] rounded-full hover:scale-105 items-center justify-center`}
+            className={`flex py-2 px-3 text-[12px] w-fit max-h-[40px] md:text-[14px] border border-success rounded-full hover:scale-105 items-center justify-center`}
             onClick={onOpenCreateModel}
           >
             <AddBox
@@ -62,11 +62,11 @@ const Header = ({
                 height: '20px',
                 width: '24px',
                 cursor: 'pointer',
-                ...iconColor('#f1b863'),
+                ...iconColor(COMMON_COLORS.success),
               }}
             />
             {!isMobile && (
-              <p className="text-[#f1b863] font-medium">
+              <p className="text-success font-medium">
                 {COMMON_TEXTS.NEW_PROJECT}
               </p>
             )}

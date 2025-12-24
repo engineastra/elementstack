@@ -1,4 +1,9 @@
-import { FsItemType, MachineTabs, TechStack } from './Enums';
+import {
+  FsItemType,
+  MachineLeftTabs,
+  MachineRightTabs,
+  TechStack,
+} from './Enums';
 
 export type FileData = {
   id: string; // based on index + depth order + name
@@ -7,6 +12,8 @@ export type FileData = {
   language: string;
   value: string;
   parentFolderId: string;
+  readonly?: boolean;
+  canBeRemoved?: boolean;
 };
 
 export type Folder = {
@@ -18,6 +25,7 @@ export type Folder = {
   isRoot?: boolean;
   isExpanded?: boolean;
   parentFolderId: string;
+  canBeRemoved?: boolean;
 };
 
 export type ProjectDetailsSchema = {
@@ -73,6 +81,11 @@ export type MachineQuestionMeta = {
 export type MachineQuestionData = {
   metaData: MachineQuestionMeta;
   solutionFiles: Array<FileData>;
-  selectedLeftTab: MachineTabs | undefined;
-  selectedRightTab: MachineTabs | undefined;
+  selectedLeftTab: MachineLeftTabs | undefined;
+  selectedRightTab: MachineRightTabs | undefined;
+  rootFolder: Folder;
+  selectedFileId: string;
+  selectedFolderId: string;
+  treeItemSelectionId: string;
+  multipleItemsSelected: Array<string>;
 };

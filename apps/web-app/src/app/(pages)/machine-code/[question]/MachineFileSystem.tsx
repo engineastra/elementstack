@@ -1,7 +1,7 @@
 'use client';
 import {
+  COMMON_COLORS,
   FILE_TYPE_TO_ICON,
-  PROJECT_THEME_BY_TYPE,
 } from '@elementstack/shared-assets/Constants';
 import { FileData, Folder } from '@elementstack/shared-assets/Types';
 import {
@@ -12,10 +12,11 @@ import {
 } from '@mui/icons-material';
 import Image from 'next/image';
 import { FsItemType } from '@elementstack/shared-assets/Enums';
-import { useProjectFolderTree } from '@web-app/hooks/useProjectFolderTree';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import { Ref } from 'react';
+import { Dispatch, Ref } from 'react';
 import { iconColor } from '@web-app/utils/commonUtils';
+import { useMachineFileSystem } from '@web-app/hooks/useMachineFileSystem';
+import { InputType } from './FilesSection';
 
 type NewInputFieldPropType<T extends FieldValues> = {
   name: Path<T>;
@@ -34,7 +35,7 @@ const NewInputField = <T extends FieldValues>({
     name={name}
     control={control}
     render={({ field, fieldState }) => (
-      <div className="flex flex-col">
+      <div className="flex flex-col bg-greenishgrey px-2 py-1 rounded-md">
         <input
           {...field}
           ref={ref}
@@ -56,26 +57,28 @@ const NewInputField = <T extends FieldValues>({
   />
 );
 
-const FolderTree = ({ folder }: { folder: Folder }) => {
+const MachineFolderTree = ({
+  folder,
+  inputData,
+  setInputData,
+}: {
+  folder: Folder;
+  inputData: InputType;
+  setInputData: Dispatch<InputType>;
+}) => {
   const {
     inputRef,
     control,
-    newInputData,
-    currentSelectedId,
-    renameFileOrFolderObj,
-    renameFileOrFolderRef,
     multipleItemsSelected,
+    treeItemSelectionId,
     selectedFolderId,
-    projectType,
     handleFileOrFolderSelection,
-    handleFileRenameEnter,
-    handleFolderRenameEnter,
-    onNewFileOrFolderInputEnter,
     onDragStartFileOrFolder,
     onDragOverFileOrFolder,
     onDropFileOrFolder,
     onFileOrFolderNameDoubleClick,
-  } = useProjectFolderTree(folder);
+    onNameChangeEnter,
+  } = useMachineFileSystem({ folder, inputData, setInputData });
   return (
     <div
       className={`flex flex-col ${folder.isRoot ? 'flex-1' : ''}`}
@@ -108,63 +111,68 @@ const FolderTree = ({ folder }: { folder: Folder }) => {
           sx={{
             fontSize: 15,
             marginRight: '0.5rem',
-            ...iconColor(PROJECT_THEME_BY_TYPE[projectType].text),
+            ...iconColor(COMMON_COLORS.machine[500]),
           }}
         />
-        {renameFileOrFolderObj && renameFileOrFolderObj.id === folder.id ? (
-          <div className="flex my-[4px] px-1 py-[2px] bg-greenishgrey border border-primary gap-1">
-            <NewInputField
-              name="renameFileOrFolder"
-              ref={renameFileOrFolderRef}
-              control={control}
-              onInputEnter={() => handleFolderRenameEnter(folder)}
-            />
-          </div>
+        {inputData.toggle && inputData.id === folder.id ? (
+          <NewInputField
+            name="nameChangeInput"
+            ref={inputRef}
+            control={control}
+            onInputEnter={onNameChangeEnter}
+          />
         ) : (
           <p
             className={`text-[12px] ${
-              currentSelectedId === folder.id ||
+              treeItemSelectionId === folder.id ||
               multipleItemsSelected.includes(folder.id)
-                ? 'text-primary'
+                ? 'text-machine-500'
                 : ''
             }`}
-            onDoubleClick={() => onFileOrFolderNameDoubleClick(folder)}
+            onDoubleClick={() =>
+              onFileOrFolderNameDoubleClick(
+                folder.id,
+                FsItemType.FOLDER,
+                folder.name
+              )
+            }
           >
             {folder.name}
           </p>
         )}
       </div>
-      {newInputData.isEnabled && selectedFolderId === folder.id && (
-        <div className="flex my-[4px] ml-4 px-1 py-[2px] bg-greenishgrey border border-primary gap-1 items-center rounded-sm">
-          {newInputData.type === FsItemType.FILE ? (
-            <FileIcon
-              color="warning"
-              sx={{
-                fontSize: 15,
-                ...iconColor(PROJECT_THEME_BY_TYPE[projectType].text),
-              }}
+      {inputData.toggle &&
+        inputData.isNew &&
+        selectedFolderId === folder.id && (
+          <div className="flex my-[4px] ml-4 px-2 py-[2px] bg-greenishgrey rounded-xl gap-1 items-center">
+            {inputData.type === FsItemType.FILE ? (
+              <FileIcon
+                sx={{ fontSize: 15, ...iconColor(COMMON_COLORS.machine[500]) }}
+              />
+            ) : (
+              <FolderIcon
+                sx={{ fontSize: 15, ...iconColor(COMMON_COLORS.machine[500]) }}
+              />
+            )}
+            <NewInputField
+              name="nameChangeInput"
+              ref={inputRef}
+              control={control}
+              onInputEnter={onNameChangeEnter}
             />
-          ) : (
-            <FolderIcon
-              color="warning"
-              sx={{
-                fontSize: 15,
-                ...iconColor(PROJECT_THEME_BY_TYPE[projectType].text),
-              }}
-            />
-          )}
-          <NewInputField
-            name="newInputName"
-            ref={inputRef}
-            control={control}
-            onInputEnter={() => onNewFileOrFolderInputEnter(folder)}
-          />
-        </div>
-      )}
+          </div>
+        )}
       {folder.isExpanded && (
         <div className="flex flex-col pl-4 h-full">
           {folder.folders.map((subFolder) => {
-            return <FolderTree key={subFolder.id} folder={subFolder} />;
+            return (
+              <MachineFolderTree
+                key={subFolder.id}
+                folder={subFolder}
+                inputData={inputData}
+                setInputData={setInputData}
+              />
+            );
           })}
           {folder.files.map((file: FileData) => {
             return (
@@ -194,29 +202,32 @@ const FolderTree = ({ folder }: { folder: Folder }) => {
                     color="warning"
                     sx={{
                       fontSize: 15,
-                      ...iconColor(PROJECT_THEME_BY_TYPE[projectType].text),
+                      ...iconColor(COMMON_COLORS.machine[500]),
                     }}
                   />
                 )}
-                {renameFileOrFolderObj &&
-                renameFileOrFolderObj.id === file.id ? (
-                  <div className="flex my-[4px] px-1 py-[2px] bg-greenishgrey border border-primary gap-1 rounded-sm">
-                    <NewInputField
-                      name="renameFileOrFolder"
-                      ref={renameFileOrFolderRef}
-                      control={control}
-                      onInputEnter={() => handleFileRenameEnter(file)}
-                    />
-                  </div>
+                {inputData.toggle && inputData.id === file.id ? (
+                  <NewInputField
+                    name="nameChangeInput"
+                    ref={inputRef}
+                    control={control}
+                    onInputEnter={onNameChangeEnter}
+                  />
                 ) : (
                   <p
                     className={`text-[12px] ${
-                      currentSelectedId === file.id ||
+                      treeItemSelectionId === file.id ||
                       multipleItemsSelected.includes(file.id)
-                        ? 'text-primary'
+                        ? 'text-machine-500'
                         : ''
                     }`}
-                    onDoubleClick={() => onFileOrFolderNameDoubleClick(file)}
+                    onDoubleClick={() =>
+                      onFileOrFolderNameDoubleClick(
+                        file.id,
+                        FsItemType.FILE,
+                        file.name
+                      )
+                    }
                   >
                     {file.name}
                   </p>
@@ -230,4 +241,4 @@ const FolderTree = ({ folder }: { folder: Folder }) => {
   );
 };
 
-export default FolderTree;
+export default MachineFolderTree;

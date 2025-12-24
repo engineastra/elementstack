@@ -233,7 +233,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             name: 'index.html',
             extention: 'html',
             language: 'html',
-            parentFolderId: '01:src',
+            parentFolderId: '01:public',
             value: BOILER_PLATES.jsxHtml,
           },
         ],
@@ -307,7 +307,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             name: 'index.html',
             extention: 'html',
             language: 'html',
-            parentFolderId: '01:src',
+            parentFolderId: '01:public',
             value: BOILER_PLATES.jsxHtml,
           },
         ],
@@ -370,9 +370,11 @@ export const getFolderTemplate: (
     newFolder.id += folderName;
     newFolder.files.forEach((file) => {
       file.parentFolderId = newFolder.id;
+      file.canBeRemoved = false;
     });
     newFolder.folders.forEach((fld) => {
       fld.parentFolderId = newFolder.id;
+      fld.canBeRemoved = false;
     });
     return newFolder;
   }
