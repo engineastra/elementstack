@@ -1,12 +1,10 @@
 'use client';
 import React, { useState } from 'react';
-import { ExpandMore, ExpandLess, OpenInNew } from '@mui/icons-material';
+import { ExpandMore, ExpandLess } from '@mui/icons-material';
 import { QuestionLevel } from '@elementstack/shared-assets/Types';
 import { oxanium } from '@web-app/constants/Common';
 import { MachineQuestionDetailsContext } from '@web-app/contexts/MachineQuestionProvider';
 import { useContext } from 'react';
-import { iconColor } from '@web-app/utils/commonUtils';
-import { COMMON_COLORS } from '@elementstack/shared-assets/Constants';
 import { MachineRightTabs } from '@elementstack/shared-assets/Enums';
 
 const getLevelColor = (type: QuestionLevel) => {
@@ -58,9 +56,10 @@ const Description = () => {
           <p className={`text-[14px] text-machine-500 text-justify`}>
             Solution Preview
           </p>
-          <OpenInNew
+          <p className='text-[12px] text-machine-500 text-justify px-2 py-1 border border-machine-500 rounded-full bg-machine-500 bg-opacity-20'>Coming soon</p>
+          {/* <OpenInNew
             sx={{ fontSize: 20, ...iconColor(COMMON_COLORS.machine[500]) }}
-          />
+          /> */}
         </div>
         <div className="w-full mt-auto">
           <div

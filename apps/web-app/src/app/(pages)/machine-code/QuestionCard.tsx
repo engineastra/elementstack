@@ -18,12 +18,14 @@ const getLevelColor = (type: QuestionLevel) => {
 };
 
 const getTechStackColor = (tech: TechStack) => {
-  if (TechStack.VanilaJS === tech) {
+  if (TechStack.VANILLA_JS_BASED === tech) {
     return COMMON_COLORS.js;
-  } else if (TechStack.React === tech) {
+  } else if (TechStack.REACT_BASED === tech) {
     return COMMON_COLORS.tsx;
+  } else if (TechStack.REACT_VANILLA_JS_BASED === tech) {
+    return COMMON_COLORS.jsx;
   }
-  return 'machine-500';
+  return COMMON_COLORS.machine[500];
 };
 
 const QuestionCard = ({
@@ -36,7 +38,7 @@ const QuestionCard = ({
   return (
     <>
       <div
-        className={`flex flex-col min-w-[120px] justify-center gap-1 p-5 bg-pannel rounded-lg cursor-pointer border border-transparent hover:border-machine-500 transition-all`}
+        className={`flex flex-col min-w-[120px] justify-center gap-1 p-5 bg-pannel rounded-lg cursor-pointer border border-transparent hover:border-machine-500 transition-all my-[10px]`}
         onClick={() => {
           router.push(pathName.slice(1) + '/' + questionData.id);
         }}

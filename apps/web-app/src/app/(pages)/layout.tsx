@@ -32,7 +32,7 @@ const CommonLayout = ({ children }: { children: ReactNode }) => {
               <Branding full />
             </div>
           )}
-          <div className="flex items-center flex-row md:flex-col h-full w-full md:w-[300px] p-2 md:p-3 md:pt-[25px] border border-greenishgrey rounded-xl">
+          <div className="flex items-center flex-row md:flex-col md:h-full w-full md:w-[300px] p-2 md:p-3 md:pt-[25px] bg-transparent md:border md:border-greenishgrey rounded-xl">
             {!isMobile && <Branding />}
             <nav className="flex flex-1 flex-row md:flex-col w-full px-2 md:py-4 gap-3 md:mt-[50px]">
               {Object.entries(OPTION_CARDS).map(([key, value]) => {

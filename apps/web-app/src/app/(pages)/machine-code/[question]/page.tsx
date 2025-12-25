@@ -24,11 +24,13 @@ import FilesSection from './FilesSection';
 import { getFolderTemplate } from '@elementstack/shared-assets/Template';
 import MachineCodeEditor from './MachineCodeEditor';
 import { SandboxPreview } from '@web-app/components/Preview';
-import { Close } from '@mui/icons-material';
+import { Close, OpenInNew } from '@mui/icons-material';
 import {
   DEVICE_SIZES,
   SizeProviderContext,
 } from '@web-app/contexts/SizeProvider';
+import { FullPreviewContext } from '@web-app/contexts/FullPreviewProvider';
+import { useRouter } from 'next/navigation';
 
 async function getQuestionById(id: string) {
   const questions = (
@@ -43,9 +45,11 @@ const SingleQuestion = ({
   params: Promise<{ question: string }>;
 }) => {
   const paramObj = use(params);
+  const router = useRouter();
   const { machineQuestionDetails, setMachineQuestionDetails } = useContext(
     MachineQuestionDetailsContext
   );
+  const { setFullPreviewData } = useContext(FullPreviewContext);
   const { windowSize } = useContext(SizeProviderContext);
   const isTablet = [
     DEVICE_SIZES.xsm,
@@ -57,6 +61,12 @@ const SingleQuestion = ({
   const [, loadQuestionInTransition] = useTransition();
   const { metaData, rootFolder, selectedLeftTab, selectedRightTab } =
     machineQuestionDetails;
+  const projectType = [
+    TechStack.HTML5_JS_BASED,
+    TechStack.VANILLA_JS_BASED,
+  ].includes(metaData.techStack)
+    ? ProjectType.js
+    : ProjectType.jsx;
 
   useEffect(() => {
     if (isTablet) {
@@ -81,10 +91,12 @@ const SingleQuestion = ({
             keyFeatures: quesObj.keyFeatures,
           },
         };
-        const quesProjType =
-          payload.metaData?.techStack === TechStack.React
-            ? ProjectType.jsx
-            : ProjectType.js;
+        const quesProjType = [
+          TechStack.HTML5_JS_BASED,
+          TechStack.VANILLA_JS_BASED,
+        ].includes(payload.metaData?.techStack as TechStack)
+          ? ProjectType.js
+          : ProjectType.jsx;
         payload.rootFolder =
           getFolderTemplate(quesProjType, payload.metaData?.title || '') ||
           undefined;
@@ -104,6 +116,14 @@ const SingleQuestion = ({
       }
     });
   }, []);
+
+  const onFullPagePreviewClick = () => {
+    setFullPreviewData({
+      folder: rootFolder,
+      type: projectType,
+    });
+    router.push('/webpreview');
+  };
 
   return (
     <div className="relative flex flex-col md:flex-row w-full h-[100vh] md:max-h-[100vh] p-2 gap-2 bg-backgroundAccent md:overflow-hidden">
@@ -130,6 +150,15 @@ const SingleQuestion = ({
               <p className="text-[13px] text-machine-500 font-semibold">
                 {MachineRightTabs.Preview}
               </p>
+              <OpenInNew
+                sx={{
+                  fontSize: 15,
+                  position: 'absolute',
+                  right: 30,
+                  cursor: 'pointer',
+                }}
+                onClick={onFullPagePreviewClick}
+              />
               <Close
                 sx={{
                   fontSize: 15,
@@ -144,14 +173,7 @@ const SingleQuestion = ({
               />
             </div>
             <div className="h-full w-full">
-              <SandboxPreview
-                folder={rootFolder}
-                type={
-                  metaData?.techStack === TechStack.React
-                    ? ProjectType.jsx
-                    : ProjectType.js
-                }
-              />
+              <SandboxPreview folder={rootFolder} type={projectType} />
             </div>
           </div>
         </div>
@@ -165,14 +187,7 @@ const SingleQuestion = ({
           {selectedRightTab === MachineRightTabs.Code && <MachineCodeEditor />}
           {selectedRightTab === MachineRightTabs.Preview && (
             <div className="h-full w-full">
-              <SandboxPreview
-                folder={rootFolder}
-                type={
-                  metaData?.techStack === TechStack.React
-                    ? ProjectType.jsx
-                    : ProjectType.js
-                }
-              />
+              <SandboxPreview folder={rootFolder} type={projectType} />
             </div>
           )}
         </div>

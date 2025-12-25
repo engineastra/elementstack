@@ -16,7 +16,8 @@ export enum MachineRightTabs {
 }
 
 export enum TechStack {
-  VanilaJS = 'Vanilla JS based',
-  React = 'React based',
-  Html = 'HTML5 & JS based',
+  REACT_BASED = 'React based',
+  VANILLA_JS_BASED = 'Vanilla JS based',
+  HTML5_JS_BASED = 'HTML5 & JS based',
+  REACT_VANILLA_JS_BASED = 'React/Vanilla JS based',
 }

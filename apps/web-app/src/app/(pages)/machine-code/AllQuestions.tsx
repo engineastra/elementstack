@@ -1,5 +1,10 @@
 'use client';
 import debounce from 'lodash/debounce';
+import {
+  List as FixedSizeList,
+  type RowComponentProps,
+  useDynamicRowHeight,
+} from 'react-window';
 import { FilterAlt, FilterAltOff } from '@mui/icons-material';
 import { MachineQuestionMeta } from '@elementstack/shared-assets/Types';
 import QuestionCard from './QuestionCard';
@@ -33,6 +38,9 @@ const AllQuestions = ({ questions }: { questions: MachineQuestionMeta[] }) => {
   >([]);
   const [searchKey, setSearchKey] = useState('');
   const [filterToggle, setFilterToggle] = useState(false);
+  const questionRowHeight = useDynamicRowHeight({
+    defaultRowHeight: 50,
+  });
 
   const debouncedSearch = debounce(
     (val: string) => setSearchKey(val.toLowerCase()),
@@ -75,7 +83,7 @@ const AllQuestions = ({ questions }: { questions: MachineQuestionMeta[] }) => {
   ]);
 
   return (
-    <div className="relative lg:static flex flex-col lg:flex-row gap-2 pt-3 overflow-y-auto">
+    <div className="relative lg:static flex flex-col lg:flex-row gap-2 pt-3 md:overflow-y-auto">
       <div className="flex flex-col md:flex-[0.6] p-2 gap-3">
         <div className="flex justify-between items-center px-2">
           <Header />
@@ -97,14 +105,36 @@ const AllQuestions = ({ questions }: { questions: MachineQuestionMeta[] }) => {
           themeColor="machine-500"
           onSearch={debouncedSearch}
         />
-        <div className="flex flex-col flex-1 gap-[10px] ">
-          {filteredQuestions.map((ques) => {
+        <div className="flex flex-col flex-1 gap-[10px]">
+          <FixedSizeList
+            rowCount={filteredQuestions.length}
+            rowHeight={questionRowHeight}
+            rowProps={{ questions: filteredQuestions }}
+            rowComponent={({
+              index,
+              style,
+              questions,
+            }: RowComponentProps<{
+              questions: MachineQuestionMeta[];
+            }>) => {
+              return (
+                <div style={style}>
+                  <QuestionCard
+                    key={questions[index].id}
+                    questionData={questions[index]}
+                  />
+                </div>
+              );
+            }}
+          />
+
+          {/* {filteredQuestions.map((ques) => {
             return <QuestionCard key={ques.id} questionData={ques} />;
-          })}
+          })} */}
         </div>
       </div>
       {(!isTablet || filterToggle) && (
-        <div className="absolute lg:sticky top-[58px] lg:top-0 right-0 flex md:flex-[0.4] lg:mt-12 bg-black lg:bg-transparent border border-greenishgrey lg:border-transparent p-2 rounded-xl">
+        <div className="absolute lg:sticky top-[58px] lg:top-0 right-0 flex md:flex-[0.4] md:h-full lg:mt-12 bg-black lg:bg-transparent border border-greenishgrey lg:border-transparent p-2 rounded-xl">
           <div className="w-full overflow-y-auto">
             <Filters
               filterTopics={filterTopics}

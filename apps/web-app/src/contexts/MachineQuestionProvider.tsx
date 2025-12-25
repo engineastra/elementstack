@@ -16,7 +16,7 @@ const initialState: MachineQuestionData = {
   metaData: {
     id: '',
     title: '',
-    techStack: TechStack.VanilaJS,
+    techStack: TechStack.HTML5_JS_BASED,
     level: QuestionLevel.EASY,
     quickDescription: '',
     detailedDescription: '',

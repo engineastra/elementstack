@@ -1,5 +1,6 @@
 import SizeProvider from '@web-app/contexts/SizeProvider';
 import './global.css';
+import FullPreviewProvider from '@web-app/contexts/FullPreviewProvider';
 
 export const metadata = {
   title: 'Element Stack',
@@ -18,8 +19,10 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-backgroundAccent md:max-h-[100vh]">
         <SizeProvider>
-          {children}
-          <div id="modal" className="fixed top-0 left-0 z-10"></div>
+          <FullPreviewProvider>
+            {children}
+            <div id="modal" className="fixed top-0 left-0 z-10"></div>
+          </FullPreviewProvider>
         </SizeProvider>
       </body>
     </html>

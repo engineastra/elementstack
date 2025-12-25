@@ -14,6 +14,7 @@ import Modal from '@web-app/components/Modal';
 import DeletePopUp from '@web-app/components/DeletePopUp';
 import { MachineQuestionDetailsContext } from '@web-app/contexts/MachineQuestionProvider';
 import { InputType } from './FilesSection';
+import { ProjectType } from '@elementstack/shared-assets/Types';
 
 const RightTabHeader = ({
   inputData,
@@ -30,6 +31,12 @@ const RightTabHeader = ({
   const { metaData, treeItemSelectionId, multipleItemsSelected, rootFolder } =
     machineQuestionDetails;
   const [deleteConfimPopupToggle, setDeleteConfimPopupToggle] = useState(false);
+  const projectType = [
+    TechStack.HTML5_JS_BASED,
+    TechStack.VANILLA_JS_BASED,
+  ].includes(metaData.techStack)
+    ? ProjectType.js
+    : ProjectType.jsx;
 
   const handleOnAddClick = (type: FsItemType) => {
     setInputData({ ...inputData, type, toggle: true });
@@ -55,19 +62,11 @@ const RightTabHeader = ({
     <div className="flex items-center rounded-md rounded-b-none max-h-[100vh] ">
       <Image
         className="w-4"
-        src={
-          CREATE_PROJECT_OPTIONS[
-            metaData.techStack === TechStack.React ? 'jsx' : 'js'
-          ].icon
-        }
+        src={CREATE_PROJECT_OPTIONS[projectType].icon}
         alt="app-logo"
       />
       <p className="text-[12px] ml-[6px] mr-[15px]">
-        {
-          CREATE_PROJECT_OPTIONS[
-            metaData.techStack === TechStack.React ? 'jsx' : 'js'
-          ].title
-        }
+        {CREATE_PROJECT_OPTIONS[projectType].title}
       </p>
       <div className={`flex h-full items-center justify-center gap-1 ml-auto`}>
         {multipleItemsSelected.length > 0 && (
