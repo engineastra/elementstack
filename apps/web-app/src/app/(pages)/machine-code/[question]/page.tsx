@@ -104,7 +104,7 @@ const SingleQuestion = ({
           payload.rootFolder.isRoot = true;
           payload.rootFolder.isExpanded = true;
           const htmlFile = payload.rootFolder.folders
-            .find((fld) => fld.name === 'public')
+            .find((fld) => fld.name === 'public' || fld.name === 'src')
             ?.files.find((file) => file.name === 'index.html');
           if (htmlFile) {
             payload.selectedFileId = htmlFile.id;
