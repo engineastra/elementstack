@@ -13,7 +13,7 @@ html {
   --primary-text: #f9fafb;
   --black-gradient: linear-gradient(180deg, #000000 0%, #05112c 100%);
   --green-gradient: linear-gradient(0deg, #22c55e 0%, #71f163 100%);
-  --red-gradient: linear-gradient(0deg, #1F0021, #751006);
+  --red-gradient: linear-gradient(0deg, #1f0021, #751006);
   --purple-gradient: linear-gradient(180deg, #513690 0%, #15111d 100%);
   --blue-gradient: linear-gradient(180deg, #0f5c83 0%, #0c1945 100%);
   --darkgreen-gradient: linear-gradient(180deg, #178c42 0%, #0d3a1e 100%);
@@ -71,58 +71,6 @@ html {
     background-position: center;
     animation: rotate-bg 30s linear infinite;
   }
-  .codebanner-bg-wrapper {
-    pointer-events: none !important;
-    &::before {
-      content: '';
-      position: absolute;
-      z-index: -2;
-      left: -50%;
-      top: -50%;
-      width: 200%;
-      height: 200%;
-      background-repeat: no-repeat;
-      background-size: 50% 50%, 50% 50%;
-      background-position: 0 0, 100% 0, 100% 100%, 0 100%;
-      background-image: var(--green-gradient), var(--black-gradient),
-        var(--black-gradient), var(--black-gradient);
-      animation: rotate-bg 5s linear infinite;
-    }
-    &::after {
-      content: '';
-      position: absolute;
-      z-index: -1;
-      left: 2px;
-      top: 2px;
-      width: calc(100% - 4px);
-      height: calc(100% - 4px);
-      background-color: #111827;
-      border-radius: 0.9rem;
-    }
-    .monaco-editor-background,
-    .margin-view-overlays {
-      background-color: #111827 !important;
-    }
-  }
-
-  .with-divider {
-    position: relative;
-    &::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      border: 1px solid #1f2933;
-    }
-  }
-}
-
-.monaco-editor-background,
-.margin-view-overlays,
-.sticky-line-content,
-.sticky-line-number {
-  background-color: #0c1020 !important;
 }
 
 .current-line {

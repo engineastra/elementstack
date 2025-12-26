@@ -26,7 +26,7 @@ const CommonLayout = ({ children }: { children: ReactNode }) => {
         .includes(pathName.slice(1, pathName.length)) ? (
         children
       ) : (
-        <div className="feature-grad flex flex-col items-stretch md:items-start md:flex-row h-[100vh] overflow-y-scroll md:overflow-y-hidden p-3 gap-2">
+        <div className="feature-grad w-full flex flex-col items-stretch md:items-start md:flex-row h-[100vh] overflow-y-scroll md:overflow-y-hidden p-3 gap-2">
           {isMobile && (
             <div className="flex w-full justify-center py-[15px]">
               <Branding full />

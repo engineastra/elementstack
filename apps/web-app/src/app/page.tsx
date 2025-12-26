@@ -3,18 +3,18 @@ import yrgDots from '@elementstack/shared-assets/images/yrgDots.svg';
 import { OPTION_CARDS } from '@elementstack/shared-assets/Constants';
 import Image from 'next/image';
 import OptionCard from '@web-app/components/OptionCard';
-import Editor from '@web-app/components/Editor';
 import Header from '@web-app/app/Header';
 import { oxanium } from '@web-app/constants/Common';
+import CodemirrorEditor from '@web-app/components/CodemirrorEditor';
 
 export default function Home() {
   return (
     <div
-      className={`flex flex-col min-h-[100vh] ${oxanium.variable} px-5 py-4`}
+      className={`flex flex-col min-h-[100vh] max-w-[1400px] ${oxanium.variable} px-5 py-4`}
     >
       <Header />
-      <div className="flex min-h-[90vh] justify-start items-center w-full py-7 lg:px-10 flex-col lg:flex-row">
-        <div className="flex flex-col lg:px-5 lg:max-w-[55%]">
+      <div className="flex min-h-[80vh] justify-between w-full py-7 lg:mt-[100px] flex-col lg:flex-row gap-[40px]">
+        <div className="flex flex-col lg:max-w-[55%]">
           <p className="oxanium-font  text-primary font-bold text-[36px] lg:text-[56px]">
             {COMMON_TEXTS.TAG_LINE}
           </p>
@@ -27,10 +27,14 @@ export default function Home() {
             })}
           </div>
         </div>
-        <div className="relative lg:absolute h-[400px] w-full lg:w-[35vw] rounded-2xl lg:right-10 overflow-hidden padding: 2rem; codebanner-bg-wrapper p-4">
+        <div className="h-[400px] rounded-2xl overflow-hidden bg-pannel p-4">
           <Image width={40} src={yrgDots} alt="yrg-dots"></Image>
-          <div className="pt-6 h-[90%]">
-            <Editor value={COMMON_TEXTS.HOME_EDITOR_DEFAULT_VALUE} readOnly />
+          <div className="pt-6 h-[95%] *:pointer-events-none [&_.cm-gutters]:bg-pannel [&_.cm-editor]:bg-pannel">
+            <CodemirrorEditor
+              extention="jsx"
+              value={COMMON_TEXTS.HOME_EDITOR_DEFAULT_VALUE}
+              readOnly
+            />
           </div>
         </div>
       </div>

@@ -30,7 +30,6 @@
     "@eslint/js": "^9.8.0",
     "@expo/cli": "~54.0.16",
     "@hookform/resolvers": "^5.2.2",
-    "@monaco-editor/react": "^4.7.0",
     "@mui/icons-material": "^7.3.6",
     "@mui/material": "^7.3.6",
     "@next/eslint-plugin-next": "^16.0.1",

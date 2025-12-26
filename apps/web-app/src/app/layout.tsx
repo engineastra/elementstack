@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className="bg-backgroundAccent md:max-h-[100vh]">
         <SizeProvider>
           <FullPreviewProvider>
-            {children}
+            <div id="app" className='flex flex-0 w-full px-1 justify-center'>{children}</div>
             <div id="modal" className="fixed top-0 left-0 z-10"></div>
           </FullPreviewProvider>
         </SizeProvider>
