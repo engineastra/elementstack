@@ -45,6 +45,12 @@ const initialState: MachineQuestionData = {
   selectedFolderId: '',
   treeItemSelectionId: '',
   multipleItemsSelected: [],
+  nameChangeInputData: {
+    id: '',
+    type: '',
+    toggle: false,
+    isNew: true,
+  },
 };
 
 export const MachineQuestionDetailsInitialState = Object.freeze({

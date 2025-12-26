@@ -36,7 +36,7 @@ async function getQuestionById(id: string) {
   const questions = (
     await import('@elementstack/shared-assets/50Questions.json')
   ).default;
-  return questions.frontendMachineCodingQuestions.find((obj) => obj.id === id);
+  return questions.find((obj) => obj.id === id);
 }
 
 const SingleQuestion = ({
@@ -109,6 +109,7 @@ const SingleQuestion = ({
           if (htmlFile) {
             payload.selectedFileId = htmlFile.id;
             payload.treeItemSelectionId = htmlFile.id;
+            payload.selectedFolderId = htmlFile.parentFolderId;
             payload.multipleItemsSelected = [];
           }
         }

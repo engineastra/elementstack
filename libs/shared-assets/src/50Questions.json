@@ -1,1764 +1,1762 @@
-{
-  "frontendMachineCodingQuestions": [
-    {
-      "id": "q1-todo-list-app",
-      "title": "Todo List Application",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build a production-like Todo app with CRUD, filters, drag & drop, and persistence.",
-      "detailedDescription": "Build a complete Todo application where users can add, edit, delete, and mark tasks as completed, filter todos by status (all, active, completed), reorder items using drag & drop, and persist the state in localStorage so the list survives page reloads. The app should feel like a real-world productivity tool with clean UI, keyboard shortcuts (for example, Ctrl+K for search), and robust state management using hooks like useReducer and custom utilities such as a useLocalStorage hook.",
-      "hints": [
-        "Use useReducer for complex state management",
-        "Implement HTML5 Drag & Drop API",
-        "Create custom useLocalStorage hook",
-        "Add keyboard shortcuts (Ctrl+K for search)"
-      ],
-      "keyFeatures": [
-        "CRUD Operations",
-        "State Management",
-        "Persistence",
-        "Filtering",
-        "Drag & Drop"
-      ],
-      "timeEstimate": "45-60 minutes"
-    },
-    {
-      "id": "q2-image-carousel",
-      "title": "Image Carousel/Slider",
-      "techStack": "Vanilla JS based",
-      "level": "Medium",
-      "quickDescription": "Build a responsive image slider with autoplay, navigation controls, and lazy loading.",
-      "detailedDescription": "Create a responsive image carousel that supports navigation arrows, dot indicators, autoplay with pause on hover, touch and swipe gestures for mobile, keyboard navigation using arrow keys, and lazy loading for images to optimize performance. The component should handle edge cases like rapid user interaction, maintain smooth CSS transitions using translateX, and expose a clean API so it can be dropped into any landing page or gallery.",
-      "hints": [
-        "Use CSS transform: translateX for smooth transitions",
-        "Implement IntersectionObserver for lazy loading",
-        "Add touch/swipe event handlers",
-        "Handle edge cases like rapid clicking"
-      ],
-      "keyFeatures": [
-        "Autoplay",
-        "Touch Gestures",
-        "Lazy Loading",
-        "Keyboard Navigation",
-        "Responsive Design"
-      ],
-      "timeEstimate": "50-70 minutes"
-    },
-    {
-      "id": "q3-modal-dialog",
-      "title": "Modal Dialog",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Implement an accessible modal component with focus management and keyboard support.",
-      "detailedDescription": "Build an accessible modal dialog component that opens on user action, traps focus inside the dialog, supports closing via ESC, backdrop click, and close button, and can render different sizes like small, medium, and large. Use React Portals to correctly layer the modal above other content, add proper ARIA roles and attributes, and implement subtle open/close animations so it can be reused across forms, confirmation flows, and detail views.",
-      "hints": [
-        "Use React Portal for proper stacking",
-        "Implement focus management with useEffect",
-        "Add ARIA attributes and roles",
-        "Handle backdrop click vs escape key differently"
-      ],
-      "keyFeatures": [
-        "Accessibility",
-        "Focus Trap",
-        "Portal",
-        "Keyboard Support",
-        "Animations"
-      ],
-      "timeEstimate": "40-50 minutes"
-    },
-    {
-      "id": "q4-search-autocomplete",
-      "title": "Search Autocomplete Component",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a search input with autocomplete suggestions, debouncing, and keyboard navigation.",
-      "detailedDescription": "Create a search autocomplete component that fetches suggestions from an API with debounced input, displays filtered results in a dropdown, supports arrow key navigation and Enter to select, highlights matching text, shows loading and error states, and handles edge cases like empty input and no results. Implement caching to avoid redundant API calls and use useCallback to optimize performance.",
-      "hints": [
-        "Implement debouncing with useCallback or custom hook",
-        "Cache API responses to reduce requests",
-        "Handle keyboard navigation with arrow keys and Enter",
-        "Implement proper loading and error states"
-      ],
-      "keyFeatures": [
-        "Debouncing",
-        "API Integration",
-        "Keyboard Navigation",
-        "Caching",
-        "Error Handling"
-      ],
-      "timeEstimate": "55-75 minutes"
-    },
-    {
-      "id": "q5-form-validation",
-      "title": "Form Validation System",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a reusable form validation system with real-time error display.",
-      "detailedDescription": "Create a flexible form validation system that supports multiple field types (text, email, password, checkbox), real-time and submit-time validation, custom validation rules, async validators (like email uniqueness checks), and displays inline error messages. Implement a useForm hook that manages form state, touched fields, and validation errors, supporting both synchronous and asynchronous validation chains.",
-      "hints": [
-        "Create a custom useForm hook",
-        "Support async validators",
-        "Track touched fields separately",
-        "Implement validation schemas"
-      ],
-      "keyFeatures": [
-        "Custom Hooks",
-        "Async Validation",
-        "Error Display",
-        "Reusability",
-        "Field State Management"
-      ],
-      "timeEstimate": "60-80 minutes"
-    },
-    {
-      "id": "q6-infinite-scroll",
-      "title": "Infinite Scroll List",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Implement infinite scroll pagination with loading states and performance optimization.",
-      "detailedDescription": "Build an infinite scroll component that loads more items as the user scrolls near the bottom using IntersectionObserver, shows loading spinners during fetch, prevents duplicate requests, handles errors gracefully with retry buttons, and optimizes rendering with virtual scrolling for large lists. Support both scroll-based and button-triggered loading patterns.",
-      "hints": [
-        "Use IntersectionObserver API",
-        "Implement virtual scrolling or windowing",
-        "Prevent race conditions with AbortController",
-        "Add loading and error states"
-      ],
-      "keyFeatures": [
-        "IntersectionObserver",
-        "Virtual Scrolling",
-        "Loading States",
-        "Error Handling",
-        "Performance"
-      ],
-      "timeEstimate": "65-85 minutes"
-    },
-    {
-      "id": "q7-star-rating",
-      "title": "Star Rating Component",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build an interactive star rating component with hover effects and accessibility.",
-      "detailedDescription": "Create a star rating component that displays 5 stars, allows users to click and hover to rate, shows the current rating value, supports different sizes and colors through props, includes accessibility attributes (aria-label, role), and triggers onChange callbacks. Add features like partial star ratings, read-only mode, and smooth hover animations.",
-      "hints": [
-        "Use SVG or Unicode stars",
-        "Handle both click and hover states",
-        "Add proper ARIA labels",
-        "Support partial ratings"
-      ],
-      "keyFeatures": [
-        "Interactivity",
-        "Accessibility",
-        "Hover Effects",
-        "Props-based Customization",
-        "Animations"
-      ],
-      "timeEstimate": "30-40 minutes"
-    },
-    {
-      "id": "q8-pagination",
-      "title": "Pagination Component",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build a pagination component with page navigation and smart ellipsis display.",
-      "detailedDescription": "Create a reusable pagination component that displays page numbers with previous/next buttons, handles current page state, shows ellipsis for skipped pages, disables navigation at boundaries, and accepts callbacks for page changes. Support customizable page ranges and implement smart ellipsis logic to show relevant pages around the current page.",
-      "hints": [
-        "Calculate visible page range intelligently",
-        "Handle edge cases at start/end",
-        "Use disabled state for boundary buttons",
-        "Optimize re-renders with memoization"
-      ],
-      "keyFeatures": [
-        "Smart Ellipsis",
-        "Boundary Handling",
-        "Callback Props",
-        "Responsive Design",
-        "Accessibility"
-      ],
-      "timeEstimate": "35-45 minutes"
-    },
-    {
-      "id": "q9-tabs-component",
-      "title": "Tabs Navigation Component",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Implement a tabs component with tab switching and keyboard navigation.",
-      "detailedDescription": "Build a flexible tabs component that displays multiple tab panels, switches content on tab click, supports keyboard navigation (arrow keys and tab key), manages active tab state, and supports lazy loading of tab content. Add smooth transitions between tabs and implement proper ARIA roles for accessibility. Support both controlled and uncontrolled component patterns.",
-      "hints": [
-        "Use keyboard arrow navigation",
-        "Add ARIA attributes for accessibility",
-        "Support lazy loading of content",
-        "Implement smooth transitions"
-      ],
-      "keyFeatures": [
-        "Keyboard Navigation",
-        "Accessibility",
-        "Lazy Loading",
-        "State Management",
-        "Animations"
-      ],
-      "timeEstimate": "40-50 minutes"
-    },
-    {
-      "id": "q10-dropdown-menu",
-      "title": "Dropdown Menu",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build a dropdown menu with nested items and keyboard support.",
-      "detailedDescription": "Create a dropdown menu component that opens on click, closes on item selection or outside click, supports nested submenu items, handles keyboard navigation (arrow keys, Enter, Escape), displays icons alongside menu items, and positions intelligently to avoid going off-screen. Include accessibility features like ARIA menus and focus management.",
-      "hints": [
-        "Use useRef for detecting outside clicks",
-        "Handle nested menu navigation",
-        "Implement keyboard shortcuts",
-        "Add smart positioning logic"
-      ],
-      "keyFeatures": [
-        "Nested Items",
-        "Keyboard Navigation",
-        "Click-outside Detection",
-        "Smart Positioning",
-        "Accessibility"
-      ],
-      "timeEstimate": "45-55 minutes"
-    },
-    {
-      "id": "q11-kanban-board",
-      "title": "Kanban Board",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build a drag-and-drop Kanban board with multiple columns and card management.",
-      "detailedDescription": "Create a full-featured Kanban board with multiple columns (To Do, In Progress, Done), draggable cards between columns, add/edit/delete cards within columns, persist state to localStorage, undo/redo functionality, card filtering by assignee or label, and smooth animations. Handle edge cases like drag over boundaries, rapid interactions, and mobile touch support.",
-      "hints": [
-        "Use React DnD library or implement custom drag-drop",
-        "Manage complex state with useReducer",
-        "Implement undo/redo stack",
-        "Add touch support for mobile"
-      ],
-      "keyFeatures": [
-        "Drag & Drop",
-        "Complex State",
-        "Undo/Redo",
-        "Persistence",
-        "Touch Support"
-      ],
-      "timeEstimate": "90-120 minutes"
-    },
-    {
-      "id": "q12-video-player",
-      "title": "Custom Video Player",
-      "techStack": "HTML5 & JS based",
-      "level": "Hard",
-      "quickDescription": "Build a custom video player with controls, playback speed, and quality selection.",
-      "detailedDescription": "Develop a full-featured video player with custom controls (play/pause, seek, volume, fullscreen), multiple quality options with adaptive streaming, playback speed selection, progress bar with preview thumbnails, subtitles/captions support, keyboard shortcuts, and analytics tracking. Implement smooth buffering indicators and optimize for mobile with responsive controls.",
-      "hints": [
-        "Use HTML5 Video API",
-        "Implement custom progress bar with seek preview",
-        "Handle multiple quality streams",
-        "Add keyboard shortcut support"
-      ],
-      "keyFeatures": [
-        "Video API",
-        "Quality Switching",
-        "Custom Controls",
-        "Subtitles",
-        "Keyboard Shortcuts"
-      ],
-      "timeEstimate": "100-130 minutes"
-    },
-    {
-      "id": "q13-date-picker",
-      "title": "Date Picker Component",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build an interactive date picker with calendar and keyboard support.",
-      "detailedDescription": "Create a date picker component that displays a calendar grid, allows selecting single or date ranges, navigates months/years, supports keyboard shortcuts (arrow keys, Enter), highlights today and selected dates, and handles edge cases like disabled dates and month boundaries. Add keyboard support for quick navigation and implement efficient rendering for large date ranges.",
-      "hints": [
-        "Use Date APIs for calendar logic",
-        "Implement keyboard navigation",
-        "Support date range selection",
-        "Handle month/year transitions"
-      ],
-      "keyFeatures": [
-        "Calendar Grid",
-        "Range Selection",
-        "Keyboard Navigation",
-        "Date Logic",
-        "Disabled Dates"
-      ],
-      "timeEstimate": "70-90 minutes"
-    },
-    {
-      "id": "q14-drawer-sidebar",
-      "title": "Drawer/Sidebar Component",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a slide-out drawer component with animations and overlay backdrop.",
-      "detailedDescription": "Create a drawer/sidebar component that slides in from the edge with smooth animations, includes a semi-transparent backdrop, closes on backdrop click or ESC key, traps focus while open, supports different sizes and directions (left, right, top, bottom), and is fully accessible with ARIA attributes. Implement smooth transitions and prevent body scroll when drawer is open.",
-      "hints": [
-        "Use CSS transforms for smooth animations",
-        "Implement focus trap",
-        "Prevent body overflow when open",
-        "Support multiple directions"
-      ],
-      "keyFeatures": [
-        "Slide Animations",
-        "Backdrop",
-        "Focus Trap",
-        "Multiple Directions",
-        "Accessibility"
-      ],
-      "timeEstimate": "50-65 minutes"
-    },
-    {
-      "id": "q15-slider-input",
-      "title": "Range Slider Component",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a range slider with dual handles and label display.",
-      "detailedDescription": "Create a range slider component that allows selecting a range between min and max values, supports single or dual handles, displays current values with labels above handles, updates smoothly on drag, handles edge cases like inverted ranges, includes keyboard support for arrow keys, and works with different step values.",
-      "hints": [
-        "Calculate position based on value",
-        "Handle overlapping handles correctly",
-        "Support keyboard navigation",
-        "Add smooth animations"
-      ],
-      "keyFeatures": [
-        "Dual Handles",
-        "Keyboard Navigation",
-        "Value Labels",
-        "Smooth Dragging",
-        "Edge Cases"
-      ],
-      "timeEstimate": "55-70 minutes"
-    },
-    {
-      "id": "q16-toast-notification",
-      "title": "Toast Notification System",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a toast notification system with auto-dismiss and queue management.",
-      "detailedDescription": "Create a toast notification system that displays temporary notifications with different types (success, error, warning, info), auto-dismisses after a timeout, stacks multiple toasts, allows manual dismissal with a close button, uses React Context for global access, and includes animation on enter/exit. Support custom durations and priority-based ordering.",
-      "hints": [
-        "Use React Context for global state",
-        "Implement auto-dismiss with useEffect",
-        "Handle toast queuing and stacking",
-        "Add animation classes"
-      ],
-      "keyFeatures": [
-        "Global State",
-        "Auto-dismiss",
-        "Stacking",
-        "Context API",
-        "Animations"
-      ],
-      "timeEstimate": "50-65 minutes"
-    },
-    {
-      "id": "q17-popover",
-      "title": "Popover Component",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build a popover that displays content relative to a trigger element.",
-      "detailedDescription": "Create a popover component that displays content in a popup near a trigger element, positions intelligently (top, bottom, left, right with fallback), closes on outside click or ESC key, animates smoothly, and supports custom content. Use React Portals for proper layering and implement smart positioning to avoid going off-screen.",
-      "hints": [
-        "Use React Portal",
-        "Calculate position dynamically",
-        "Implement smart positioning fallbacks",
-        "Add click-outside detection"
-      ],
-      "keyFeatures": [
-        "Smart Positioning",
-        "Portal",
-        "Animations",
-        "Click-outside Detection",
-        "Accessibility"
-      ],
-      "timeEstimate": "40-50 minutes"
-    },
-    {
-      "id": "q18-lightbox-gallery",
-      "title": "Lightbox Gallery",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a full-screen image lightbox with navigation and keyboard support.",
-      "detailedDescription": "Create a lightbox gallery component that displays images in full-screen mode, allows navigating between images with arrow buttons and keyboard arrows, shows image counter, includes a close button, disables body scroll when open, supports touch swipe gestures, and includes smooth fade/zoom animations. Add keyboard shortcuts for common actions.",
-      "hints": [
-        "Use Portal for full-screen display",
-        "Implement keyboard and swipe navigation",
-        "Add smooth zoom/fade animations",
-        "Handle body scroll prevention"
-      ],
-      "keyFeatures": [
-        "Full-screen Display",
-        "Navigation",
-        "Swipe Gestures",
-        "Keyboard Shortcuts",
-        "Animations"
-      ],
-      "timeEstimate": "60-75 minutes"
-    },
-    {
-      "id": "q19-accordion",
-      "title": "Accordion Component",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build an accordion with expandable/collapsible sections.",
-      "detailedDescription": "Create an accordion component with multiple sections that expand and collapse, supports single or multiple open sections simultaneously, includes smooth height animations, displays icons for expand/collapse state, and implements keyboard navigation for accessibility. Support lazy loading of accordion content and manage state efficiently.",
-      "hints": [
-        "Use useRef for measuring content height",
-        "Animate height with CSS transitions",
-        "Support single/multi expand modes",
-        "Add keyboard navigation"
-      ],
-      "keyFeatures": [
-        "Smooth Animations",
-        "Keyboard Navigation",
-        "Flexible State",
-        "Lazy Loading",
-        "Accessibility"
-      ],
-      "timeEstimate": "40-50 minutes"
-    },
-    {
-      "id": "q20-product-image-viewer",
-      "title": "Product Image Viewer",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a product image viewer with zoom and thumbnail navigation.",
-      "detailedDescription": "Create a product image viewer with a large main image display, thumbnail navigation, zoom-in capability on hover or button click, smooth image transitions, keyboard navigation between images, and responsive design that works on mobile. Support different image formats and implement efficient image loading with proper fallbacks.",
-      "hints": [
-        "Implement zoom on hover with mouse position",
-        "Load high-res images on demand",
-        "Support touch gestures for mobile",
-        "Optimize image loading"
-      ],
-      "keyFeatures": [
-        "Zoom Functionality",
-        "Thumbnail Navigation",
-        "Responsive Design",
-        "Image Optimization",
-        "Touch Support"
-      ],
-      "timeEstimate": "55-70 minutes"
-    },
-    {
-      "id": "q21-chat-interface",
-      "title": "Real-time Chat Interface",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build a chat interface with real-time messaging and user presence.",
-      "detailedDescription": "Create a chat application interface with real-time message updates using WebSocket, displays user avatar and timestamps, shows typing indicators, marks messages as sent/delivered/read, implements infinite scroll for message history, supports emoji and rich text, and includes user presence indicators. Handle connection loss gracefully and implement message persistence with IndexedDB.",
-      "hints": [
-        "Use WebSocket for real-time updates",
-        "Implement typing indicators",
-        "Handle connection loss and reconnection",
-        "Use IndexedDB for offline support"
-      ],
-      "keyFeatures": [
-        "WebSocket Integration",
-        "Typing Indicators",
-        "Message Status",
-        "Infinite Scroll",
-        "Offline Support"
-      ],
-      "timeEstimate": "120-150 minutes"
-    },
-    {
-      "id": "q22-file-upload",
-      "title": "File Upload Component",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a drag-and-drop file upload with progress tracking.",
-      "detailedDescription": "Create a file upload component with drag-and-drop support, displays upload progress with percentage, supports multiple file formats with validation, shows file preview thumbnails for images, includes cancel upload functionality, and handles errors gracefully. Implement chunked upload for large files and add retry logic for failed uploads.",
-      "hints": [
-        "Implement drag-and-drop listeners",
-        "Use FormData for file uploads",
-        "Display upload progress with ProgressEvent",
-        "Add chunking for large files"
-      ],
-      "keyFeatures": [
-        "Drag & Drop",
-        "Progress Tracking",
-        "File Validation",
-        "Chunked Upload",
-        "Error Handling"
-      ],
-      "timeEstimate": "70-90 minutes"
-    },
-    {
-      "id": "q23-multi-select",
-      "title": "Multi-Select Component",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a searchable multi-select dropdown with tags display.",
-      "detailedDescription": "Create a multi-select component that displays selected items as removable tags, includes a searchable dropdown for finding options, supports grouping options by category, allows selecting/deselecting all options, shows selected count, and handles keyboard navigation. Implement efficient filtering and support for large option lists with virtual scrolling.",
-      "hints": [
-        "Implement efficient search filtering",
-        "Use virtual scrolling for large lists",
-        "Display tags with remove buttons",
-        "Support keyboard navigation"
-      ],
-      "keyFeatures": [
-        "Search Filtering",
-        "Virtual Scrolling",
-        "Tag Display",
-        "Keyboard Navigation",
-        "Grouping"
-      ],
-      "timeEstimate": "65-80 minutes"
-    },
-    {
-      "id": "q24-code-editor",
-      "title": "Code Editor with Syntax Highlighting",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build a code editor with syntax highlighting and line numbers.",
-      "detailedDescription": "Create a code editor component with real-time syntax highlighting using Prism or highlight.js, displays line numbers, supports multiple programming languages, includes code copying functionality, implements keyboard shortcuts (Ctrl+A, Ctrl+C), handles large files efficiently, and includes a dark/light theme toggle. Add features like auto-indentation and bracket matching.",
-      "hints": [
-        "Use Prism or highlight.js for syntax highlighting",
-        "Sync scroll between code and line numbers",
-        "Implement keyboard shortcuts",
-        "Handle large files efficiently"
-      ],
-      "keyFeatures": [
-        "Syntax Highlighting",
-        "Line Numbers",
-        "Keyboard Shortcuts",
-        "Theme Support",
-        "Performance"
-      ],
-      "timeEstimate": "100-120 minutes"
-    },
-    {
-      "id": "q25-progress-bar",
-      "title": "Progress Bar Component",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build a flexible progress bar with different states and animations.",
-      "detailedDescription": "Create a progress bar component that displays progress as percentage, supports different variants (success, warning, danger, info), includes smooth animated transitions, displays text label with percentage, handles different heights/sizes, and includes optional stripe animation. Support both determinate and indeterminate states.",
-      "hints": [
-        "Use CSS width transitions for animation",
-        "Support different color variants",
-        "Add stripe animation with CSS",
-        "Handle edge cases like 0% or 100%"
-      ],
-      "keyFeatures": [
-        "Smooth Animation",
-        "Variants",
-        "Text Label",
-        "Different States",
-        "Customization"
-      ],
-      "timeEstimate": "30-40 minutes"
-    },
-    {
-      "id": "q26-breadcrumb",
-      "title": "Breadcrumb Navigation",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build a breadcrumb navigation component with proper semantics.",
-      "detailedDescription": "Create a breadcrumb navigation component that shows the current page hierarchy, displays clickable links for parent pages, uses proper separators (typically '/'), includes proper ARIA attributes and semantic HTML, and highlights the current page. Support dynamic breadcrumb generation from URL or prop-based configuration.",
-      "hints": [
-        "Use proper semantic HTML with nav",
-        "Add ARIA attributes for accessibility",
-        "Support dynamic breadcrumb generation",
-        "Handle active state styling"
-      ],
-      "keyFeatures": [
-        "Semantic HTML",
-        "Accessibility",
-        "Dynamic Generation",
-        "Responsive Design",
-        "Styling Flexibility"
-      ],
-      "timeEstimate": "25-35 minutes"
-    },
-    {
-      "id": "q27-notification-badge",
-      "title": "Notification Badge Component",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build a notification badge with animation and different states.",
-      "detailedDescription": "Create a notification badge component that displays count or status on top-right of an element, supports different colors and sizes, includes pulse animation, handles zero count hiding, and includes optional dot variant. Support both numeric and status-based badges with smooth animations.",
-      "hints": [
-        "Use CSS positioning for badge placement",
-        "Implement pulse animation",
-        "Support different variants",
-        "Handle responsive sizing"
-      ],
-      "keyFeatures": [
-        "CSS Animation",
-        "Multiple Variants",
-        "Flexible Positioning",
-        "Responsive",
-        "Easy Integration"
-      ],
-      "timeEstimate": "25-35 minutes"
-    },
-    {
-      "id": "q28-admin-dashboard",
-      "title": "Admin Dashboard",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build a comprehensive admin dashboard with charts, tables, and filters.",
-      "detailedDescription": "Create a full admin dashboard with data visualization charts (line, bar, pie), interactive data tables with sorting and filtering, search functionality, date range filtering, export to CSV/PDF, responsive design, and dark/light theme. Include real-time data updates with WebSocket and implement proper data caching strategies for performance.",
-      "hints": [
-        "Use charting library like Chart.js or Recharts",
-        "Implement efficient table rendering",
-        "Add advanced filtering options",
-        "Handle real-time data updates"
-      ],
-      "keyFeatures": [
-        "Data Visualization",
-        "Sorting/Filtering",
-        "Export Functionality",
-        "Real-time Updates",
-        "Theme Support"
-      ],
-      "timeEstimate": "150-180 minutes"
-    },
-    {
-      "id": "q29-expense-tracker",
-      "title": "Expense Tracker App",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build an expense tracking app with categories and visualization.",
-      "detailedDescription": "Create an expense tracker application that allows adding expenses with amount, category, date, and description, displays expenses in a list with edit/delete options, shows summary statistics by category, filters expenses by date range and category, and includes pie chart visualization. Persist data to localStorage and implement budget alerts.",
-      "hints": [
-        "Use useReducer for expense state",
-        "Implement category-based aggregation",
-        "Add date range filtering",
-        "Create pie chart visualization"
-      ],
-      "keyFeatures": [
-        "Category Management",
-        "Date Filtering",
-        "Data Visualization",
-        "Edit/Delete",
-        "Persistence"
-      ],
-      "timeEstimate": "70-90 minutes"
-    },
-    {
-      "id": "q30-weather-app",
-      "title": "Weather Application",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a weather app with location search and forecast display.",
-      "detailedDescription": "Create a weather application that fetches weather data from an API based on user location, displays current weather with icon and description, shows 5-day forecast with temperature trends, includes search functionality for different cities, caches location data, handles errors gracefully, and includes unit toggle (Celsius/Fahrenheit). Add weather alerts and real-time updates.",
-      "hints": [
-        "Use weather API like OpenWeather",
-        "Implement geolocation detection",
-        "Cache location data",
-        "Handle API errors gracefully"
-      ],
-      "keyFeatures": [
-        "API Integration",
-        "Geolocation",
-        "Data Caching",
-        "Unit Conversion",
-        "Error Handling"
-      ],
-      "timeEstimate": "60-80 minutes"
-    },
-    {
-      "id": "q31-calculator",
-      "title": "Advanced Calculator",
-      "techStack": "Vanilla JS based",
-      "level": "Medium",
-      "quickDescription": "Build a scientific calculator with keyboard support.",
-      "detailedDescription": "Create a calculator that supports basic operations (+, -, *, /), handles decimal numbers, includes clear and delete buttons, implements keyboard input support, shows calculation history, supports scientific functions (sin, cos, square root), handles order of operations correctly, and prevents invalid operations. Include memory functions (M+, M-, MR, MC) and calculation history display.",
-      "hints": [
-        "Use proper order of operations",
-        "Handle decimal arithmetic carefully",
-        "Implement keyboard event listeners",
-        "Store calculation history"
-      ],
-      "keyFeatures": [
-        "Scientific Functions",
-        "Keyboard Support",
-        "History Display",
-        "Memory Functions",
-        "Error Handling"
-      ],
-      "timeEstimate": "50-70 minutes"
-    },
-    {
-      "id": "q32-stopwatch",
-      "title": "Stopwatch Timer Application",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build a stopwatch with lap times and reset functionality.",
-      "detailedDescription": "Create a stopwatch application with start/pause/stop controls, records lap times with comparison to previous lap, displays time in MM:SS:MS format, includes visual feedback on button states, handles edge cases like restarting from paused state, and includes keyboard shortcuts (spacebar for start/pause). Persist lap history and support export of timing data.",
-      "hints": [
-        "Use setInterval for timing",
-        "Track lap times in state",
-        "Format time properly",
-        "Handle pause/resume states"
-      ],
-      "keyFeatures": [
-        "Lap Tracking",
-        "Proper Formatting",
-        "Keyboard Shortcuts",
-        "Export Functionality",
-        "State Management"
-      ],
-      "timeEstimate": "40-55 minutes"
-    },
-    {
-      "id": "q33-markdown-editor",
-      "title": "Markdown to HTML Preview Editor",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a markdown editor with live preview.",
-      "detailedDescription": "Create a split-pane markdown editor with real-time HTML preview, supports markdown syntax highlighting in editor, handles all common markdown elements (headers, lists, code blocks, links, images), includes a toolbar with formatting shortcuts, supports custom CSS for preview styling, and includes export to HTML/PDF. Implement auto-save to localStorage and keyboard shortcuts for formatting.",
-      "hints": [
-        "Use markdown parsing library like marked",
-        "Implement sanitization for HTML output",
-        "Add toolbar buttons for formatting",
-        "Support keyboard shortcuts"
-      ],
-      "keyFeatures": [
-        "Live Preview",
-        "Syntax Highlighting",
-        "Toolbar",
-        "Custom Styling",
-        "Export Functionality"
-      ],
-      "timeEstimate": "70-90 minutes"
-    },
-    {
-      "id": "q34-password-manager",
-      "title": "Password Manager UI",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a password manager interface with encryption visualization.",
-      "detailedDescription": "Create a password manager interface that displays saved passwords in a table with website, username, and encrypted password, includes add new password dialog, edit/delete functionality, password strength indicator, search and filtering capabilities, copy password functionality with confirmation, and shows password generation tool. Add security features like master password verification and encryption simulation.",
-      "hints": [
-        "Implement password strength checker",
-        "Add password generation logic",
-        "Support search and filtering",
-        "Add copy-to-clipboard functionality"
-      ],
-      "keyFeatures": [
-        "Password Generation",
-        "Strength Indicator",
-        "Search/Filter",
-        "Edit/Delete",
-        "Copy Functionality"
-      ],
-      "timeEstimate": "65-80 minutes"
-    },
-    {
-      "id": "q35-music-player",
-      "title": "Music Player Application",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build a music player with playlist management and visualizer.",
-      "detailedDescription": "Create a music player with HTML5 audio support, displays currently playing song with album art and metadata, implements play/pause/next/previous controls, includes volume control and progress bar with seek functionality, supports playlist creation and management, includes shuffle and repeat modes, and adds audio visualizer. Implement keyboard shortcuts and support both local files and streaming.",
-      "hints": [
-        "Use HTML5 Audio API",
-        "Implement audio visualization with Canvas",
-        "Support playlist management",
-        "Add keyboard shortcuts"
-      ],
-      "keyFeatures": [
-        "Audio API",
-        "Visualization",
-        "Playlist Management",
-        "Keyboard Shortcuts",
-        "Metadata Display"
-      ],
-      "timeEstimate": "100-120 minutes"
-    },
-    {
-      "id": "q36-todo-with-groups",
-      "title": "Todo List with Categories and Tags",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a todo app with advanced organization features.",
-      "detailedDescription": "Create an advanced todo application with categories/groups, tag system for better organization, filter todos by category or tags, includes priority levels with visual indicators, shows today's tasks vs future tasks, supports recurring todos, includes statistics dashboard showing completion rates, and implements focus mode hiding non-essential UI. Add collaboration features like sharing and due date notifications.",
-      "hints": [
-        "Manage complex nested state",
-        "Implement efficient filtering",
-        "Add priority-based sorting",
-        "Create statistics calculations"
-      ],
-      "keyFeatures": [
-        "Categories & Tags",
-        "Priority System",
-        "Recurring Tasks",
-        "Statistics",
-        "Focus Mode"
-      ],
-      "timeEstimate": "85-105 minutes"
-    },
-    {
-      "id": "q37-poll-voting",
-      "title": "Poll/Voting System",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a poll application with real-time results visualization.",
-      "detailedDescription": "Create a poll application that displays poll questions with multiple options, allows users to vote (with prevention of duplicate voting using device ID or cookie), shows real-time vote counts and percentages, displays results as progress bars or pie chart, includes share functionality, and supports creating new polls. Implement proper state management for voting and results updates.",
-      "hints": [
-        "Track votes using unique identifiers",
-        "Calculate vote percentages efficiently",
-        "Visualize results with charts",
-        "Prevent duplicate voting"
-      ],
-      "keyFeatures": [
-        "Vote Tracking",
-        "Results Visualization",
-        "Real-time Updates",
-        "Share Functionality",
-        "Create Polls"
-      ],
-      "timeEstimate": "60-75 minutes"
-    },
-    {
-      "id": "q38-email-client-ui",
-      "title": "Email Client Interface",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build an email client UI with folder management and search.",
-      "detailedDescription": "Create an email client interface with folder hierarchy (Inbox, Sent, Drafts, Archive), email list with sorting (date, sender, subject), individual email preview, search with filters (from, date range, subject), includes compose email dialog, marks email as read/starred, supports bulk actions on multiple emails, and includes responsive layout. Add real-time new mail notifications and support for multiple accounts.",
-      "hints": [
-        "Implement hierarchical folder structure",
-        "Add advanced search filtering",
-        "Support bulk email actions",
-        "Add real-time notifications"
-      ],
-      "keyFeatures": [
-        "Folder Management",
-        "Advanced Search",
-        "Bulk Actions",
-        "Email Preview",
-        "Responsive Layout"
-      ],
-      "timeEstimate": "120-150 minutes"
-    },
-    {
-      "id": "q39-drawing-canvas",
-      "title": "Drawing Canvas Application",
-      "techStack": "Vanilla JS based",
-      "level": "Hard",
-      "quickDescription": "Build a drawing application with tools and color picker.",
-      "detailedDescription": "Create a drawing canvas application with multiple drawing tools (pencil, brush, eraser, shapes), color picker with color history, adjustable brush size and opacity, includes undo/redo functionality, supports saving drawings as image, implements layer system for advanced drawing, includes preset brushes and textures. Add keyboard shortcuts for tool selection and implement smooth drawing with mouse or touch input.",
-      "hints": [
-        "Use Canvas API for drawing",
-        "Implement undo/redo stack",
-        "Add touch support for mobile",
-        "Support multiple drawing tools"
-      ],
-      "keyFeatures": [
-        "Multiple Tools",
-        "Undo/Redo",
-        "Color Picker",
-        "Layer System",
-        "Touch Support"
-      ],
-      "timeEstimate": "110-140 minutes"
-    },
-    {
-      "id": "q40-movie-search",
-      "title": "Movie Search Application",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a movie search app with filters and ratings.",
-      "detailedDescription": "Create a movie search application that fetches data from TMDB or similar API, displays movie cards with posters and ratings, includes search by title with debouncing, filters by genre, year, and rating, shows detailed movie information in modal, supports sorting by popularity/rating/release date, includes watchlist functionality with localStorage, and displays trending movies. Add infinite scroll for search results and movie recommendations.",
-      "hints": [
-        "Use movie database API",
-        "Implement debounced search",
-        "Add advanced filtering",
-        "Show detailed information in modal"
-      ],
-      "keyFeatures": [
-        "API Integration",
-        "Debounced Search",
-        "Filtering",
-        "Watchlist",
-        "Infinite Scroll"
-      ],
-      "timeEstimate": "75-95 minutes"
-    },
-    {
-      "id": "q41-recipe-app",
-      "title": "Recipe App with Filtering",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a recipe application with search and favorites.",
-      "detailedDescription": "Create a recipe application that displays recipe cards with images, ingredients, and instructions, includes search by recipe name or ingredient, filters by cuisine type and cooking time, allows users to save favorite recipes to localStorage, scales ingredient quantities based on servings, generates shopping list from selected recipes, and includes nutritional information display. Add recipe rating system and user comments.",
-      "hints": [
-        "Implement efficient search filtering",
-        "Calculate scaled ingredients",
-        "Support favorite management",
-        "Generate shopping lists"
-      ],
-      "keyFeatures": [
-        "Search & Filter",
-        "Favorites System",
-        "Ingredient Scaling",
-        "Shopping List",
-        "Ratings"
-      ],
-      "timeEstimate": "70-90 minutes"
-    },
-    {
-      "id": "q42-e-commerce-cart",
-      "title": "E-Commerce Shopping Cart",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a shopping cart with product filtering and checkout.",
-      "detailedDescription": "Create an e-commerce cart system with product listing, add/remove items from cart, quantity adjustment with stock validation, applies discounts and coupon codes, calculates shipping and taxes automatically, shows order summary with breakdown, supports multiple payment methods (mock), includes order confirmation page, and persists cart to localStorage. Add recommendation system and saved items feature.",
-      "hints": [
-        "Manage cart state efficiently",
-        "Calculate totals with taxes/shipping",
-        "Support coupon validation",
-        "Implement payment flow"
-      ],
-      "keyFeatures": [
-        "Cart Management",
-        "Discount Application",
-        "Checkout Flow",
-        "Payment Integration",
-        "Order Summary"
-      ],
-      "timeEstimate": "85-105 minutes"
-    },
-    {
-      "id": "q43-job-board",
-      "title": "Job Board Application",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a job listing board with filters and saved jobs.",
-      "detailedDescription": "Create a job board that displays job listings from API, includes filtering by location, job type, experience level, and salary range, implements search functionality with debouncing, shows detailed job description in modal or separate page, allows users to save job postings, includes company profiles, shows similar job recommendations, and supports job alerts. Add pagination for job listings and proper error handling.",
-      "hints": [
-        "Use job API for data",
-        "Implement advanced filtering",
-        "Add saved jobs functionality",
-        "Show related recommendations"
-      ],
-      "keyFeatures": [
-        "API Integration",
-        "Advanced Filtering",
-        "Saved Jobs",
-        "Job Details",
-        "Recommendations"
-      ],
-      "timeEstimate": "75-95 minutes"
-    },
-    {
-      "id": "q44-note-taking-app",
-      "title": "Note-Taking Application",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a note app with rich text and organization.",
-      "detailedDescription": "Create a note-taking application with rich text editing (bold, italic, lists), organizes notes in folders or notebooks, supports tags for better organization, includes search across notes with highlighting, implements auto-save to localStorage, supports dark mode, includes trash/archive functionality, and exports notes as PDF or Markdown. Add collaborative features like sharing notes and real-time sync.",
-      "hints": [
-        "Use rich text editor library",
-        "Implement efficient search",
-        "Support auto-save functionality",
-        "Add folder management"
-      ],
-      "keyFeatures": [
-        "Rich Text Editor",
-        "Folder Organization",
-        "Search",
-        "Auto-save",
-        "Export Functionality"
-      ],
-      "timeEstimate": "80-100 minutes"
-    },
-    {
-      "id": "q45-quiz-application",
-      "title": "Quiz Application",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a quiz app with questions, scoring, and results.",
-      "detailedDescription": "Create a quiz application that displays questions one at a time, supports multiple choice, true/false, and fill-in-the-blank questions, implements timer for timed quizzes, calculates score and shows results with performance breakdown, includes review mode to see correct answers, stores quiz history, supports creating custom quizzes, and generates certificates for passing scores. Add difficulty levels and category-based quizzes.",
-      "hints": [
-        "Manage quiz state properly",
-        "Implement timer functionality",
-        "Calculate scores accurately",
-        "Support quiz creation"
-      ],
-      "keyFeatures": [
-        "Quiz Management",
-        "Timer",
-        "Scoring System",
-        "Results Analysis",
-        "Quiz Creation"
-      ],
-      "timeEstimate": "80-100 minutes"
-    },
-    {
-      "id": "q46-portfolio-website",
-      "title": "Portfolio Website Generator",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build a portfolio website builder with customizable templates.",
-      "detailedDescription": "Create a portfolio website generator that allows users to input their information (name, bio, skills, projects, experience), provides multiple design templates to choose from, generates professional portfolio with project showcase, includes contact form with email integration, supports social media links, implements responsive design for all devices, allows exporting or deploying website, and includes SEO optimization. Add theme customization and domain setup.",
-      "hints": [
-        "Support multiple templates",
-        "Implement customization options",
-        "Generate responsive design",
-        "Add deployment options"
-      ],
-      "keyFeatures": [
-        "Multiple Templates",
-        "Customization",
-        "Responsive Design",
-        "Export/Deploy",
-        "SEO Optimization"
-      ],
-      "timeEstimate": "140-170 minutes"
-    },
-    {
-      "id": "q47-real-estate-search",
-      "title": "Real Estate Listing Browser",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a real estate app with map integration and filters.",
-      "detailedDescription": "Create a real estate property search application with listings display, advanced filtering (price, bedrooms, location, property type), integrates maps (Google Maps) showing property locations, includes detailed property view with images gallery, calculates mortgage estimates, supports saving favorite properties, shows property history and price trends, and includes agent contact information. Add neighborhood information and school ratings.",
-      "hints": [
-        "Integrate Google Maps API",
-        "Implement advanced filtering",
-        "Show property gallery",
-        "Calculate mortgage estimates"
-      ],
-      "keyFeatures": [
-        "Map Integration",
-        "Advanced Filters",
-        "Image Gallery",
-        "Calculations",
-        "Favorites"
-      ],
-      "timeEstimate": "100-130 minutes"
-    },
-    {
-      "id": "q48-team-collaboration-board",
-      "title": "Team Collaboration Board",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build a collaboration tool with real-time updates.",
-      "detailedDescription": "Create a team collaboration board for task management and communication, includes task creation with assignments and due dates, supports comments and @mentions on tasks, shows real-time activity feed, implements notifications for updates, supports file attachments, includes team member profiles, shows project progress with burndown chart, and enables video chat integration. Add permission levels and audit logs.",
-      "hints": [
-        "Use WebSocket for real-time updates",
-        "Implement notification system",
-        "Support file attachments",
-        "Add activity tracking"
-      ],
-      "keyFeatures": [
-        "Real-time Updates",
-        "Notifications",
-        "File Attachments",
-        "Activity Feed",
-        "Progress Tracking"
-      ],
-      "timeEstimate": "150-180 minutes"
-    },
-    {
-      "id": "q49-fitness-tracker",
-      "title": "Fitness Tracker Application",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a fitness tracker with workout logging and progress.",
-      "detailedDescription": "Create a fitness tracking application that logs workouts with exercise type, duration, and calories burned, tracks personal records, displays progress charts (weight, strength, endurance), includes workout plans with exercise instructions, supports different fitness goals, calculates BMI and daily calorie intake, includes nutrition tracking, and provides motivational achievements/badges. Add integration with fitness APIs and support for wearable devices.",
-      "hints": [
-        "Implement data visualization",
-        "Calculate fitness metrics",
-        "Support workout logging",
-        "Add progress tracking"
-      ],
-      "keyFeatures": [
-        "Workout Logging",
-        "Progress Charts",
-        "Goal Tracking",
-        "Nutrition Integration",
-        "Achievements"
-      ],
-      "timeEstimate": "90-110 minutes"
-    },
-    {
-      "id": "q50-translation-tool",
-      "title": "Text Translation Tool",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a translation app with language detection.",
-      "detailedDescription": "Create a translation application that translates text between multiple languages, includes language detection for source text, supports batch translation of multiple items, shows translation history, includes pronunciation guide with audio, supports copying translated text, implements favorites for frequently used translations, includes text-to-speech for both languages, and shows alternative translations or context. Add document translation support and translation memory.",
-      "hints": [
-        "Use translation API (Google Translate, etc)",
-        "Implement language detection",
-        "Add text-to-speech functionality",
-        "Support translation history"
-      ],
-      "keyFeatures": [
-        "Multi-language Support",
-        "Language Detection",
-        "Text-to-Speech",
-        "History",
-        "Copy Functionality"
-      ],
-      "timeEstimate": "70-90 minutes"
-    },
-    {
-      "id": "q51-virtual-list",
-      "title": "Virtual List/Window Component",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build a virtualized list for rendering large datasets efficiently.",
-      "detailedDescription": "Create a virtual list component that only renders visible items in the viewport, improving performance for lists with thousands of items, maintains scroll position accurately, supports dynamic item heights, includes scroll-to-index functionality, handles variable-sized items with auto-measurement, and supports smooth scrolling with keyboard navigation. Implement efficient DOM recycling and smooth performance even with rapid scrolling.",
-      "hints": [
-        "Calculate visible range based on scroll position",
-        "Use overscan to prevent blank rows",
-        "Handle dynamic item heights",
-        "Implement efficient scroll event handling"
-      ],
-      "keyFeatures": [
-        "Performance Optimization",
-        "Dynamic Heights",
-        "Scroll-to-Index",
-        "Keyboard Navigation",
-        "Large Dataset Support"
-      ],
-      "timeEstimate": "110-140 minutes"
-    },
-    {
-      "id": "q52-tic-tac-toe-game",
-      "title": "Tic-Tac-Toe Game with AI",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a tic-tac-toe game with AI opponent and game history.",
-      "detailedDescription": "Create a tic-tac-toe game with human vs computer gameplay, implements AI opponent using minimax algorithm for intelligent moves, tracks game history with undo functionality, shows win/loss/draw statistics, includes difficulty levels (easy, medium, hard), supports game restart, and displays move history. Add themes for different visual styles and keyboard shortcuts for moves.",
-      "hints": [
-        "Implement minimax algorithm for AI",
-        "Detect win conditions",
-        "Store game history",
-        "Implement difficulty levels"
-      ],
-      "keyFeatures": [
-        "AI Opponent",
-        "Game Logic",
-        "Statistics",
-        "Move History",
-        "Difficulty Levels"
-      ],
-      "timeEstimate": "60-80 minutes"
-    },
-    {
-      "id": "q53-color-picker",
-      "title": "Advanced Color Picker Component",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build an advanced color picker with multiple input formats.",
-      "detailedDescription": "Create a comprehensive color picker that supports multiple formats (HEX, RGB, HSL), displays color gradient with crosshair selector, includes hue slider for color selection, shows color palette with recent colors, allows manual input of color values, displays color preview, exports colors in different formats, and includes accessibility color contrast checker. Add color harmony suggestions and color naming.",
-      "hints": [
-        "Implement color space conversions",
-        "Handle canvas-based color selection",
-        "Support multiple input formats",
-        "Calculate color contrast ratio"
-      ],
-      "keyFeatures": [
-        "Multiple Formats",
-        "Gradient Selector",
-        "Color Palette",
-        "Contrast Checker",
-        "Format Conversion"
-      ],
-      "timeEstimate": "85-105 minutes"
-    },
-    {
-      "id": "q54-flow-diagram-builder",
-      "title": "Flow Diagram/Node Editor",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build an interactive flow diagram editor with connectable nodes.",
-      "detailedDescription": "Create a node-based flow diagram editor that allows creating nodes with drag-and-drop, connecting nodes with edges, includes multiple node types with different shapes, supports node editing and deletion, implements zooming and panning functionality, includes validation for connections, exports diagram as JSON or image, supports undo/redo, and includes layout auto-arrangement. Add real-time collaboration features.",
-      "hints": [
-        "Use Canvas or SVG for rendering",
-        "Implement drag-drop for nodes",
-        "Handle connection validation",
-        "Support zoom and pan operations"
-      ],
-      "keyFeatures": [
-        "Node Creation",
-        "Connection Management",
-        "Zoom/Pan",
-        "Export Functionality",
-        "Undo/Redo"
-      ],
-      "timeEstimate": "150-180 minutes"
-    },
-    {
-      "id": "q55-split-pane-layout",
-      "title": "Resizable Split Pane Layout",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a resizable split pane layout with draggable dividers.",
-      "detailedDescription": "Create a split pane layout with draggable dividers to resize sections, supports horizontal and vertical splits, allows nested splits, persists layout to localStorage, includes collapse/expand functionality for panes, supports keyboard shortcuts for navigation, and handles responsive behavior on mobile. Implement smooth drag animations and proper cursor feedback.",
-      "hints": [
-        "Use mouse move/up events for dragging",
-        "Calculate new dimensions during drag",
-        "Store layout state",
-        "Handle responsive behavior"
-      ],
-      "keyFeatures": [
-        "Draggable Dividers",
-        "Nested Splits",
-        "Collapse/Expand",
-        "Persistence",
-        "Responsive Design"
-      ],
-      "timeEstimate": "70-90 minutes"
-    },
-    {
-      "id": "q56-tree-view",
-      "title": "Expandable Tree View Component",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a tree view component with expand/collapse and filtering.",
-      "detailedDescription": "Create a tree view component that displays hierarchical data with expandable/collapsible nodes, supports keyboard navigation (arrow keys, Enter), implements search filtering across tree structure, shows icons for different node types, includes selected node highlighting, supports drag-drop of nodes within tree, and generates proper ARIA attributes for accessibility. Handle large tree datasets with virtual scrolling.",
-      "hints": [
-        "Store expanded/collapsed state",
-        "Implement keyboard navigation",
-        "Filter while maintaining structure",
-        "Use virtual scrolling for large trees"
-      ],
-      "keyFeatures": [
-        "Expand/Collapse",
-        "Keyboard Navigation",
-        "Search Filtering",
-        "Drag-Drop Support",
-        "Virtual Scrolling"
-      ],
-      "timeEstimate": "80-100 minutes"
-    },
-    {
-      "id": "q57-gantt-chart",
-      "title": "Gantt Chart Component",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build a Gantt chart for project timeline visualization.",
-      "detailedDescription": "Create a Gantt chart that displays tasks with timelines, supports draggable task bars to reschedule, shows task dependencies and critical path, includes zoom controls for different time scales, allows adding/editing tasks, shows resources and workload distribution, includes progress indicators, and supports exporting as PDF. Implement responsive design for mobile viewing.",
-      "hints": [
-        "Calculate task positions based on dates",
-        "Handle drag operations on tasks",
-        "Show dependency lines between tasks",
-        "Support different time scales"
-      ],
-      "keyFeatures": [
-        "Timeline Display",
-        "Draggable Tasks",
-        "Dependencies",
-        "Zoom Controls",
-        "Progress Tracking"
-      ],
-      "timeEstimate": "130-160 minutes"
-    },
-    {
-      "id": "q58-spreadsheet-grid",
-      "title": "Spreadsheet/Data Grid Component",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build an Excel-like spreadsheet with editing and formulas.",
-      "detailedDescription": "Create a spreadsheet component with editable cells, supports multiple data types (text, number, date, checkbox), implements column sorting and filtering, includes formula support (SUM, AVERAGE, COUNT), handles copy/paste operations, supports undo/redo functionality, includes row/column resizing, allows adding/deleting rows and columns, and supports exporting to CSV. Implement cell validation and formatting options.",
-      "hints": [
-        "Store data in 2D array or object structure",
-        "Implement formula parser",
-        "Handle cell selection and editing",
-        "Support copy/paste operations"
-      ],
-      "keyFeatures": [
-        "Cell Editing",
-        "Formulas",
-        "Sorting/Filtering",
-        "Copy/Paste",
-        "Undo/Redo"
-      ],
-      "timeEstimate": "140-170 minutes"
-    },
-    {
-      "id": "q59-json-viewer",
-      "title": "JSON Viewer/Editor",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a JSON viewer with syntax highlighting and editing.",
-      "detailedDescription": "Create a JSON viewer that displays JSON with syntax highlighting, supports collapsible/expandable nodes for nested objects, includes search functionality to find keys/values, allows editing JSON inline, validates JSON structure, shows error messages for invalid JSON, supports formatting and minification, and includes copy functionality. Add dark/light theme toggle.",
-      "hints": [
-        "Parse and structure JSON data",
-        "Implement recursive component for nested objects",
-        "Add syntax highlighting",
-        "Validate JSON input"
-      ],
-      "keyFeatures": [
-        "Syntax Highlighting",
-        "Expand/Collapse",
-        "Search Functionality",
-        "Inline Editing",
-        "Validation"
-      ],
-      "timeEstimate": "70-85 minutes"
-    },
-    {
-      "id": "q60-clipboard-manager",
-      "title": "Clipboard Manager",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a clipboard history manager with search.",
-      "detailedDescription": "Create a clipboard manager that stores clipboard history, displays recent copied items with timestamps, supports searching through clipboard history, allows pinning frequently used items, includes quick copy buttons, shows item preview with proper formatting, supports clearing history, and persists data to localStorage. Add categories for different types of copied content.",
-      "hints": [
-        "Use Clipboard API for monitoring",
-        "Store history in state/localStorage",
-        "Implement search functionality",
-        "Show item previews"
-      ],
-      "keyFeatures": [
-        "History Management",
-        "Search",
-        "Pin Functionality",
-        "Preview",
-        "Persistence"
-      ],
-      "timeEstimate": "50-65 minutes"
-    },
-    {
-      "id": "q61-url-shortener",
-      "title": "URL Shortener Application",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build a URL shortener with QR code generation.",
-      "detailedDescription": "Create a URL shortener application that generates short unique codes, supports custom short URLs, displays QR code for easy sharing, shows click analytics and statistics, includes copy-to-clipboard functionality, stores history of shortened URLs, displays most used links, and supports bulk URL shortening. Add expiration date functionality for links.",
-      "hints": [
-        "Generate unique short codes",
-        "Generate QR codes",
-        "Track click statistics",
-        "Store URL mappings"
-      ],
-      "keyFeatures": [
-        "Short Code Generation",
-        "QR Code",
-        "Analytics",
-        "History",
-        "Copy Functionality"
-      ],
-      "timeEstimate": "45-60 minutes"
-    },
-    {
-      "id": "q62-timer-multiple-instances",
-      "title": "Multiple Timer/Pomodoro Manager",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a Pomodoro timer with multiple concurrent timers.",
-      "detailedDescription": "Create a Pomodoro timer application that supports multiple concurrent timers, shows progress rings for each timer, includes preset durations (work, break, long break), allows custom timer durations, supports play/pause/cancel for each timer, includes notifications when timer completes, tracks daily statistics, supports keyboard shortcuts, and includes dark mode. Add music/sound options for notifications.",
-      "hints": [
-        "Manage multiple timer states",
-        "Use setInterval for each timer",
-        "Show progress visualization",
-        "Send notifications"
-      ],
-      "keyFeatures": [
-        "Multiple Timers",
-        "Progress Rings",
-        "Notifications",
-        "Statistics",
-        "Keyboard Shortcuts"
-      ],
-      "timeEstimate": "65-80 minutes"
-    },
-    {
-      "id": "q63-quote-generator",
-      "title": "Random Quote/Joke Generator",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build a quote generator with sharing capabilities.",
-      "detailedDescription": "Create a quote/joke generator that fetches random quotes from API, displays quote with author, includes share buttons for social media, supports copy-to-clipboard, stores favorite quotes, filters by category or author, shows quote statistics, includes loading state, handles API errors gracefully. Add text-to-speech for reading quotes.",
-      "hints": [
-        "Fetch data from quotes API",
-        "Implement social media sharing",
-        "Store favorites in localStorage",
-        "Add error handling"
-      ],
-      "keyFeatures": [
-        "API Integration",
-        "Social Sharing",
-        "Favorites",
-        "Filtering",
-        "Error Handling"
-      ],
-      "timeEstimate": "40-55 minutes"
-    },
-    {
-      "id": "q64-code-diff-viewer",
-      "title": "Code Diff/Comparison Viewer",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build a code diff viewer with syntax highlighting.",
-      "detailedDescription": "Create a diff viewer that compares two code snippets side-by-side or inline, highlights differences with colors (added, removed, modified), includes syntax highlighting for multiple languages, supports navigation between differences, shows line numbers, allows copy functionality, and includes merge capabilities. Add options for ignoring whitespace and different comparison modes.",
-      "hints": [
-        "Use diff algorithm (Myers, Hunt-McIlroy)",
-        "Apply syntax highlighting",
-        "Highlight changes with colors",
-        "Implement diff navigation"
-      ],
-      "keyFeatures": [
-        "Side-by-Side View",
-        "Syntax Highlighting",
-        "Change Highlighting",
-        "Navigation",
-        "Merge Capabilities"
-      ],
-      "timeEstimate": "100-130 minutes"
-    },
-    {
-      "id": "q65-password-strength-checker",
-      "title": "Password Strength Checker",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build a password strength indicator with feedback.",
-      "detailedDescription": "Create a password strength checker that evaluates password strength in real-time, displays strength meter with visual feedback, shows specific requirements met/unmet, provides suggestions for improvement, includes common pattern detection, shows estimated time to crack password, and includes password visibility toggle. Add customizable strength criteria.",
-      "hints": [
-        "Check password against criteria",
-        "Calculate entropy",
-        "Show real-time feedback",
-        "Detect common patterns"
-      ],
-      "keyFeatures": [
-        "Real-time Feedback",
-        "Strength Meter",
-        "Requirements Check",
-        "Pattern Detection",
-        "Suggestions"
-      ],
-      "timeEstimate": "35-50 minutes"
-    },
-    {
-      "id": "q66-landing-page-with-nav",
-      "title": "Landing Page with Sticky Navigation",
-      "techStack": "React/Vanilla JS based",
-      "level": "Easy",
-      "quickDescription": "Build a landing page with smooth scroll navigation.",
-      "detailedDescription": "Create a landing page with multiple sections (hero, features, pricing, testimonials, footer), implements sticky header navigation that changes on scroll, includes smooth scroll-to-section functionality, highlights active navigation item based on viewport, supports responsive hamburger menu on mobile, includes call-to-action buttons, and implements parallax effects. Add animations on scroll.",
-      "hints": [
-        "Detect active section on scroll",
-        "Implement smooth scrolling",
-        "Handle responsive navigation",
-        "Add intersection observer for animations"
-      ],
-      "keyFeatures": [
-        "Sticky Header",
-        "Smooth Scrolling",
-        "Responsive Menu",
-        "Animations",
-        "Section Highlighting"
-      ],
-      "timeEstimate": "50-65 minutes"
-    },
-    {
-      "id": "q67-image-lazy-loader",
-      "title": "Image Lazy Loader with Blur Effect",
-      "techStack": "React/Vanilla JS based",
-      "level": "Medium",
-      "quickDescription": "Build a lazy loader with progressive image loading.",
-      "detailedDescription": "Create an image lazy loader that loads images only when visible in viewport using IntersectionObserver, displays placeholder while loading, includes blur-up effect (load small image first then replace), shows loading spinner, handles loading errors with fallback image, supports responsive images with srcset, and optimizes bandwidth usage. Add progressive JPEG support.",
-      "hints": [
-        "Use IntersectionObserver API",
-        "Implement blur-up effect",
-        "Support srcset for responsive images",
-        "Handle loading errors"
-      ],
-      "keyFeatures": [
-        "Intersection Observer",
-        "Blur-up Effect",
-        "Responsive Images",
-        "Error Handling",
-        "Performance"
-      ],
-      "timeEstimate": "55-70 minutes"
-    },
-    {
-      "id": "q68-notification-system",
-      "title": "Advanced Notification System",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build a notification system with priority and grouping.",
-      "detailedDescription": "Create an advanced notification system that supports different notification types (success, error, warning, info), implements priority-based queuing, groups similar notifications, shows notification history, includes undo functionality for actions, supports persistent storage of important notifications, includes notification preferences/settings, and implements Web Push API integration. Add notification sounds and animations.",
-      "hints": [
-        "Manage notification queue with priority",
-        "Group similar notifications",
-        "Store notification history",
-        "Implement undo functionality"
-      ],
-      "keyFeatures": [
-        "Priority Queue",
-        "Grouping",
-        "History",
-        "Undo Support",
-        "Web Push API"
-      ],
-      "timeEstimate": "90-110 minutes"
-    },
-    {
-      "id": "q69-dependency-visualizer",
-      "title": "Dependency Visualizer Graph",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build a graph visualization for dependencies.",
-      "detailedDescription": "Create a dependency graph visualizer that displays nodes and connections between components/packages, highlights circular dependencies in red, supports zooming and panning, includes filtering by dependency type, shows dependency details on click, implements force-directed layout, includes search functionality, and exports graph as image or JSON. Add cycle detection and impact analysis.",
-      "hints": [
-        "Use graph visualization library (D3, Cytoscape)",
-        "Implement force-directed layout",
-        "Detect circular dependencies",
-        "Handle large graph rendering"
-      ],
-      "keyFeatures": [
-        "Graph Visualization",
-        "Cycle Detection",
-        "Force Layout",
-        "Search",
-        "Export Functionality"
-      ],
-      "timeEstimate": "120-150 minutes"
-    },
-    {
-      "id": "q70-comment-section",
-      "title": "Nested Comment System",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a nested comment section with replies.",
-      "detailedDescription": "Create a nested comment system that allows adding comments and replies, supports comment editing and deletion, implements threading with visual hierarchy, includes upvote/downvote functionality, shows timestamps and user avatars, sorts comments by newest/popular/oldest, supports pagination for large comment sections, includes user mentions with @notifications. Add comment moderation features.",
-      "hints": [
-        "Store comments in tree structure",
-        "Implement recursive rendering",
-        "Handle reply nesting",
-        "Implement sorting/filtering"
-      ],
-      "keyFeatures": [
-        "Nested Comments",
-        "Voting",
-        "Editing/Deletion",
-        "Sorting",
-        "User Mentions"
-      ],
-      "timeEstimate": "75-95 minutes"
-    },
-    {
-      "id": "q71-snippet-manager",
-      "title": "Code Snippet Manager",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a code snippet saver with search and tags.",
-      "detailedDescription": "Create a code snippet manager that allows saving code snippets with tags and descriptions, implements search across snippets, supports syntax highlighting for multiple languages, includes copy-to-clipboard, shows snippet metadata (created date, language, size), supports organizing into collections, includes export as file, and allows sharing snippets. Add snippet rating and collaborative features.",
-      "hints": [
-        "Store snippets with metadata",
-        "Implement tag-based filtering",
-        "Add syntax highlighting",
-        "Support export functionality"
-      ],
-      "keyFeatures": [
-        "Snippet Storage",
-        "Search & Filter",
-        "Syntax Highlighting",
-        "Collections",
-        "Export"
-      ],
-      "timeEstimate": "70-85 minutes"
-    },
-    {
-      "id": "q72-network-request-logger",
-      "title": "Network Request Logger/Inspector",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build a network inspector showing all API calls.",
-      "detailedDescription": "Create a network request logger that intercepts and displays all API calls made by the application, shows request/response details (headers, body, status), filters by request type or status, includes search functionality, shows request timing and performance metrics, allows copying requests, includes request replay functionality, and implements storage for request history. Add waterfall visualization for performance analysis.",
-      "hints": [
-        "Intercept fetch/XHR requests",
-        "Store request/response data",
-        "Calculate timing metrics",
-        "Implement replay functionality"
-      ],
-      "keyFeatures": [
-        "Request Interception",
-        "Filtering",
-        "Performance Metrics",
-        "Request Replay",
-        "History Storage"
-      ],
-      "timeEstimate": "110-140 minutes"
-    },
-    {
-      "id": "q73-kanban-with-swimlanes",
-      "title": "Advanced Kanban with Swimlanes",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build a Kanban board with user swimlanes.",
-      "detailedDescription": "Create an advanced Kanban board with swimlanes grouped by assignee/priority, supports drag-drop across columns and swimlanes, includes WIP (Work In Progress) limits with visual indicators, shows card relationships and dependencies, includes filtering by multiple criteria, displays card burn-down metrics, supports board templates, and includes team member focus view. Add board history and activity tracking.",
-      "hints": [
-        "Organize data by swimlanes and columns",
-        "Handle drag-drop between swimlanes",
-        "Enforce WIP limits",
-        "Calculate metrics"
-      ],
-      "keyFeatures": [
-        "Swimlane Organization",
-        "WIP Limits",
-        "Metrics Display",
-        "Templates",
-        "Activity Tracking"
-      ],
-      "timeEstimate": "120-150 minutes"
-    },
-    {
-      "id": "q74-typewriter-effect",
-      "title": "Typewriter/Text Animation Effect",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build a typewriter text animation component.",
-      "detailedDescription": "Create a typewriter effect component that animates text character by character, supports variable typing speed, includes cursor blinking, allows pausing and resuming animation, supports multiple text sequences, includes backspace animation option, and can trigger actions when animation completes. Add sound effects for typing and backspace.",
-      "hints": [
-        "Update state character by character",
-        "Use setInterval for timing",
-        "Implement cursor animation",
-        "Support animation control"
-      ],
-      "keyFeatures": [
-        "Character Animation",
-        "Variable Speed",
-        "Cursor Blinking",
-        "Pause/Resume",
-        "Sound Effects"
-      ],
-      "timeEstimate": "35-50 minutes"
-    },
-    {
-      "id": "q75-mobile-responsive-sidebar",
-      "title": "Mobile Responsive Sidebar Navigation",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a responsive sidebar with mobile hamburger menu.",
-      "detailedDescription": "Create a responsive sidebar navigation that transforms into hamburger menu on mobile, includes smooth slide-out animation, implements backdrop click to close, supports nested menu items, highlights active route, includes keyboard navigation (Escape to close), persists menu state during navigation, and supports accessibility features. Add sidebar collapsing functionality.",
-      "hints": [
-        "Use media queries for responsive design",
-        "Implement smooth animations",
-        "Handle mobile gestures",
-        "Support nested navigation"
-      ],
-      "keyFeatures": [
-        "Responsive Design",
-        "Slide Animation",
-        "Hamburger Menu",
-        "Nested Items",
-        "Accessibility"
-      ],
-      "timeEstimate": "55-70 minutes"
-    },
-    {
-      "id": "q76-whack-a-mole-game",
-      "title": "Whack-a-Mole Game",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build a whack-a-mole game with scoring.",
-      "detailedDescription": "Create a whack-a-mole game with grid of holes, randomly shows moles that player must click, tracks score and missed targets, implements difficulty levels with increasing speed, shows countdown timer, displays high scores with leaderboard, includes sound effects for clicks and game-over, and supports game reset. Add power-ups and special moles.",
-      "hints": [
-        "Randomly show moles in holes",
-        "Track clicks and scoring",
-        "Implement difficulty progression",
-        "Store high scores"
-      ],
-      "keyFeatures": [
-        "Game Logic",
-        "Scoring",
-        "Difficulty Levels",
-        "Sound Effects",
-        "Leaderboard"
-      ],
-      "timeEstimate": "50-65 minutes"
-    },
-    {
-      "id": "q77-memory-matching-game",
-      "title": "Memory Matching Game",
-      "techStack": "React based",
-      "level": "Easy",
-      "quickDescription": "Build a memory/flip card matching game.",
-      "detailedDescription": "Create a memory game with card pairs that player must match by flipping cards, prevents mismatches from staying flipped, tracks number of moves and best score, includes different difficulty levels (different grid sizes), implements timer for timed mode, shows completion percentage, supports game reset, and includes animations for card flips. Add hints functionality and leaderboard.",
-      "hints": [
-        "Shuffle cards randomly",
-        "Track flipped cards and matches",
-        "Prevent clicking while comparing",
-        "Store game statistics"
-      ],
-      "keyFeatures": [
-        "Card Matching",
-        "Move Tracking",
-        "Difficulty Levels",
-        "Timer",
-        "Animations"
-      ],
-      "timeEstimate": "55-70 minutes"
-    },
-    {
-      "id": "q78-slider-carousel-advanced",
-      "title": "Advanced Slider with Smart Transition",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build an advanced carousel with smart transitions.",
-      "detailedDescription": "Create an advanced carousel that supports multiple transition effects (fade, slide, zoom), includes customizable timing and easing, supports variable slide sizes, implements lazy loading of images, shows slide counter and progress bar, includes loop or end behavior options, supports keyboard and mouse wheel navigation, and implements accessibility features. Add autoplay pause on interaction.",
-      "hints": [
-        "Implement multiple transition types",
-        "Use CSS animations/transforms",
-        "Handle keyboard navigation",
-        "Implement accessibility"
-      ],
-      "keyFeatures": [
-        "Multiple Transitions",
-        "Custom Easing",
-        "Lazy Loading",
-        "Keyboard Navigation",
-        "Accessibility"
-      ],
-      "timeEstimate": "70-90 minutes"
-    },
-    {
-      "id": "q79-form-with-conditional-fields",
-      "title": "Form with Conditional Field Display",
-      "techStack": "React based",
-      "level": "Medium",
-      "quickDescription": "Build a dynamic form with conditional field rendering.",
-      "detailedDescription": "Create a dynamic form that shows/hides fields based on other field values, implements field dependencies and validation chains, includes multi-step form progression, validates conditional field groups, shows helpful error messages, persists form state across steps, supports field arrays for dynamic sections, and includes progress indicator. Add automatic saving and draft functionality.",
-      "hints": [
-        "Manage complex form state",
-        "Implement conditional rendering logic",
-        "Handle field dependencies",
-        "Validate conditionally"
-      ],
-      "keyFeatures": [
-        "Conditional Fields",
-        "Multi-step",
-        "Field Dependencies",
-        "Progress Indicator",
-        "State Persistence"
-      ],
-      "timeEstimate": "80-100 minutes"
-    },
-    {
-      "id": "q80-infinite-scroll-with-filter",
-      "title": "Infinite Scroll with Multiple Filters",
-      "techStack": "React based",
-      "level": "Hard",
-      "quickDescription": "Build infinite scroll with complex filtering.",
-      "detailedDescription": "Create an infinite scroll implementation with multiple simultaneous filters, maintains scroll position when filters change, prevents race conditions in concurrent requests, shows loading skeletons during fetch, implements reset filter button, supports URL query parameters for shareable filtered results, includes sort options, and handles edge cases like filtered empty results. Add saved filter presets.",
-      "hints": [
-        "Handle filter state changes",
-        "Manage concurrent API requests",
-        "Use AbortController for cleanup",
-        "Sync with URL parameters"
-      ],
-      "keyFeatures": [
-        "Multiple Filters",
-        "Concurrent Requests",
-        "URL Sync",
-        "Loading States",
-        "Filter Presets"
-      ],
-      "timeEstimate": "90-110 minutes"
-    }
-  ]
-}
+[
+  {
+    "id": "q1-todo-list-app",
+    "title": "Todo List Application",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build a production-like Todo app with CRUD, filters, drag & drop, and persistence.",
+    "detailedDescription": "Build a complete Todo application where users can add, edit, delete, and mark tasks as completed, filter todos by status (all, active, completed), reorder items using drag & drop, and persist the state in localStorage so the list survives page reloads. The app should feel like a real-world productivity tool with clean UI, keyboard shortcuts (for example, Ctrl+K for search), and robust state management using hooks like useReducer and custom utilities such as a useLocalStorage hook.",
+    "hints": [
+      "Use useReducer for complex state management",
+      "Implement HTML5 Drag & Drop API",
+      "Create custom useLocalStorage hook",
+      "Add keyboard shortcuts (Ctrl+K for search)"
+    ],
+    "keyFeatures": [
+      "CRUD Operations",
+      "State Management",
+      "Persistence",
+      "Filtering",
+      "Drag & Drop"
+    ],
+    "timeEstimate": "45-60 minutes"
+  },
+  {
+    "id": "q2-image-carousel",
+    "title": "Image Carousel/Slider",
+    "techStack": "Vanilla JS based",
+    "level": "Medium",
+    "quickDescription": "Build a responsive image slider with autoplay, navigation controls, and lazy loading.",
+    "detailedDescription": "Create a responsive image carousel that supports navigation arrows, dot indicators, autoplay with pause on hover, touch and swipe gestures for mobile, keyboard navigation using arrow keys, and lazy loading for images to optimize performance. The component should handle edge cases like rapid user interaction, maintain smooth CSS transitions using translateX, and expose a clean API so it can be dropped into any landing page or gallery.",
+    "hints": [
+      "Use CSS transform: translateX for smooth transitions",
+      "Implement IntersectionObserver for lazy loading",
+      "Add touch/swipe event handlers",
+      "Handle edge cases like rapid clicking"
+    ],
+    "keyFeatures": [
+      "Autoplay",
+      "Touch Gestures",
+      "Lazy Loading",
+      "Keyboard Navigation",
+      "Responsive Design"
+    ],
+    "timeEstimate": "50-70 minutes"
+  },
+  {
+    "id": "q3-modal-dialog",
+    "title": "Modal Dialog",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Implement an accessible modal component with focus management and keyboard support.",
+    "detailedDescription": "Build an accessible modal dialog component that opens on user action, traps focus inside the dialog, supports closing via ESC, backdrop click, and close button, and can render different sizes like small, medium, and large. Use React Portals to correctly layer the modal above other content, add proper ARIA roles and attributes, and implement subtle open/close animations so it can be reused across forms, confirmation flows, and detail views.",
+    "hints": [
+      "Use React Portal for proper stacking",
+      "Implement focus management with useEffect",
+      "Add ARIA attributes and roles",
+      "Handle backdrop click vs escape key differently"
+    ],
+    "keyFeatures": [
+      "Accessibility",
+      "Focus Trap",
+      "Portal",
+      "Keyboard Support",
+      "Animations"
+    ],
+    "timeEstimate": "40-50 minutes"
+  },
+  {
+    "id": "q4-search-autocomplete",
+    "title": "Search Autocomplete Component",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a search input with autocomplete suggestions, debouncing, and keyboard navigation.",
+    "detailedDescription": "Create a search autocomplete component that fetches suggestions from an API with debounced input, displays filtered results in a dropdown, supports arrow key navigation and Enter to select, highlights matching text, shows loading and error states, and handles edge cases like empty input and no results. Implement caching to avoid redundant API calls and use useCallback to optimize performance.",
+    "hints": [
+      "Implement debouncing with useCallback or custom hook",
+      "Cache API responses to reduce requests",
+      "Handle keyboard navigation with arrow keys and Enter",
+      "Implement proper loading and error states"
+    ],
+    "keyFeatures": [
+      "Debouncing",
+      "API Integration",
+      "Keyboard Navigation",
+      "Caching",
+      "Error Handling"
+    ],
+    "timeEstimate": "55-75 minutes"
+  },
+  {
+    "id": "q5-form-validation",
+    "title": "Form Validation System",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a reusable form validation system with real-time error display.",
+    "detailedDescription": "Create a flexible form validation system that supports multiple field types (text, email, password, checkbox), real-time and submit-time validation, custom validation rules, async validators (like email uniqueness checks), and displays inline error messages. Implement a useForm hook that manages form state, touched fields, and validation errors, supporting both synchronous and asynchronous validation chains.",
+    "hints": [
+      "Create a custom useForm hook",
+      "Support async validators",
+      "Track touched fields separately",
+      "Implement validation schemas"
+    ],
+    "keyFeatures": [
+      "Custom Hooks",
+      "Async Validation",
+      "Error Display",
+      "Reusability",
+      "Field State Management"
+    ],
+    "timeEstimate": "60-80 minutes"
+  },
+  {
+    "id": "q6-infinite-scroll",
+    "title": "Infinite Scroll List",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Implement infinite scroll pagination with loading states and performance optimization.",
+    "detailedDescription": "Build an infinite scroll component that loads more items as the user scrolls near the bottom using IntersectionObserver, shows loading spinners during fetch, prevents duplicate requests, handles errors gracefully with retry buttons, and optimizes rendering with virtual scrolling for large lists. Support both scroll-based and button-triggered loading patterns.",
+    "hints": [
+      "Use IntersectionObserver API",
+      "Implement virtual scrolling or windowing",
+      "Prevent race conditions with AbortController",
+      "Add loading and error states"
+    ],
+    "keyFeatures": [
+      "IntersectionObserver",
+      "Virtual Scrolling",
+      "Loading States",
+      "Error Handling",
+      "Performance"
+    ],
+    "timeEstimate": "65-85 minutes"
+  },
+  {
+    "id": "q7-star-rating",
+    "title": "Star Rating Component",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build an interactive star rating component with hover effects and accessibility.",
+    "detailedDescription": "Create a star rating component that displays 5 stars, allows users to click and hover to rate, shows the current rating value, supports different sizes and colors through props, includes accessibility attributes (aria-label, role), and triggers onChange callbacks. Add features like partial star ratings, read-only mode, and smooth hover animations.",
+    "hints": [
+      "Use SVG or Unicode stars",
+      "Handle both click and hover states",
+      "Add proper ARIA labels",
+      "Support partial ratings"
+    ],
+    "keyFeatures": [
+      "Interactivity",
+      "Accessibility",
+      "Hover Effects",
+      "Props-based Customization",
+      "Animations"
+    ],
+    "timeEstimate": "30-40 minutes"
+  },
+  {
+    "id": "q8-pagination",
+    "title": "Pagination Component",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build a pagination component with page navigation and smart ellipsis display.",
+    "detailedDescription": "Create a reusable pagination component that displays page numbers with previous/next buttons, handles current page state, shows ellipsis for skipped pages, disables navigation at boundaries, and accepts callbacks for page changes. Support customizable page ranges and implement smart ellipsis logic to show relevant pages around the current page.",
+    "hints": [
+      "Calculate visible page range intelligently",
+      "Handle edge cases at start/end",
+      "Use disabled state for boundary buttons",
+      "Optimize re-renders with memoization"
+    ],
+    "keyFeatures": [
+      "Smart Ellipsis",
+      "Boundary Handling",
+      "Callback Props",
+      "Responsive Design",
+      "Accessibility"
+    ],
+    "timeEstimate": "35-45 minutes"
+  },
+  {
+    "id": "q9-tabs-component",
+    "title": "Tabs Navigation Component",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Implement a tabs component with tab switching and keyboard navigation.",
+    "detailedDescription": "Build a flexible tabs component that displays multiple tab panels, switches content on tab click, supports keyboard navigation (arrow keys and tab key), manages active tab state, and supports lazy loading of tab content. Add smooth transitions between tabs and implement proper ARIA roles for accessibility. Support both controlled and uncontrolled component patterns.",
+    "hints": [
+      "Use keyboard arrow navigation",
+      "Add ARIA attributes for accessibility",
+      "Support lazy loading of content",
+      "Implement smooth transitions"
+    ],
+    "keyFeatures": [
+      "Keyboard Navigation",
+      "Accessibility",
+      "Lazy Loading",
+      "State Management",
+      "Animations"
+    ],
+    "timeEstimate": "40-50 minutes"
+  },
+  {
+    "id": "q10-dropdown-menu",
+    "title": "Dropdown Menu",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build a dropdown menu with nested items and keyboard support.",
+    "detailedDescription": "Create a dropdown menu component that opens on click, closes on item selection or outside click, supports nested submenu items, handles keyboard navigation (arrow keys, Enter, Escape), displays icons alongside menu items, and positions intelligently to avoid going off-screen. Include accessibility features like ARIA menus and focus management.",
+    "hints": [
+      "Use useRef for detecting outside clicks",
+      "Handle nested menu navigation",
+      "Implement keyboard shortcuts",
+      "Add smart positioning logic"
+    ],
+    "keyFeatures": [
+      "Nested Items",
+      "Keyboard Navigation",
+      "Click-outside Detection",
+      "Smart Positioning",
+      "Accessibility"
+    ],
+    "timeEstimate": "45-55 minutes"
+  },
+  {
+    "id": "q11-kanban-board",
+    "title": "Kanban Board",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build a drag-and-drop Kanban board with multiple columns and card management.",
+    "detailedDescription": "Create a full-featured Kanban board with multiple columns (To Do, In Progress, Done), draggable cards between columns, add/edit/delete cards within columns, persist state to localStorage, undo/redo functionality, card filtering by assignee or label, and smooth animations. Handle edge cases like drag over boundaries, rapid interactions, and mobile touch support.",
+    "hints": [
+      "Use React DnD library or implement custom drag-drop",
+      "Manage complex state with useReducer",
+      "Implement undo/redo stack",
+      "Add touch support for mobile"
+    ],
+    "keyFeatures": [
+      "Drag & Drop",
+      "Complex State",
+      "Undo/Redo",
+      "Persistence",
+      "Touch Support"
+    ],
+    "timeEstimate": "90-120 minutes"
+  },
+  {
+    "id": "q12-video-player",
+    "title": "Custom Video Player",
+    "techStack": "HTML5 & JS based",
+    "level": "Hard",
+    "quickDescription": "Build a custom video player with controls, playback speed, and quality selection.",
+    "detailedDescription": "Develop a full-featured video player with custom controls (play/pause, seek, volume, fullscreen), multiple quality options with adaptive streaming, playback speed selection, progress bar with preview thumbnails, subtitles/captions support, keyboard shortcuts, and analytics tracking. Implement smooth buffering indicators and optimize for mobile with responsive controls.",
+    "hints": [
+      "Use HTML5 Video API",
+      "Implement custom progress bar with seek preview",
+      "Handle multiple quality streams",
+      "Add keyboard shortcut support"
+    ],
+    "keyFeatures": [
+      "Video API",
+      "Quality Switching",
+      "Custom Controls",
+      "Subtitles",
+      "Keyboard Shortcuts"
+    ],
+    "timeEstimate": "100-130 minutes"
+  },
+  {
+    "id": "q13-date-picker",
+    "title": "Date Picker Component",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build an interactive date picker with calendar and keyboard support.",
+    "detailedDescription": "Create a date picker component that displays a calendar grid, allows selecting single or date ranges, navigates months/years, supports keyboard shortcuts (arrow keys, Enter), highlights today and selected dates, and handles edge cases like disabled dates and month boundaries. Add keyboard support for quick navigation and implement efficient rendering for large date ranges.",
+    "hints": [
+      "Use Date APIs for calendar logic",
+      "Implement keyboard navigation",
+      "Support date range selection",
+      "Handle month/year transitions"
+    ],
+    "keyFeatures": [
+      "Calendar Grid",
+      "Range Selection",
+      "Keyboard Navigation",
+      "Date Logic",
+      "Disabled Dates"
+    ],
+    "timeEstimate": "70-90 minutes"
+  },
+  {
+    "id": "q14-drawer-sidebar",
+    "title": "Drawer/Sidebar Component",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a slide-out drawer component with animations and overlay backdrop.",
+    "detailedDescription": "Create a drawer/sidebar component that slides in from the edge with smooth animations, includes a semi-transparent backdrop, closes on backdrop click or ESC key, traps focus while open, supports different sizes and directions (left, right, top, bottom), and is fully accessible with ARIA attributes. Implement smooth transitions and prevent body scroll when drawer is open.",
+    "hints": [
+      "Use CSS transforms for smooth animations",
+      "Implement focus trap",
+      "Prevent body overflow when open",
+      "Support multiple directions"
+    ],
+    "keyFeatures": [
+      "Slide Animations",
+      "Backdrop",
+      "Focus Trap",
+      "Multiple Directions",
+      "Accessibility"
+    ],
+    "timeEstimate": "50-65 minutes"
+  },
+  {
+    "id": "q15-slider-input",
+    "title": "Range Slider Component",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a range slider with dual handles and label display.",
+    "detailedDescription": "Create a range slider component that allows selecting a range between min and max values, supports single or dual handles, displays current values with labels above handles, updates smoothly on drag, handles edge cases like inverted ranges, includes keyboard support for arrow keys, and works with different step values.",
+    "hints": [
+      "Calculate position based on value",
+      "Handle overlapping handles correctly",
+      "Support keyboard navigation",
+      "Add smooth animations"
+    ],
+    "keyFeatures": [
+      "Dual Handles",
+      "Keyboard Navigation",
+      "Value Labels",
+      "Smooth Dragging",
+      "Edge Cases"
+    ],
+    "timeEstimate": "55-70 minutes"
+  },
+  {
+    "id": "q16-toast-notification",
+    "title": "Toast Notification System",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a toast notification system with auto-dismiss and queue management.",
+    "detailedDescription": "Create a toast notification system that displays temporary notifications with different types (success, error, warning, info), auto-dismisses after a timeout, stacks multiple toasts, allows manual dismissal with a close button, uses React Context for global access, and includes animation on enter/exit. Support custom durations and priority-based ordering.",
+    "hints": [
+      "Use React Context for global state",
+      "Implement auto-dismiss with useEffect",
+      "Handle toast queuing and stacking",
+      "Add animation classes"
+    ],
+    "keyFeatures": [
+      "Global State",
+      "Auto-dismiss",
+      "Stacking",
+      "Context API",
+      "Animations"
+    ],
+    "timeEstimate": "50-65 minutes"
+  },
+  {
+    "id": "q17-popover",
+    "title": "Popover Component",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build a popover that displays content relative to a trigger element.",
+    "detailedDescription": "Create a popover component that displays content in a popup near a trigger element, positions intelligently (top, bottom, left, right with fallback), closes on outside click or ESC key, animates smoothly, and supports custom content. Use React Portals for proper layering and implement smart positioning to avoid going off-screen.",
+    "hints": [
+      "Use React Portal",
+      "Calculate position dynamically",
+      "Implement smart positioning fallbacks",
+      "Add click-outside detection"
+    ],
+    "keyFeatures": [
+      "Smart Positioning",
+      "Portal",
+      "Animations",
+      "Click-outside Detection",
+      "Accessibility"
+    ],
+    "timeEstimate": "40-50 minutes"
+  },
+  {
+    "id": "q18-lightbox-gallery",
+    "title": "Lightbox Gallery",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a full-screen image lightbox with navigation and keyboard support.",
+    "detailedDescription": "Create a lightbox gallery component that displays images in full-screen mode, allows navigating between images with arrow buttons and keyboard arrows, shows image counter, includes a close button, disables body scroll when open, supports touch swipe gestures, and includes smooth fade/zoom animations. Add keyboard shortcuts for common actions.",
+    "hints": [
+      "Use Portal for full-screen display",
+      "Implement keyboard and swipe navigation",
+      "Add smooth zoom/fade animations",
+      "Handle body scroll prevention"
+    ],
+    "keyFeatures": [
+      "Full-screen Display",
+      "Navigation",
+      "Swipe Gestures",
+      "Keyboard Shortcuts",
+      "Animations"
+    ],
+    "timeEstimate": "60-75 minutes"
+  },
+  {
+    "id": "q19-accordion",
+    "title": "Accordion Component",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build an accordion with expandable/collapsible sections.",
+    "detailedDescription": "Create an accordion component with multiple sections that expand and collapse, supports single or multiple open sections simultaneously, includes smooth height animations, displays icons for expand/collapse state, and implements keyboard navigation for accessibility. Support lazy loading of accordion content and manage state efficiently.",
+    "hints": [
+      "Use useRef for measuring content height",
+      "Animate height with CSS transitions",
+      "Support single/multi expand modes",
+      "Add keyboard navigation"
+    ],
+    "keyFeatures": [
+      "Smooth Animations",
+      "Keyboard Navigation",
+      "Flexible State",
+      "Lazy Loading",
+      "Accessibility"
+    ],
+    "timeEstimate": "40-50 minutes"
+  },
+  {
+    "id": "q20-product-image-viewer",
+    "title": "Product Image Viewer",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a product image viewer with zoom and thumbnail navigation.",
+    "detailedDescription": "Create a product image viewer with a large main image display, thumbnail navigation, zoom-in capability on hover or button click, smooth image transitions, keyboard navigation between images, and responsive design that works on mobile. Support different image formats and implement efficient image loading with proper fallbacks.",
+    "hints": [
+      "Implement zoom on hover with mouse position",
+      "Load high-res images on demand",
+      "Support touch gestures for mobile",
+      "Optimize image loading"
+    ],
+    "keyFeatures": [
+      "Zoom Functionality",
+      "Thumbnail Navigation",
+      "Responsive Design",
+      "Image Optimization",
+      "Touch Support"
+    ],
+    "timeEstimate": "55-70 minutes"
+  },
+  {
+    "id": "q21-chat-interface",
+    "title": "Real-time Chat Interface",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build a chat interface with real-time messaging and user presence.",
+    "detailedDescription": "Create a chat application interface with real-time message updates using WebSocket, displays user avatar and timestamps, shows typing indicators, marks messages as sent/delivered/read, implements infinite scroll for message history, supports emoji and rich text, and includes user presence indicators. Handle connection loss gracefully and implement message persistence with IndexedDB.",
+    "hints": [
+      "Use WebSocket for real-time updates",
+      "Implement typing indicators",
+      "Handle connection loss and reconnection",
+      "Use IndexedDB for offline support"
+    ],
+    "keyFeatures": [
+      "WebSocket Integration",
+      "Typing Indicators",
+      "Message Status",
+      "Infinite Scroll",
+      "Offline Support"
+    ],
+    "timeEstimate": "120-150 minutes"
+  },
+  {
+    "id": "q22-file-upload",
+    "title": "File Upload Component",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a drag-and-drop file upload with progress tracking.",
+    "detailedDescription": "Create a file upload component with drag-and-drop support, displays upload progress with percentage, supports multiple file formats with validation, shows file preview thumbnails for images, includes cancel upload functionality, and handles errors gracefully. Implement chunked upload for large files and add retry logic for failed uploads.",
+    "hints": [
+      "Implement drag-and-drop listeners",
+      "Use FormData for file uploads",
+      "Display upload progress with ProgressEvent",
+      "Add chunking for large files"
+    ],
+    "keyFeatures": [
+      "Drag & Drop",
+      "Progress Tracking",
+      "File Validation",
+      "Chunked Upload",
+      "Error Handling"
+    ],
+    "timeEstimate": "70-90 minutes"
+  },
+  {
+    "id": "q23-multi-select",
+    "title": "Multi-Select Component",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a searchable multi-select dropdown with tags display.",
+    "detailedDescription": "Create a multi-select component that displays selected items as removable tags, includes a searchable dropdown for finding options, supports grouping options by category, allows selecting/deselecting all options, shows selected count, and handles keyboard navigation. Implement efficient filtering and support for large option lists with virtual scrolling.",
+    "hints": [
+      "Implement efficient search filtering",
+      "Use virtual scrolling for large lists",
+      "Display tags with remove buttons",
+      "Support keyboard navigation"
+    ],
+    "keyFeatures": [
+      "Search Filtering",
+      "Virtual Scrolling",
+      "Tag Display",
+      "Keyboard Navigation",
+      "Grouping"
+    ],
+    "timeEstimate": "65-80 minutes"
+  },
+  {
+    "id": "q24-code-editor",
+    "title": "Code Editor with Syntax Highlighting",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build a code editor with syntax highlighting and line numbers.",
+    "detailedDescription": "Create a code editor component with real-time syntax highlighting using Prism or highlight.js, displays line numbers, supports multiple programming languages, includes code copying functionality, implements keyboard shortcuts (Ctrl+A, Ctrl+C), handles large files efficiently, and includes a dark/light theme toggle. Add features like auto-indentation and bracket matching.",
+    "hints": [
+      "Use Prism or highlight.js for syntax highlighting",
+      "Sync scroll between code and line numbers",
+      "Implement keyboard shortcuts",
+      "Handle large files efficiently"
+    ],
+    "keyFeatures": [
+      "Syntax Highlighting",
+      "Line Numbers",
+      "Keyboard Shortcuts",
+      "Theme Support",
+      "Performance"
+    ],
+    "timeEstimate": "100-120 minutes"
+  },
+  {
+    "id": "q25-progress-bar",
+    "title": "Progress Bar Component",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build a flexible progress bar with different states and animations.",
+    "detailedDescription": "Create a progress bar component that displays progress as percentage, supports different variants (success, warning, danger, info), includes smooth animated transitions, displays text label with percentage, handles different heights/sizes, and includes optional stripe animation. Support both determinate and indeterminate states.",
+    "hints": [
+      "Use CSS width transitions for animation",
+      "Support different color variants",
+      "Add stripe animation with CSS",
+      "Handle edge cases like 0% or 100%"
+    ],
+    "keyFeatures": [
+      "Smooth Animation",
+      "Variants",
+      "Text Label",
+      "Different States",
+      "Customization"
+    ],
+    "timeEstimate": "30-40 minutes"
+  },
+  {
+    "id": "q26-breadcrumb",
+    "title": "Breadcrumb Navigation",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build a breadcrumb navigation component with proper semantics.",
+    "detailedDescription": "Create a breadcrumb navigation component that shows the current page hierarchy, displays clickable links for parent pages, uses proper separators (typically '/'), includes proper ARIA attributes and semantic HTML, and highlights the current page. Support dynamic breadcrumb generation from URL or prop-based configuration.",
+    "hints": [
+      "Use proper semantic HTML with nav",
+      "Add ARIA attributes for accessibility",
+      "Support dynamic breadcrumb generation",
+      "Handle active state styling"
+    ],
+    "keyFeatures": [
+      "Semantic HTML",
+      "Accessibility",
+      "Dynamic Generation",
+      "Responsive Design",
+      "Styling Flexibility"
+    ],
+    "timeEstimate": "25-35 minutes"
+  },
+  {
+    "id": "q27-notification-badge",
+    "title": "Notification Badge Component",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build a notification badge with animation and different states.",
+    "detailedDescription": "Create a notification badge component that displays count or status on top-right of an element, supports different colors and sizes, includes pulse animation, handles zero count hiding, and includes optional dot variant. Support both numeric and status-based badges with smooth animations.",
+    "hints": [
+      "Use CSS positioning for badge placement",
+      "Implement pulse animation",
+      "Support different variants",
+      "Handle responsive sizing"
+    ],
+    "keyFeatures": [
+      "CSS Animation",
+      "Multiple Variants",
+      "Flexible Positioning",
+      "Responsive",
+      "Easy Integration"
+    ],
+    "timeEstimate": "25-35 minutes"
+  },
+  {
+    "id": "q28-admin-dashboard",
+    "title": "Admin Dashboard",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build a comprehensive admin dashboard with charts, tables, and filters.",
+    "detailedDescription": "Create a full admin dashboard with data visualization charts (line, bar, pie), interactive data tables with sorting and filtering, search functionality, date range filtering, export to CSV/PDF, responsive design, and dark/light theme. Include real-time data updates with WebSocket and implement proper data caching strategies for performance.",
+    "hints": [
+      "Use charting library like Chart.js or Recharts",
+      "Implement efficient table rendering",
+      "Add advanced filtering options",
+      "Handle real-time data updates"
+    ],
+    "keyFeatures": [
+      "Data Visualization",
+      "Sorting/Filtering",
+      "Export Functionality",
+      "Real-time Updates",
+      "Theme Support"
+    ],
+    "timeEstimate": "150-180 minutes"
+  },
+  {
+    "id": "q29-expense-tracker",
+    "title": "Expense Tracker App",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build an expense tracking app with categories and visualization.",
+    "detailedDescription": "Create an expense tracker application that allows adding expenses with amount, category, date, and description, displays expenses in a list with edit/delete options, shows summary statistics by category, filters expenses by date range and category, and includes pie chart visualization. Persist data to localStorage and implement budget alerts.",
+    "hints": [
+      "Use useReducer for expense state",
+      "Implement category-based aggregation",
+      "Add date range filtering",
+      "Create pie chart visualization"
+    ],
+    "keyFeatures": [
+      "Category Management",
+      "Date Filtering",
+      "Data Visualization",
+      "Edit/Delete",
+      "Persistence"
+    ],
+    "timeEstimate": "70-90 minutes"
+  },
+  {
+    "id": "q30-weather-app",
+    "title": "Weather Application",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a weather app with location search and forecast display.",
+    "detailedDescription": "Create a weather application that fetches weather data from an API based on user location, displays current weather with icon and description, shows 5-day forecast with temperature trends, includes search functionality for different cities, caches location data, handles errors gracefully, and includes unit toggle (Celsius/Fahrenheit). Add weather alerts and real-time updates.",
+    "hints": [
+      "Use weather API like OpenWeather",
+      "Implement geolocation detection",
+      "Cache location data",
+      "Handle API errors gracefully"
+    ],
+    "keyFeatures": [
+      "API Integration",
+      "Geolocation",
+      "Data Caching",
+      "Unit Conversion",
+      "Error Handling"
+    ],
+    "timeEstimate": "60-80 minutes"
+  },
+  {
+    "id": "q31-calculator",
+    "title": "Advanced Calculator",
+    "techStack": "Vanilla JS based",
+    "level": "Medium",
+    "quickDescription": "Build a scientific calculator with keyboard support.",
+    "detailedDescription": "Create a calculator that supports basic operations (+, -, *, /), handles decimal numbers, includes clear and delete buttons, implements keyboard input support, shows calculation history, supports scientific functions (sin, cos, square root), handles order of operations correctly, and prevents invalid operations. Include memory functions (M+, M-, MR, MC) and calculation history display.",
+    "hints": [
+      "Use proper order of operations",
+      "Handle decimal arithmetic carefully",
+      "Implement keyboard event listeners",
+      "Store calculation history"
+    ],
+    "keyFeatures": [
+      "Scientific Functions",
+      "Keyboard Support",
+      "History Display",
+      "Memory Functions",
+      "Error Handling"
+    ],
+    "timeEstimate": "50-70 minutes"
+  },
+  {
+    "id": "q32-stopwatch",
+    "title": "Stopwatch Timer Application",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build a stopwatch with lap times and reset functionality.",
+    "detailedDescription": "Create a stopwatch application with start/pause/stop controls, records lap times with comparison to previous lap, displays time in MM:SS:MS format, includes visual feedback on button states, handles edge cases like restarting from paused state, and includes keyboard shortcuts (spacebar for start/pause). Persist lap history and support export of timing data.",
+    "hints": [
+      "Use setInterval for timing",
+      "Track lap times in state",
+      "Format time properly",
+      "Handle pause/resume states"
+    ],
+    "keyFeatures": [
+      "Lap Tracking",
+      "Proper Formatting",
+      "Keyboard Shortcuts",
+      "Export Functionality",
+      "State Management"
+    ],
+    "timeEstimate": "40-55 minutes"
+  },
+  {
+    "id": "q33-markdown-editor",
+    "title": "Markdown to HTML Preview Editor",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a markdown editor with live preview.",
+    "detailedDescription": "Create a split-pane markdown editor with real-time HTML preview, supports markdown syntax highlighting in editor, handles all common markdown elements (headers, lists, code blocks, links, images), includes a toolbar with formatting shortcuts, supports custom CSS for preview styling, and includes export to HTML/PDF. Implement auto-save to localStorage and keyboard shortcuts for formatting.",
+    "hints": [
+      "Use markdown parsing library like marked",
+      "Implement sanitization for HTML output",
+      "Add toolbar buttons for formatting",
+      "Support keyboard shortcuts"
+    ],
+    "keyFeatures": [
+      "Live Preview",
+      "Syntax Highlighting",
+      "Toolbar",
+      "Custom Styling",
+      "Export Functionality"
+    ],
+    "timeEstimate": "70-90 minutes"
+  },
+  {
+    "id": "q34-password-manager",
+    "title": "Password Manager UI",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a password manager interface with encryption visualization.",
+    "detailedDescription": "Create a password manager interface that displays saved passwords in a table with website, username, and encrypted password, includes add new password dialog, edit/delete functionality, password strength indicator, search and filtering capabilities, copy password functionality with confirmation, and shows password generation tool. Add security features like master password verification and encryption simulation.",
+    "hints": [
+      "Implement password strength checker",
+      "Add password generation logic",
+      "Support search and filtering",
+      "Add copy-to-clipboard functionality"
+    ],
+    "keyFeatures": [
+      "Password Generation",
+      "Strength Indicator",
+      "Search/Filter",
+      "Edit/Delete",
+      "Copy Functionality"
+    ],
+    "timeEstimate": "65-80 minutes"
+  },
+  {
+    "id": "q35-music-player",
+    "title": "Music Player Application",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build a music player with playlist management and visualizer.",
+    "detailedDescription": "Create a music player with HTML5 audio support, displays currently playing song with album art and metadata, implements play/pause/next/previous controls, includes volume control and progress bar with seek functionality, supports playlist creation and management, includes shuffle and repeat modes, and adds audio visualizer. Implement keyboard shortcuts and support both local files and streaming.",
+    "hints": [
+      "Use HTML5 Audio API",
+      "Implement audio visualization with Canvas",
+      "Support playlist management",
+      "Add keyboard shortcuts"
+    ],
+    "keyFeatures": [
+      "Audio API",
+      "Visualization",
+      "Playlist Management",
+      "Keyboard Shortcuts",
+      "Metadata Display"
+    ],
+    "timeEstimate": "100-120 minutes"
+  },
+  {
+    "id": "q36-todo-with-groups",
+    "title": "Todo List with Categories and Tags",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a todo app with advanced organization features.",
+    "detailedDescription": "Create an advanced todo application with categories/groups, tag system for better organization, filter todos by category or tags, includes priority levels with visual indicators, shows today's tasks vs future tasks, supports recurring todos, includes statistics dashboard showing completion rates, and implements focus mode hiding non-essential UI. Add collaboration features like sharing and due date notifications.",
+    "hints": [
+      "Manage complex nested state",
+      "Implement efficient filtering",
+      "Add priority-based sorting",
+      "Create statistics calculations"
+    ],
+    "keyFeatures": [
+      "Categories & Tags",
+      "Priority System",
+      "Recurring Tasks",
+      "Statistics",
+      "Focus Mode"
+    ],
+    "timeEstimate": "85-105 minutes"
+  },
+  {
+    "id": "q37-poll-voting",
+    "title": "Poll/Voting System",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a poll application with real-time results visualization.",
+    "detailedDescription": "Create a poll application that displays poll questions with multiple options, allows users to vote (with prevention of duplicate voting using device ID or cookie), shows real-time vote counts and percentages, displays results as progress bars or pie chart, includes share functionality, and supports creating new polls. Implement proper state management for voting and results updates.",
+    "hints": [
+      "Track votes using unique identifiers",
+      "Calculate vote percentages efficiently",
+      "Visualize results with charts",
+      "Prevent duplicate voting"
+    ],
+    "keyFeatures": [
+      "Vote Tracking",
+      "Results Visualization",
+      "Real-time Updates",
+      "Share Functionality",
+      "Create Polls"
+    ],
+    "timeEstimate": "60-75 minutes"
+  },
+  {
+    "id": "q38-email-client-ui",
+    "title": "Email Client Interface",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build an email client UI with folder management and search.",
+    "detailedDescription": "Create an email client interface with folder hierarchy (Inbox, Sent, Drafts, Archive), email list with sorting (date, sender, subject), individual email preview, search with filters (from, date range, subject), includes compose email dialog, marks email as read/starred, supports bulk actions on multiple emails, and includes responsive layout. Add real-time new mail notifications and support for multiple accounts.",
+    "hints": [
+      "Implement hierarchical folder structure",
+      "Add advanced search filtering",
+      "Support bulk email actions",
+      "Add real-time notifications"
+    ],
+    "keyFeatures": [
+      "Folder Management",
+      "Advanced Search",
+      "Bulk Actions",
+      "Email Preview",
+      "Responsive Layout"
+    ],
+    "timeEstimate": "120-150 minutes"
+  },
+  {
+    "id": "q39-drawing-canvas",
+    "title": "Drawing Canvas Application",
+    "techStack": "Vanilla JS based",
+    "level": "Hard",
+    "quickDescription": "Build a drawing application with tools and color picker.",
+    "detailedDescription": "Create a drawing canvas application with multiple drawing tools (pencil, brush, eraser, shapes), color picker with color history, adjustable brush size and opacity, includes undo/redo functionality, supports saving drawings as image, implements layer system for advanced drawing, includes preset brushes and textures. Add keyboard shortcuts for tool selection and implement smooth drawing with mouse or touch input.",
+    "hints": [
+      "Use Canvas API for drawing",
+      "Implement undo/redo stack",
+      "Add touch support for mobile",
+      "Support multiple drawing tools"
+    ],
+    "keyFeatures": [
+      "Multiple Tools",
+      "Undo/Redo",
+      "Color Picker",
+      "Layer System",
+      "Touch Support"
+    ],
+    "timeEstimate": "110-140 minutes"
+  },
+  {
+    "id": "q40-movie-search",
+    "title": "Movie Search Application",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a movie search app with filters and ratings.",
+    "detailedDescription": "Create a movie search application that fetches data from TMDB or similar API, displays movie cards with posters and ratings, includes search by title with debouncing, filters by genre, year, and rating, shows detailed movie information in modal, supports sorting by popularity/rating/release date, includes watchlist functionality with localStorage, and displays trending movies. Add infinite scroll for search results and movie recommendations.",
+    "hints": [
+      "Use movie database API",
+      "Implement debounced search",
+      "Add advanced filtering",
+      "Show detailed information in modal"
+    ],
+    "keyFeatures": [
+      "API Integration",
+      "Debounced Search",
+      "Filtering",
+      "Watchlist",
+      "Infinite Scroll"
+    ],
+    "timeEstimate": "75-95 minutes"
+  },
+  {
+    "id": "q41-recipe-app",
+    "title": "Recipe App with Filtering",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a recipe application with search and favorites.",
+    "detailedDescription": "Create a recipe application that displays recipe cards with images, ingredients, and instructions, includes search by recipe name or ingredient, filters by cuisine type and cooking time, allows users to save favorite recipes to localStorage, scales ingredient quantities based on servings, generates shopping list from selected recipes, and includes nutritional information display. Add recipe rating system and user comments.",
+    "hints": [
+      "Implement efficient search filtering",
+      "Calculate scaled ingredients",
+      "Support favorite management",
+      "Generate shopping lists"
+    ],
+    "keyFeatures": [
+      "Search & Filter",
+      "Favorites System",
+      "Ingredient Scaling",
+      "Shopping List",
+      "Ratings"
+    ],
+    "timeEstimate": "70-90 minutes"
+  },
+  {
+    "id": "q42-e-commerce-cart",
+    "title": "E-Commerce Shopping Cart",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a shopping cart with product filtering and checkout.",
+    "detailedDescription": "Create an e-commerce cart system with product listing, add/remove items from cart, quantity adjustment with stock validation, applies discounts and coupon codes, calculates shipping and taxes automatically, shows order summary with breakdown, supports multiple payment methods (mock), includes order confirmation page, and persists cart to localStorage. Add recommendation system and saved items feature.",
+    "hints": [
+      "Manage cart state efficiently",
+      "Calculate totals with taxes/shipping",
+      "Support coupon validation",
+      "Implement payment flow"
+    ],
+    "keyFeatures": [
+      "Cart Management",
+      "Discount Application",
+      "Checkout Flow",
+      "Payment Integration",
+      "Order Summary"
+    ],
+    "timeEstimate": "85-105 minutes"
+  },
+  {
+    "id": "q43-job-board",
+    "title": "Job Board Application",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a job listing board with filters and saved jobs.",
+    "detailedDescription": "Create a job board that displays job listings from API, includes filtering by location, job type, experience level, and salary range, implements search functionality with debouncing, shows detailed job description in modal or separate page, allows users to save job postings, includes company profiles, shows similar job recommendations, and supports job alerts. Add pagination for job listings and proper error handling.",
+    "hints": [
+      "Use job API for data",
+      "Implement advanced filtering",
+      "Add saved jobs functionality",
+      "Show related recommendations"
+    ],
+    "keyFeatures": [
+      "API Integration",
+      "Advanced Filtering",
+      "Saved Jobs",
+      "Job Details",
+      "Recommendations"
+    ],
+    "timeEstimate": "75-95 minutes"
+  },
+  {
+    "id": "q44-note-taking-app",
+    "title": "Note-Taking Application",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a note app with rich text and organization.",
+    "detailedDescription": "Create a note-taking application with rich text editing (bold, italic, lists), organizes notes in folders or notebooks, supports tags for better organization, includes search across notes with highlighting, implements auto-save to localStorage, supports dark mode, includes trash/archive functionality, and exports notes as PDF or Markdown. Add collaborative features like sharing notes and real-time sync.",
+    "hints": [
+      "Use rich text editor library",
+      "Implement efficient search",
+      "Support auto-save functionality",
+      "Add folder management"
+    ],
+    "keyFeatures": [
+      "Rich Text Editor",
+      "Folder Organization",
+      "Search",
+      "Auto-save",
+      "Export Functionality"
+    ],
+    "timeEstimate": "80-100 minutes"
+  },
+  {
+    "id": "q45-quiz-application",
+    "title": "Quiz Application",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a quiz app with questions, scoring, and results.",
+    "detailedDescription": "Create a quiz application that displays questions one at a time, supports multiple choice, true/false, and fill-in-the-blank questions, implements timer for timed quizzes, calculates score and shows results with performance breakdown, includes review mode to see correct answers, stores quiz history, supports creating custom quizzes, and generates certificates for passing scores. Add difficulty levels and category-based quizzes.",
+    "hints": [
+      "Manage quiz state properly",
+      "Implement timer functionality",
+      "Calculate scores accurately",
+      "Support quiz creation"
+    ],
+    "keyFeatures": [
+      "Quiz Management",
+      "Timer",
+      "Scoring System",
+      "Results Analysis",
+      "Quiz Creation"
+    ],
+    "timeEstimate": "80-100 minutes"
+  },
+  {
+    "id": "q46-portfolio-website",
+    "title": "Portfolio Website Generator",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build a portfolio website builder with customizable templates.",
+    "detailedDescription": "Create a portfolio website generator that allows users to input their information (name, bio, skills, projects, experience), provides multiple design templates to choose from, generates professional portfolio with project showcase, includes contact form with email integration, supports social media links, implements responsive design for all devices, allows exporting or deploying website, and includes SEO optimization. Add theme customization and domain setup.",
+    "hints": [
+      "Support multiple templates",
+      "Implement customization options",
+      "Generate responsive design",
+      "Add deployment options"
+    ],
+    "keyFeatures": [
+      "Multiple Templates",
+      "Customization",
+      "Responsive Design",
+      "Export/Deploy",
+      "SEO Optimization"
+    ],
+    "timeEstimate": "140-170 minutes"
+  },
+  {
+    "id": "q47-real-estate-search",
+    "title": "Real Estate Listing Browser",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a real estate app with map integration and filters.",
+    "detailedDescription": "Create a real estate property search application with listings display, advanced filtering (price, bedrooms, location, property type), integrates maps (Google Maps) showing property locations, includes detailed property view with images gallery, calculates mortgage estimates, supports saving favorite properties, shows property history and price trends, and includes agent contact information. Add neighborhood information and school ratings.",
+    "hints": [
+      "Integrate Google Maps API",
+      "Implement advanced filtering",
+      "Show property gallery",
+      "Calculate mortgage estimates"
+    ],
+    "keyFeatures": [
+      "Map Integration",
+      "Advanced Filters",
+      "Image Gallery",
+      "Calculations",
+      "Favorites"
+    ],
+    "timeEstimate": "100-130 minutes"
+  },
+  {
+    "id": "q48-team-collaboration-board",
+    "title": "Team Collaboration Board",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build a collaboration tool with real-time updates.",
+    "detailedDescription": "Create a team collaboration board for task management and communication, includes task creation with assignments and due dates, supports comments and @mentions on tasks, shows real-time activity feed, implements notifications for updates, supports file attachments, includes team member profiles, shows project progress with burndown chart, and enables video chat integration. Add permission levels and audit logs.",
+    "hints": [
+      "Use WebSocket for real-time updates",
+      "Implement notification system",
+      "Support file attachments",
+      "Add activity tracking"
+    ],
+    "keyFeatures": [
+      "Real-time Updates",
+      "Notifications",
+      "File Attachments",
+      "Activity Feed",
+      "Progress Tracking"
+    ],
+    "timeEstimate": "150-180 minutes"
+  },
+  {
+    "id": "q49-fitness-tracker",
+    "title": "Fitness Tracker Application",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a fitness tracker with workout logging and progress.",
+    "detailedDescription": "Create a fitness tracking application that logs workouts with exercise type, duration, and calories burned, tracks personal records, displays progress charts (weight, strength, endurance), includes workout plans with exercise instructions, supports different fitness goals, calculates BMI and daily calorie intake, includes nutrition tracking, and provides motivational achievements/badges. Add integration with fitness APIs and support for wearable devices.",
+    "hints": [
+      "Implement data visualization",
+      "Calculate fitness metrics",
+      "Support workout logging",
+      "Add progress tracking"
+    ],
+    "keyFeatures": [
+      "Workout Logging",
+      "Progress Charts",
+      "Goal Tracking",
+      "Nutrition Integration",
+      "Achievements"
+    ],
+    "timeEstimate": "90-110 minutes"
+  },
+  {
+    "id": "q50-translation-tool",
+    "title": "Text Translation Tool",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a translation app with language detection.",
+    "detailedDescription": "Create a translation application that translates text between multiple languages, includes language detection for source text, supports batch translation of multiple items, shows translation history, includes pronunciation guide with audio, supports copying translated text, implements favorites for frequently used translations, includes text-to-speech for both languages, and shows alternative translations or context. Add document translation support and translation memory.",
+    "hints": [
+      "Use translation API (Google Translate, etc)",
+      "Implement language detection",
+      "Add text-to-speech functionality",
+      "Support translation history"
+    ],
+    "keyFeatures": [
+      "Multi-language Support",
+      "Language Detection",
+      "Text-to-Speech",
+      "History",
+      "Copy Functionality"
+    ],
+    "timeEstimate": "70-90 minutes"
+  },
+  {
+    "id": "q51-virtual-list",
+    "title": "Virtual List/Window Component",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build a virtualized list for rendering large datasets efficiently.",
+    "detailedDescription": "Create a virtual list component that only renders visible items in the viewport, improving performance for lists with thousands of items, maintains scroll position accurately, supports dynamic item heights, includes scroll-to-index functionality, handles variable-sized items with auto-measurement, and supports smooth scrolling with keyboard navigation. Implement efficient DOM recycling and smooth performance even with rapid scrolling.",
+    "hints": [
+      "Calculate visible range based on scroll position",
+      "Use overscan to prevent blank rows",
+      "Handle dynamic item heights",
+      "Implement efficient scroll event handling"
+    ],
+    "keyFeatures": [
+      "Performance Optimization",
+      "Dynamic Heights",
+      "Scroll-to-Index",
+      "Keyboard Navigation",
+      "Large Dataset Support"
+    ],
+    "timeEstimate": "110-140 minutes"
+  },
+  {
+    "id": "q52-tic-tac-toe-game",
+    "title": "Tic-Tac-Toe Game with AI",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a tic-tac-toe game with AI opponent and game history.",
+    "detailedDescription": "Create a tic-tac-toe game with human vs computer gameplay, implements AI opponent using minimax algorithm for intelligent moves, tracks game history with undo functionality, shows win/loss/draw statistics, includes difficulty levels (easy, medium, hard), supports game restart, and displays move history. Add themes for different visual styles and keyboard shortcuts for moves.",
+    "hints": [
+      "Implement minimax algorithm for AI",
+      "Detect win conditions",
+      "Store game history",
+      "Implement difficulty levels"
+    ],
+    "keyFeatures": [
+      "AI Opponent",
+      "Game Logic",
+      "Statistics",
+      "Move History",
+      "Difficulty Levels"
+    ],
+    "timeEstimate": "60-80 minutes"
+  },
+  {
+    "id": "q53-color-picker",
+    "title": "Advanced Color Picker Component",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build an advanced color picker with multiple input formats.",
+    "detailedDescription": "Create a comprehensive color picker that supports multiple formats (HEX, RGB, HSL), displays color gradient with crosshair selector, includes hue slider for color selection, shows color palette with recent colors, allows manual input of color values, displays color preview, exports colors in different formats, and includes accessibility color contrast checker. Add color harmony suggestions and color naming.",
+    "hints": [
+      "Implement color space conversions",
+      "Handle canvas-based color selection",
+      "Support multiple input formats",
+      "Calculate color contrast ratio"
+    ],
+    "keyFeatures": [
+      "Multiple Formats",
+      "Gradient Selector",
+      "Color Palette",
+      "Contrast Checker",
+      "Format Conversion"
+    ],
+    "timeEstimate": "85-105 minutes"
+  },
+  {
+    "id": "q54-flow-diagram-builder",
+    "title": "Flow Diagram/Node Editor",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build an interactive flow diagram editor with connectable nodes.",
+    "detailedDescription": "Create a node-based flow diagram editor that allows creating nodes with drag-and-drop, connecting nodes with edges, includes multiple node types with different shapes, supports node editing and deletion, implements zooming and panning functionality, includes validation for connections, exports diagram as JSON or image, supports undo/redo, and includes layout auto-arrangement. Add real-time collaboration features.",
+    "hints": [
+      "Use Canvas or SVG for rendering",
+      "Implement drag-drop for nodes",
+      "Handle connection validation",
+      "Support zoom and pan operations"
+    ],
+    "keyFeatures": [
+      "Node Creation",
+      "Connection Management",
+      "Zoom/Pan",
+      "Export Functionality",
+      "Undo/Redo"
+    ],
+    "timeEstimate": "150-180 minutes"
+  },
+  {
+    "id": "q55-split-pane-layout",
+    "title": "Resizable Split Pane Layout",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a resizable split pane layout with draggable dividers.",
+    "detailedDescription": "Create a split pane layout with draggable dividers to resize sections, supports horizontal and vertical splits, allows nested splits, persists layout to localStorage, includes collapse/expand functionality for panes, supports keyboard shortcuts for navigation, and handles responsive behavior on mobile. Implement smooth drag animations and proper cursor feedback.",
+    "hints": [
+      "Use mouse move/up events for dragging",
+      "Calculate new dimensions during drag",
+      "Store layout state",
+      "Handle responsive behavior"
+    ],
+    "keyFeatures": [
+      "Draggable Dividers",
+      "Nested Splits",
+      "Collapse/Expand",
+      "Persistence",
+      "Responsive Design"
+    ],
+    "timeEstimate": "70-90 minutes"
+  },
+  {
+    "id": "q56-tree-view",
+    "title": "Expandable Tree View Component",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a tree view component with expand/collapse and filtering.",
+    "detailedDescription": "Create a tree view component that displays hierarchical data with expandable/collapsible nodes, supports keyboard navigation (arrow keys, Enter), implements search filtering across tree structure, shows icons for different node types, includes selected node highlighting, supports drag-drop of nodes within tree, and generates proper ARIA attributes for accessibility. Handle large tree datasets with virtual scrolling.",
+    "hints": [
+      "Store expanded/collapsed state",
+      "Implement keyboard navigation",
+      "Filter while maintaining structure",
+      "Use virtual scrolling for large trees"
+    ],
+    "keyFeatures": [
+      "Expand/Collapse",
+      "Keyboard Navigation",
+      "Search Filtering",
+      "Drag-Drop Support",
+      "Virtual Scrolling"
+    ],
+    "timeEstimate": "80-100 minutes"
+  },
+  {
+    "id": "q57-gantt-chart",
+    "title": "Gantt Chart Component",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build a Gantt chart for project timeline visualization.",
+    "detailedDescription": "Create a Gantt chart that displays tasks with timelines, supports draggable task bars to reschedule, shows task dependencies and critical path, includes zoom controls for different time scales, allows adding/editing tasks, shows resources and workload distribution, includes progress indicators, and supports exporting as PDF. Implement responsive design for mobile viewing.",
+    "hints": [
+      "Calculate task positions based on dates",
+      "Handle drag operations on tasks",
+      "Show dependency lines between tasks",
+      "Support different time scales"
+    ],
+    "keyFeatures": [
+      "Timeline Display",
+      "Draggable Tasks",
+      "Dependencies",
+      "Zoom Controls",
+      "Progress Tracking"
+    ],
+    "timeEstimate": "130-160 minutes"
+  },
+  {
+    "id": "q58-spreadsheet-grid",
+    "title": "Spreadsheet/Data Grid Component",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build an Excel-like spreadsheet with editing and formulas.",
+    "detailedDescription": "Create a spreadsheet component with editable cells, supports multiple data types (text, number, date, checkbox), implements column sorting and filtering, includes formula support (SUM, AVERAGE, COUNT), handles copy/paste operations, supports undo/redo functionality, includes row/column resizing, allows adding/deleting rows and columns, and supports exporting to CSV. Implement cell validation and formatting options.",
+    "hints": [
+      "Store data in 2D array or object structure",
+      "Implement formula parser",
+      "Handle cell selection and editing",
+      "Support copy/paste operations"
+    ],
+    "keyFeatures": [
+      "Cell Editing",
+      "Formulas",
+      "Sorting/Filtering",
+      "Copy/Paste",
+      "Undo/Redo"
+    ],
+    "timeEstimate": "140-170 minutes"
+  },
+  {
+    "id": "q59-json-viewer",
+    "title": "JSON Viewer/Editor",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a JSON viewer with syntax highlighting and editing.",
+    "detailedDescription": "Create a JSON viewer that displays JSON with syntax highlighting, supports collapsible/expandable nodes for nested objects, includes search functionality to find keys/values, allows editing JSON inline, validates JSON structure, shows error messages for invalid JSON, supports formatting and minification, and includes copy functionality. Add dark/light theme toggle.",
+    "hints": [
+      "Parse and structure JSON data",
+      "Implement recursive component for nested objects",
+      "Add syntax highlighting",
+      "Validate JSON input"
+    ],
+    "keyFeatures": [
+      "Syntax Highlighting",
+      "Expand/Collapse",
+      "Search Functionality",
+      "Inline Editing",
+      "Validation"
+    ],
+    "timeEstimate": "70-85 minutes"
+  },
+  {
+    "id": "q60-clipboard-manager",
+    "title": "Clipboard Manager",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a clipboard history manager with search.",
+    "detailedDescription": "Create a clipboard manager that stores clipboard history, displays recent copied items with timestamps, supports searching through clipboard history, allows pinning frequently used items, includes quick copy buttons, shows item preview with proper formatting, supports clearing history, and persists data to localStorage. Add categories for different types of copied content.",
+    "hints": [
+      "Use Clipboard API for monitoring",
+      "Store history in state/localStorage",
+      "Implement search functionality",
+      "Show item previews"
+    ],
+    "keyFeatures": [
+      "History Management",
+      "Search",
+      "Pin Functionality",
+      "Preview",
+      "Persistence"
+    ],
+    "timeEstimate": "50-65 minutes"
+  },
+  {
+    "id": "q61-url-shortener",
+    "title": "URL Shortener Application",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build a URL shortener with QR code generation.",
+    "detailedDescription": "Create a URL shortener application that generates short unique codes, supports custom short URLs, displays QR code for easy sharing, shows click analytics and statistics, includes copy-to-clipboard functionality, stores history of shortened URLs, displays most used links, and supports bulk URL shortening. Add expiration date functionality for links.",
+    "hints": [
+      "Generate unique short codes",
+      "Generate QR codes",
+      "Track click statistics",
+      "Store URL mappings"
+    ],
+    "keyFeatures": [
+      "Short Code Generation",
+      "QR Code",
+      "Analytics",
+      "History",
+      "Copy Functionality"
+    ],
+    "timeEstimate": "45-60 minutes"
+  },
+  {
+    "id": "q62-timer-multiple-instances",
+    "title": "Multiple Timer/Pomodoro Manager",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a Pomodoro timer with multiple concurrent timers.",
+    "detailedDescription": "Create a Pomodoro timer application that supports multiple concurrent timers, shows progress rings for each timer, includes preset durations (work, break, long break), allows custom timer durations, supports play/pause/cancel for each timer, includes notifications when timer completes, tracks daily statistics, supports keyboard shortcuts, and includes dark mode. Add music/sound options for notifications.",
+    "hints": [
+      "Manage multiple timer states",
+      "Use setInterval for each timer",
+      "Show progress visualization",
+      "Send notifications"
+    ],
+    "keyFeatures": [
+      "Multiple Timers",
+      "Progress Rings",
+      "Notifications",
+      "Statistics",
+      "Keyboard Shortcuts"
+    ],
+    "timeEstimate": "65-80 minutes"
+  },
+  {
+    "id": "q63-quote-generator",
+    "title": "Random Quote/Joke Generator",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build a quote generator with sharing capabilities.",
+    "detailedDescription": "Create a quote/joke generator that fetches random quotes from API, displays quote with author, includes share buttons for social media, supports copy-to-clipboard, stores favorite quotes, filters by category or author, shows quote statistics, includes loading state, handles API errors gracefully. Add text-to-speech for reading quotes.",
+    "hints": [
+      "Fetch data from quotes API",
+      "Implement social media sharing",
+      "Store favorites in localStorage",
+      "Add error handling"
+    ],
+    "keyFeatures": [
+      "API Integration",
+      "Social Sharing",
+      "Favorites",
+      "Filtering",
+      "Error Handling"
+    ],
+    "timeEstimate": "40-55 minutes"
+  },
+  {
+    "id": "q64-code-diff-viewer",
+    "title": "Code Diff/Comparison Viewer",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build a code diff viewer with syntax highlighting.",
+    "detailedDescription": "Create a diff viewer that compares two code snippets side-by-side or inline, highlights differences with colors (added, removed, modified), includes syntax highlighting for multiple languages, supports navigation between differences, shows line numbers, allows copy functionality, and includes merge capabilities. Add options for ignoring whitespace and different comparison modes.",
+    "hints": [
+      "Use diff algorithm (Myers, Hunt-McIlroy)",
+      "Apply syntax highlighting",
+      "Highlight changes with colors",
+      "Implement diff navigation"
+    ],
+    "keyFeatures": [
+      "Side-by-Side View",
+      "Syntax Highlighting",
+      "Change Highlighting",
+      "Navigation",
+      "Merge Capabilities"
+    ],
+    "timeEstimate": "100-130 minutes"
+  },
+  {
+    "id": "q65-password-strength-checker",
+    "title": "Password Strength Checker",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build a password strength indicator with feedback.",
+    "detailedDescription": "Create a password strength checker that evaluates password strength in real-time, displays strength meter with visual feedback, shows specific requirements met/unmet, provides suggestions for improvement, includes common pattern detection, shows estimated time to crack password, and includes password visibility toggle. Add customizable strength criteria.",
+    "hints": [
+      "Check password against criteria",
+      "Calculate entropy",
+      "Show real-time feedback",
+      "Detect common patterns"
+    ],
+    "keyFeatures": [
+      "Real-time Feedback",
+      "Strength Meter",
+      "Requirements Check",
+      "Pattern Detection",
+      "Suggestions"
+    ],
+    "timeEstimate": "35-50 minutes"
+  },
+  {
+    "id": "q66-landing-page-with-nav",
+    "title": "Landing Page with Sticky Navigation",
+    "techStack": "React/Vanilla JS based",
+    "level": "Easy",
+    "quickDescription": "Build a landing page with smooth scroll navigation.",
+    "detailedDescription": "Create a landing page with multiple sections (hero, features, pricing, testimonials, footer), implements sticky header navigation that changes on scroll, includes smooth scroll-to-section functionality, highlights active navigation item based on viewport, supports responsive hamburger menu on mobile, includes call-to-action buttons, and implements parallax effects. Add animations on scroll.",
+    "hints": [
+      "Detect active section on scroll",
+      "Implement smooth scrolling",
+      "Handle responsive navigation",
+      "Add intersection observer for animations"
+    ],
+    "keyFeatures": [
+      "Sticky Header",
+      "Smooth Scrolling",
+      "Responsive Menu",
+      "Animations",
+      "Section Highlighting"
+    ],
+    "timeEstimate": "50-65 minutes"
+  },
+  {
+    "id": "q67-image-lazy-loader",
+    "title": "Image Lazy Loader with Blur Effect",
+    "techStack": "React/Vanilla JS based",
+    "level": "Medium",
+    "quickDescription": "Build a lazy loader with progressive image loading.",
+    "detailedDescription": "Create an image lazy loader that loads images only when visible in viewport using IntersectionObserver, displays placeholder while loading, includes blur-up effect (load small image first then replace), shows loading spinner, handles loading errors with fallback image, supports responsive images with srcset, and optimizes bandwidth usage. Add progressive JPEG support.",
+    "hints": [
+      "Use IntersectionObserver API",
+      "Implement blur-up effect",
+      "Support srcset for responsive images",
+      "Handle loading errors"
+    ],
+    "keyFeatures": [
+      "Intersection Observer",
+      "Blur-up Effect",
+      "Responsive Images",
+      "Error Handling",
+      "Performance"
+    ],
+    "timeEstimate": "55-70 minutes"
+  },
+  {
+    "id": "q68-notification-system",
+    "title": "Advanced Notification System",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build a notification system with priority and grouping.",
+    "detailedDescription": "Create an advanced notification system that supports different notification types (success, error, warning, info), implements priority-based queuing, groups similar notifications, shows notification history, includes undo functionality for actions, supports persistent storage of important notifications, includes notification preferences/settings, and implements Web Push API integration. Add notification sounds and animations.",
+    "hints": [
+      "Manage notification queue with priority",
+      "Group similar notifications",
+      "Store notification history",
+      "Implement undo functionality"
+    ],
+    "keyFeatures": [
+      "Priority Queue",
+      "Grouping",
+      "History",
+      "Undo Support",
+      "Web Push API"
+    ],
+    "timeEstimate": "90-110 minutes"
+  },
+  {
+    "id": "q69-dependency-visualizer",
+    "title": "Dependency Visualizer Graph",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build a graph visualization for dependencies.",
+    "detailedDescription": "Create a dependency graph visualizer that displays nodes and connections between components/packages, highlights circular dependencies in red, supports zooming and panning, includes filtering by dependency type, shows dependency details on click, implements force-directed layout, includes search functionality, and exports graph as image or JSON. Add cycle detection and impact analysis.",
+    "hints": [
+      "Use graph visualization library (D3, Cytoscape)",
+      "Implement force-directed layout",
+      "Detect circular dependencies",
+      "Handle large graph rendering"
+    ],
+    "keyFeatures": [
+      "Graph Visualization",
+      "Cycle Detection",
+      "Force Layout",
+      "Search",
+      "Export Functionality"
+    ],
+    "timeEstimate": "120-150 minutes"
+  },
+  {
+    "id": "q70-comment-section",
+    "title": "Nested Comment System",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a nested comment section with replies.",
+    "detailedDescription": "Create a nested comment system that allows adding comments and replies, supports comment editing and deletion, implements threading with visual hierarchy, includes upvote/downvote functionality, shows timestamps and user avatars, sorts comments by newest/popular/oldest, supports pagination for large comment sections, includes user mentions with @notifications. Add comment moderation features.",
+    "hints": [
+      "Store comments in tree structure",
+      "Implement recursive rendering",
+      "Handle reply nesting",
+      "Implement sorting/filtering"
+    ],
+    "keyFeatures": [
+      "Nested Comments",
+      "Voting",
+      "Editing/Deletion",
+      "Sorting",
+      "User Mentions"
+    ],
+    "timeEstimate": "75-95 minutes"
+  },
+  {
+    "id": "q71-snippet-manager",
+    "title": "Code Snippet Manager",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a code snippet saver with search and tags.",
+    "detailedDescription": "Create a code snippet manager that allows saving code snippets with tags and descriptions, implements search across snippets, supports syntax highlighting for multiple languages, includes copy-to-clipboard, shows snippet metadata (created date, language, size), supports organizing into collections, includes export as file, and allows sharing snippets. Add snippet rating and collaborative features.",
+    "hints": [
+      "Store snippets with metadata",
+      "Implement tag-based filtering",
+      "Add syntax highlighting",
+      "Support export functionality"
+    ],
+    "keyFeatures": [
+      "Snippet Storage",
+      "Search & Filter",
+      "Syntax Highlighting",
+      "Collections",
+      "Export"
+    ],
+    "timeEstimate": "70-85 minutes"
+  },
+  {
+    "id": "q72-network-request-logger",
+    "title": "Network Request Logger/Inspector",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build a network inspector showing all API calls.",
+    "detailedDescription": "Create a network request logger that intercepts and displays all API calls made by the application, shows request/response details (headers, body, status), filters by request type or status, includes search functionality, shows request timing and performance metrics, allows copying requests, includes request replay functionality, and implements storage for request history. Add waterfall visualization for performance analysis.",
+    "hints": [
+      "Intercept fetch/XHR requests",
+      "Store request/response data",
+      "Calculate timing metrics",
+      "Implement replay functionality"
+    ],
+    "keyFeatures": [
+      "Request Interception",
+      "Filtering",
+      "Performance Metrics",
+      "Request Replay",
+      "History Storage"
+    ],
+    "timeEstimate": "110-140 minutes"
+  },
+  {
+    "id": "q73-kanban-with-swimlanes",
+    "title": "Advanced Kanban with Swimlanes",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build a Kanban board with user swimlanes.",
+    "detailedDescription": "Create an advanced Kanban board with swimlanes grouped by assignee/priority, supports drag-drop across columns and swimlanes, includes WIP (Work In Progress) limits with visual indicators, shows card relationships and dependencies, includes filtering by multiple criteria, displays card burn-down metrics, supports board templates, and includes team member focus view. Add board history and activity tracking.",
+    "hints": [
+      "Organize data by swimlanes and columns",
+      "Handle drag-drop between swimlanes",
+      "Enforce WIP limits",
+      "Calculate metrics"
+    ],
+    "keyFeatures": [
+      "Swimlane Organization",
+      "WIP Limits",
+      "Metrics Display",
+      "Templates",
+      "Activity Tracking"
+    ],
+    "timeEstimate": "120-150 minutes"
+  },
+  {
+    "id": "q74-typewriter-effect",
+    "title": "Typewriter/Text Animation Effect",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build a typewriter text animation component.",
+    "detailedDescription": "Create a typewriter effect component that animates text character by character, supports variable typing speed, includes cursor blinking, allows pausing and resuming animation, supports multiple text sequences, includes backspace animation option, and can trigger actions when animation completes. Add sound effects for typing and backspace.",
+    "hints": [
+      "Update state character by character",
+      "Use setInterval for timing",
+      "Implement cursor animation",
+      "Support animation control"
+    ],
+    "keyFeatures": [
+      "Character Animation",
+      "Variable Speed",
+      "Cursor Blinking",
+      "Pause/Resume",
+      "Sound Effects"
+    ],
+    "timeEstimate": "35-50 minutes"
+  },
+  {
+    "id": "q75-mobile-responsive-sidebar",
+    "title": "Mobile Responsive Sidebar Navigation",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a responsive sidebar with mobile hamburger menu.",
+    "detailedDescription": "Create a responsive sidebar navigation that transforms into hamburger menu on mobile, includes smooth slide-out animation, implements backdrop click to close, supports nested menu items, highlights active route, includes keyboard navigation (Escape to close), persists menu state during navigation, and supports accessibility features. Add sidebar collapsing functionality.",
+    "hints": [
+      "Use media queries for responsive design",
+      "Implement smooth animations",
+      "Handle mobile gestures",
+      "Support nested navigation"
+    ],
+    "keyFeatures": [
+      "Responsive Design",
+      "Slide Animation",
+      "Hamburger Menu",
+      "Nested Items",
+      "Accessibility"
+    ],
+    "timeEstimate": "55-70 minutes"
+  },
+  {
+    "id": "q76-whack-a-mole-game",
+    "title": "Whack-a-Mole Game",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build a whack-a-mole game with scoring.",
+    "detailedDescription": "Create a whack-a-mole game with grid of holes, randomly shows moles that player must click, tracks score and missed targets, implements difficulty levels with increasing speed, shows countdown timer, displays high scores with leaderboard, includes sound effects for clicks and game-over, and supports game reset. Add power-ups and special moles.",
+    "hints": [
+      "Randomly show moles in holes",
+      "Track clicks and scoring",
+      "Implement difficulty progression",
+      "Store high scores"
+    ],
+    "keyFeatures": [
+      "Game Logic",
+      "Scoring",
+      "Difficulty Levels",
+      "Sound Effects",
+      "Leaderboard"
+    ],
+    "timeEstimate": "50-65 minutes"
+  },
+  {
+    "id": "q77-memory-matching-game",
+    "title": "Memory Matching Game",
+    "techStack": "React based",
+    "level": "Easy",
+    "quickDescription": "Build a memory/flip card matching game.",
+    "detailedDescription": "Create a memory game with card pairs that player must match by flipping cards, prevents mismatches from staying flipped, tracks number of moves and best score, includes different difficulty levels (different grid sizes), implements timer for timed mode, shows completion percentage, supports game reset, and includes animations for card flips. Add hints functionality and leaderboard.",
+    "hints": [
+      "Shuffle cards randomly",
+      "Track flipped cards and matches",
+      "Prevent clicking while comparing",
+      "Store game statistics"
+    ],
+    "keyFeatures": [
+      "Card Matching",
+      "Move Tracking",
+      "Difficulty Levels",
+      "Timer",
+      "Animations"
+    ],
+    "timeEstimate": "55-70 minutes"
+  },
+  {
+    "id": "q78-slider-carousel-advanced",
+    "title": "Advanced Slider with Smart Transition",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build an advanced carousel with smart transitions.",
+    "detailedDescription": "Create an advanced carousel that supports multiple transition effects (fade, slide, zoom), includes customizable timing and easing, supports variable slide sizes, implements lazy loading of images, shows slide counter and progress bar, includes loop or end behavior options, supports keyboard and mouse wheel navigation, and implements accessibility features. Add autoplay pause on interaction.",
+    "hints": [
+      "Implement multiple transition types",
+      "Use CSS animations/transforms",
+      "Handle keyboard navigation",
+      "Implement accessibility"
+    ],
+    "keyFeatures": [
+      "Multiple Transitions",
+      "Custom Easing",
+      "Lazy Loading",
+      "Keyboard Navigation",
+      "Accessibility"
+    ],
+    "timeEstimate": "70-90 minutes"
+  },
+  {
+    "id": "q79-form-with-conditional-fields",
+    "title": "Form with Conditional Field Display",
+    "techStack": "React based",
+    "level": "Medium",
+    "quickDescription": "Build a dynamic form with conditional field rendering.",
+    "detailedDescription": "Create a dynamic form that shows/hides fields based on other field values, implements field dependencies and validation chains, includes multi-step form progression, validates conditional field groups, shows helpful error messages, persists form state across steps, supports field arrays for dynamic sections, and includes progress indicator. Add automatic saving and draft functionality.",
+    "hints": [
+      "Manage complex form state",
+      "Implement conditional rendering logic",
+      "Handle field dependencies",
+      "Validate conditionally"
+    ],
+    "keyFeatures": [
+      "Conditional Fields",
+      "Multi-step",
+      "Field Dependencies",
+      "Progress Indicator",
+      "State Persistence"
+    ],
+    "timeEstimate": "80-100 minutes"
+  },
+  {
+    "id": "q80-infinite-scroll-with-filter",
+    "title": "Infinite Scroll with Multiple Filters",
+    "techStack": "React based",
+    "level": "Hard",
+    "quickDescription": "Build infinite scroll with complex filtering.",
+    "detailedDescription": "Create an infinite scroll implementation with multiple simultaneous filters, maintains scroll position when filters change, prevents race conditions in concurrent requests, shows loading skeletons during fetch, implements reset filter button, supports URL query parameters for shareable filtered results, includes sort options, and handles edge cases like filtered empty results. Add saved filter presets.",
+    "hints": [
+      "Handle filter state changes",
+      "Manage concurrent API requests",
+      "Use AbortController for cleanup",
+      "Sync with URL parameters"
+    ],
+    "keyFeatures": [
+      "Multiple Filters",
+      "Concurrent Requests",
+      "URL Sync",
+      "Loading States",
+      "Filter Presets"
+    ],
+    "timeEstimate": "90-110 minutes"
+  }
+]

@@ -69,13 +69,24 @@ export type MachineQuestionMeta = {
   quickDescription: string;
   detailedDescription: string;
   hints: Array<string>;
-  solution?: Record<string, string>;
   keyFeatures: Array<string>;
+  timeEstimate?: string;
+  solution?: Record<string, string>;
+  createdAt?: Date;
+  updatedAt?: Date;
+  isSolved?: boolean;
   nextQuestions?: {
     id: string;
     title: string;
     level: QuestionLevel;
   };
+};
+
+export type MachineNameInputType = {
+  id: string;
+  type: FsItemType | '';
+  toggle: boolean;
+  isNew: boolean;
 };
 
 export type MachineQuestionData = {
@@ -88,4 +99,5 @@ export type MachineQuestionData = {
   selectedFolderId: string;
   treeItemSelectionId: string;
   multipleItemsSelected: Array<string>;
+  nameChangeInputData: MachineNameInputType;
 };

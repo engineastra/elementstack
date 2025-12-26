@@ -1,5 +1,4 @@
 import {
-  Dispatch,
   DragEvent,
   MouseEvent,
   useContext,
@@ -19,7 +18,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Regex from '@elementstack/shared-assets/Regex';
 import { getFolderById } from '@web-app/utils/projectUtils';
 import { MachineQuestionDetailsContext } from '@web-app/contexts/MachineQuestionProvider';
-import { InputType } from '@web-app/app/(pages)/machine-code/[question]/FilesSection';
 
 type MovableFileOrFolderType = {
   movableFileOrFolderId: string;
@@ -55,15 +53,7 @@ const createSchema = (folder: Folder) => {
   });
 };
 
-export const useMachineFileSystem = ({
-  folder,
-  inputData,
-  setInputData,
-}: {
-  folder: Folder;
-  inputData: InputType;
-  setInputData: Dispatch<InputType>;
-}) => {
+export const useMachineFileSystem = ({ folder }: { folder: Folder }) => {
   const { machineQuestionDetails, setMachineQuestionDetails } = useContext(
     MachineQuestionDetailsContext
   );
@@ -73,6 +63,7 @@ export const useMachineFileSystem = ({
     multipleItemsSelected,
     selectedFolderId,
     treeItemSelectionId,
+    nameChangeInputData,
   } = machineQuestionDetails;
 
   const zodSchema = useMemo(() => createSchema(folder), [folder]);
@@ -90,18 +81,27 @@ export const useMachineFileSystem = ({
     if (inputRef.current) {
       const handleInputOutsideClick = (e: Event) => {
         if (e.target !== inputRef.current) {
-          setInputData({ id: '', type: '', toggle: false, isNew: true });
+          setMachineQuestionDetails({
+            payload: {
+              nameChangeInputData: {
+                id: '',
+                type: '',
+                toggle: false,
+                isNew: true,
+              },
+            },
+          });
         }
       };
       document.body.addEventListener('click', handleInputOutsideClick);
       return () =>
         document.body.removeEventListener('click', handleInputOutsideClick);
     }
-  }, [inputData]);
+  }, [nameChangeInputData]);
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
-  }, [inputData]);
+  }, [nameChangeInputData]);
 
   const onFileOrFolderNameDoubleClick = (
     id: string,
@@ -109,13 +109,17 @@ export const useMachineFileSystem = ({
     name: string
   ) => {
     formObj.setValue('nameChangeInput', name);
-    setInputData({ id, type, toggle: true, isNew: false });
+    setMachineQuestionDetails({
+      payload: {
+        nameChangeInputData: { id, type, toggle: true, isNew: false },
+      },
+    });
   };
 
   const onNameChangeEnter = () => {
     if (values.nameChangeInput && !errors.nameChangeInput) {
-      if (inputData.isNew) {
-        if (inputData.type === FsItemType.FILE) {
+      if (nameChangeInputData.isNew) {
+        if (nameChangeInputData.type === FsItemType.FILE) {
           const newFile: FileData = {
             id:
               (folder.id.split(':').at(-1) || '') +
@@ -131,7 +135,7 @@ export const useMachineFileSystem = ({
           };
           folder.totalItems++; // Important
           folder.files.push(newFile);
-        } else if (inputData.type === FsItemType.FOLDER) {
+        } else if (nameChangeInputData.type === FsItemType.FOLDER) {
           const newFolder: Folder = {
             id:
               (folder.id.split(':').at(-1) || '') +
@@ -150,21 +154,25 @@ export const useMachineFileSystem = ({
           folder.totalItems++; // Important
         }
       } else {
-        if (inputData.type === FsItemType.FILE) {
+        if (nameChangeInputData.type === FsItemType.FILE) {
           const thisFile = folder.files.find(
-            (file) => file.id === inputData.id
+            (file) => file.id === nameChangeInputData.id
           );
           if (thisFile) thisFile.name = values.nameChangeInput;
-        } else if (inputData.type === FsItemType.FOLDER) {
+        } else if (nameChangeInputData.type === FsItemType.FOLDER) {
           const thisFolder = folder.folders.find(
-            (fld) => fld.id === inputData.id
+            (fld) => fld.id === nameChangeInputData.id
           );
           if (thisFolder) thisFolder.name = values.nameChangeInput;
         }
       }
       setMachineQuestionDetails({ payload: { rootFolder: { ...rootFolder } } });
     }
-    setInputData({ id: '', type: '', toggle: false, isNew: true });
+    setMachineQuestionDetails({
+      payload: {
+        nameChangeInputData: { id: '', type: '', toggle: false, isNew: true },
+      },
+    });
   };
 
   const handleFileOrFolderSelection = (args: {
@@ -283,6 +291,7 @@ export const useMachineFileSystem = ({
     multipleItemsSelected,
     selectedFolderId,
     treeItemSelectionId,
+    nameChangeInputData,
     handleFileOrFolderSelection,
     onDragStartFileOrFolder,
     onDragOverFileOrFolder,

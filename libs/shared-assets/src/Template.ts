@@ -139,7 +139,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             name: 'index.js',
             extention: 'js',
             language: 'javascript',
-            parentFolderId: '01:js',
+            parentFolderId: '01:src',
             value: BOILER_PLATES.js,
           },
         ],
@@ -194,7 +194,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
             name: 'index.ts',
             extention: 'ts',
             language: 'typescript',
-            parentFolderId: '01:ts',
+            parentFolderId: '01:src',
             value: BOILER_PLATES.ts,
           },
         ],
@@ -376,6 +376,7 @@ export const getFolderTemplate: (
       fld.parentFolderId = newFolder.id;
       fld.canBeRemoved = false;
     });
+    console.log(newFolder);
     return newFolder;
   }
   return null;

@@ -1,9 +1,5 @@
 import { MachineQuestionMeta } from '@elementstack/shared-assets/Types';
-import {
-  useEffect,
-  useState,
-  useTransition,
-} from 'react';
+import { useEffect, useState, useTransition } from 'react';
 
 async function getAllQuestions() {
   const questions = (
@@ -20,10 +16,9 @@ export const useAllMachineQuestions = () => {
 
   useEffect(() => {
     loadQuestionsInTransition(async () => {
-      const { frontendMachineCodingQuestions }: any = await getAllQuestions();
-      setMachineQuestions(
-        frontendMachineCodingQuestions as MachineQuestionMeta[]
-      );
+      const questions: any = await getAllQuestions();
+      if (questions) setMachineQuestions(questions as MachineQuestionMeta[]);
+      // Error handling on no fetch
     });
   }, []);
 

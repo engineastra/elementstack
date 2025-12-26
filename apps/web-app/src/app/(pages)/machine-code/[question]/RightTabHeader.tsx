@@ -7,29 +7,27 @@ import {
   IndeterminateCheckBoxOutlined as Discard,
 } from '@mui/icons-material';
 import { FsItemType, TechStack } from '@elementstack/shared-assets/Enums';
-import { Dispatch, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { CREATE_PROJECT_OPTIONS } from '@elementstack/shared-assets/Constants';
 import { iconColor } from '@web-app/utils/commonUtils';
 import Modal from '@web-app/components/Modal';
 import DeletePopUp from '@web-app/components/DeletePopUp';
 import { MachineQuestionDetailsContext } from '@web-app/contexts/MachineQuestionProvider';
-import { InputType } from './FilesSection';
 import { ProjectType } from '@elementstack/shared-assets/Types';
 
-const RightTabHeader = ({
-  inputData,
-  setInputData,
-}: {
-  inputData: InputType;
-  setInputData: Dispatch<InputType>;
-}) => {
+const RightTabHeader = () => {
   const {
     machineQuestionDetails,
     setMachineQuestionDetails,
     deleteFilesAndFolders,
   } = useContext(MachineQuestionDetailsContext);
-  const { metaData, treeItemSelectionId, multipleItemsSelected, rootFolder } =
-    machineQuestionDetails;
+  const {
+    metaData,
+    treeItemSelectionId,
+    multipleItemsSelected,
+    rootFolder,
+    nameChangeInputData,
+  } = machineQuestionDetails;
   const [deleteConfimPopupToggle, setDeleteConfimPopupToggle] = useState(false);
   const projectType = [
     TechStack.HTML5_JS_BASED,
@@ -39,7 +37,11 @@ const RightTabHeader = ({
     : ProjectType.jsx;
 
   const handleOnAddClick = (type: FsItemType) => {
-    setInputData({ ...inputData, type, toggle: true });
+    setMachineQuestionDetails({
+      payload: {
+        nameChangeInputData: { ...nameChangeInputData, type, toggle: true },
+      },
+    });
   };
 
   const handleOnDeleteItems = () => {

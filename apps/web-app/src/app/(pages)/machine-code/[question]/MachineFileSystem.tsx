@@ -13,10 +13,9 @@ import {
 import Image from 'next/image';
 import { FsItemType } from '@elementstack/shared-assets/Enums';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import { Dispatch, Ref } from 'react';
+import { Ref } from 'react';
 import { iconColor } from '@web-app/utils/commonUtils';
 import { useMachineFileSystem } from '@web-app/hooks/useMachineFileSystem';
-import { InputType } from './FilesSection';
 
 type NewInputFieldPropType<T extends FieldValues> = {
   name: Path<T>;
@@ -57,28 +56,21 @@ const NewInputField = <T extends FieldValues>({
   />
 );
 
-const MachineFolderTree = ({
-  folder,
-  inputData,
-  setInputData,
-}: {
-  folder: Folder;
-  inputData: InputType;
-  setInputData: Dispatch<InputType>;
-}) => {
+const MachineFolderTree = ({ folder }: { folder: Folder }) => {
   const {
     inputRef,
     control,
     multipleItemsSelected,
     treeItemSelectionId,
     selectedFolderId,
+    nameChangeInputData,
     handleFileOrFolderSelection,
     onDragStartFileOrFolder,
     onDragOverFileOrFolder,
     onDropFileOrFolder,
     onFileOrFolderNameDoubleClick,
     onNameChangeEnter,
-  } = useMachineFileSystem({ folder, inputData, setInputData });
+  } = useMachineFileSystem({ folder });
   return (
     <div
       className={`flex flex-col ${folder.isRoot ? 'flex-1' : ''}`}
@@ -114,7 +106,7 @@ const MachineFolderTree = ({
             ...iconColor(COMMON_COLORS.machine[500]),
           }}
         />
-        {inputData.toggle && inputData.id === folder.id ? (
+        {nameChangeInputData.toggle && nameChangeInputData.id === folder.id ? (
           <NewInputField
             name="nameChangeInput"
             ref={inputRef}
@@ -141,11 +133,11 @@ const MachineFolderTree = ({
           </p>
         )}
       </div>
-      {inputData.toggle &&
-        inputData.isNew &&
+      {nameChangeInputData.toggle &&
+        nameChangeInputData.isNew &&
         selectedFolderId === folder.id && (
           <div className="flex my-[4px] ml-4 px-2 py-[2px] bg-greenishgrey rounded-xl gap-1 items-center">
-            {inputData.type === FsItemType.FILE ? (
+            {nameChangeInputData.type === FsItemType.FILE ? (
               <FileIcon
                 sx={{ fontSize: 15, ...iconColor(COMMON_COLORS.machine[500]) }}
               />
@@ -165,14 +157,7 @@ const MachineFolderTree = ({
       {folder.isExpanded && (
         <div className="flex flex-col pl-4 h-full">
           {folder.folders.map((subFolder) => {
-            return (
-              <MachineFolderTree
-                key={subFolder.id}
-                folder={subFolder}
-                inputData={inputData}
-                setInputData={setInputData}
-              />
-            );
+            return <MachineFolderTree key={subFolder.id} folder={subFolder} />;
           })}
           {folder.files.map((file: FileData) => {
             return (
@@ -206,7 +191,8 @@ const MachineFolderTree = ({
                     }}
                   />
                 )}
-                {inputData.toggle && inputData.id === file.id ? (
+                {nameChangeInputData.toggle &&
+                nameChangeInputData.id === file.id ? (
                   <NewInputField
                     name="nameChangeInput"
                     ref={inputRef}

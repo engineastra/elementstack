@@ -59,6 +59,8 @@
     "autoprefixer": "10.4.13",
     "babel-jest": "^30.0.2",
     "babel-preset-expo": "~54.0.7",
+    "dexie": "^4.2.1",
+    "dexie-react-hooks": "^4.2.0",
     "esbuild": "^0.27.1",
     "esbuild-wasm": "^0.27.1",
     "eslint": "^9.8.0",
