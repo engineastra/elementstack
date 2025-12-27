@@ -13,7 +13,7 @@ export default function Home() {
       className={`flex flex-col min-h-[100vh] max-w-[1400px] ${oxanium.variable} px-5 py-4`}
     >
       <Header />
-      <div className="flex min-h-[80vh] justify-between w-full py-7 lg:mt-[100px] flex-col lg:flex-row gap-[40px]">
+      <div className="flex min-h-[80vh] justify-around w-full py-7 lg:mt-[100px] flex-col lg:flex-row gap-[40px]">
         <div className="flex flex-col lg:max-w-[55%]">
           <p className="oxanium-font  text-primary font-bold text-[36px] lg:text-[56px]">
             {COMMON_TEXTS.TAG_LINE}
@@ -27,9 +27,9 @@ export default function Home() {
             })}
           </div>
         </div>
-        <div className="h-[400px] rounded-2xl overflow-hidden bg-pannel p-4">
+        <div className="flex flex-col md:h-[400px] rounded-2xl overflow-hidden bg-pannel p-4">
           <Image width={40} src={yrgDots} alt="yrg-dots"></Image>
-          <div className="pt-6 h-[95%] *:pointer-events-none [&_.cm-gutters]:bg-pannel [&_.cm-editor]:bg-pannel">
+          <div className="flex pt-6 h-[95%] *:pointer-events-none [&_.cm-gutters]:bg-pannel [&_.cm-editor]:bg-pannel max-w-[80vw] md:max-w-[450px] overflow-hidden">
             <CodemirrorEditor
               extention="jsx"
               value={COMMON_TEXTS.HOME_EDITOR_DEFAULT_VALUE}
