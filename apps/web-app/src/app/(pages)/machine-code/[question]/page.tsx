@@ -33,10 +33,10 @@ import { FullPreviewContext } from '@web-app/contexts/FullPreviewProvider';
 import { useRouter } from 'next/navigation';
 
 async function getQuestionById(id: string) {
-  const questions = (
-    await import('@elementstack/shared-assets/50Questions.json')
-  ).default;
-  return questions.find((obj) => obj.id === id);
+  const resp = await fetch(`/api/machine/question/${id}`);
+  const question = await resp.json();
+  if (!question) return null;
+  return question;
 }
 
 const SingleQuestion = ({
@@ -78,6 +78,7 @@ const SingleQuestion = ({
   useEffect(() => {
     loadQuestionInTransition(async () => {
       const quesObj = await getQuestionById(paramObj.question);
+      // Error handling on no fetch
       if (quesObj) {
         const payload: Partial<MachineQuestionData> = {
           metaData: {

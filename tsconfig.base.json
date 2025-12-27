@@ -4,7 +4,7 @@
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
@@ -13,12 +13,14 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "typeRoots": ["./node_modules/@types", "./libs/*/types"],
     "baseUrl": ".",
+    "typeRoots": ["./node_modules/@types", "./libs/*/types"],
     "paths": {
       "@web-app/*": ["apps/web-app/src/*"],
       "@elementstack/shared-assets": ["libs/shared-assets/src/index.ts"],
-      "@elementstack/shared-assets/*": ["libs/shared-assets/src/*"]
+      "@elementstack/shared-assets/*": ["libs/shared-assets/src/*"],
+      "@elementstack/shared-db": ["libs/shared-db/src/index.ts"],
+      "@elementstack/shared-db/*": ["libs/shared-db/src/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,0 +1,26 @@
+{
+  "name": "shared-db",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared-db/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project shared-db --web",
+  "targets": {
+    "prisma": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma",
+        "cwd": "libs/shared-db",
+        "envFile": ".env"
+      }
+    },
+    "prisma-generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma generate --schema=prisma/schema.prisma",
+        "cwd": "libs/shared-db",
+        "envFile": ".env"
+      }
+    }
+  }
+}

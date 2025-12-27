@@ -60,3 +60,7 @@ npm-debug.*
 web-build/
 cache/
 
+
+/generated/prisma
+.env
+.env.local

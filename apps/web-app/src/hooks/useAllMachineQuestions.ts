@@ -2,9 +2,8 @@ import { MachineQuestionMeta } from '@elementstack/shared-assets/Types';
 import { useEffect, useState, useTransition } from 'react';
 
 async function getAllQuestions() {
-  const questions = (
-    await import('@elementstack/shared-assets/50Questions.json')
-  ).default;
+  const resp = await fetch('/api/machine/allQuestions');
+  const questions = await resp.json();
   return questions;
 }
 
@@ -16,7 +15,7 @@ export const useAllMachineQuestions = () => {
 
   useEffect(() => {
     loadQuestionsInTransition(async () => {
-      const questions: any = await getAllQuestions();
+      const questions = await getAllQuestions();
       if (questions) setMachineQuestions(questions as MachineQuestionMeta[]);
       // Error handling on no fetch
     });
