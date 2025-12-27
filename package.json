@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "nx run shared-db:prisma-generate && nx run web-app:build --prod"
+    "postinstall": "nx run shared-db:prisma-generate"
   },
   "private": true,
   "devDependencies": {
