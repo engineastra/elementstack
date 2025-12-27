@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "postinstall": "nx run shared-db:prisma-generate"
+    "postinstall": "(test -f .env || touch .env) && nx run shared-db:prisma-generate"
   },
   "private": true,
   "devDependencies": {
