@@ -2,7 +2,10 @@
   "name": "@elementstack/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "postinstall": "nx run shared-db:prisma-generate",
+    "build": "nx run shared-db:prisma-generate && nx run web-app:build --prod"
+  },
   "private": true,
   "devDependencies": {
     "@codemirror/autocomplete": "^6.20.0",
