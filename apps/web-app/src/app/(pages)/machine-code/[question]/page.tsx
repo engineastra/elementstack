@@ -33,7 +33,9 @@ import { FullPreviewContext } from '@web-app/contexts/FullPreviewProvider';
 import { useRouter } from 'next/navigation';
 
 async function getQuestionById(id: string) {
-  const resp = await fetch(`/api/machine/question/${id}`);
+  const resp = await fetch(`/api/machine/question/${id}`, {
+    cache: 'force-cache',
+  });
   const question = await resp.json();
   if (!question) return null;
   return question;

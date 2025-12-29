@@ -134,7 +134,7 @@ const AllQuestions = ({ questions }: { questions: MachineQuestionMeta[] }) => {
         </div>
       </div>
       {(!isTablet || filterToggle) && (
-        <div className="absolute lg:sticky top-[58px] lg:top-0 right-0 flex md:flex-[0.4] md:h-full lg:mt-12 bg-black lg:bg-transparent border border-greenishgrey lg:border-transparent p-2 rounded-xl">
+        <div className="absolute lg:sticky top-[58px] lg:top-0 right-0 flex md:flex-[0.4] md:h-full bg-black lg:bg-transparent border border-greenishgrey lg:border-transparent p-2 rounded-xl">
           <div className="w-full overflow-y-auto">
             <Filters
               filterTopics={filterTopics}

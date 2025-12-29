@@ -101,3 +101,24 @@ export type MachineQuestionData = {
   multipleItemsSelected: Array<string>;
   nameChangeInputData: MachineNameInputType;
 };
+
+export type DSAQuestionMeta = {
+  id: string;
+  title: string;
+  category: string;
+  subcategory: string;
+  level: 'Easy' | 'Medium' | 'Hard';
+  quickDescription: string;
+  detailedDescription: string;
+  companyTags: Array<string>;
+  constraints: Array<string>;
+  hints: Array<string>;
+  keyConcepts: Array<string>;
+  similarProblems: Array<string>;
+  timeEstimate: string;
+  relatedTopics: Array<string>;
+  solution?: Record<string, string>;
+  createdAt?: Date;
+  updatedAt?: Date;
+  isSolved?: boolean;
+};

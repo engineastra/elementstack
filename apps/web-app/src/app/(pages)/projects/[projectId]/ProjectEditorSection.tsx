@@ -66,14 +66,6 @@ function ProjectEditorSection({ selectedFileId }: { selectedFileId: string }) {
         <FilesTab />
         {selectedFileId && fileObj && (
           <div className="project-editor flex flex-1 pl-2 pt-2 rounded-b-md h-full min-h-0">
-            {/* <Editor
-              key={`${isPreviewOn} ${fileObj.id} ${windowSize}`}
-              value={fileObj.value}
-              selectedLanguageuage={fileObj.language}
-              lineDecorationsWidth={20}
-              fontSize={14}
-              setValue={updateValue}
-            /> */}
             <CodemirrorEditor
               key={`${isPreviewOn} ${fileObj.id} ${windowSize}`}
               value={fileObj.value}
