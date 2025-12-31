@@ -48,7 +48,7 @@ const Header = ({
         <p
           className={`w-fit ${oxanium.className} ${
             isMobile ? 'text-[18px]' : 'text-[24px]'
-          } text-problems-500 font-medium`}
+          } text-project-500 font-medium`}
         >
           {COMMON_TEXTS.ALL_PROJECTS}
         </p>

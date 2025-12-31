@@ -18,6 +18,7 @@ import {
   DEVICE_SIZES,
   SizeProviderContext,
 } from '@web-app/contexts/SizeProvider';
+import SingleBoxPulse from '@web-app/components/skeletons/SingleBoxPulse';
 
 const AllQuestions = ({ questions }: { questions: MachineQuestionMeta[] }) => {
   const { windowSize } = useContext(SizeProviderContext);
@@ -106,31 +107,31 @@ const AllQuestions = ({ questions }: { questions: MachineQuestionMeta[] }) => {
           onSearch={debouncedSearch}
         />
         <div className="flex flex-col flex-1 gap-[10px]">
-          <FixedSizeList
-            rowCount={filteredQuestions.length}
-            rowHeight={questionRowHeight}
-            rowProps={{ questions: filteredQuestions }}
-            rowComponent={({
-              index,
-              style,
-              questions,
-            }: RowComponentProps<{
-              questions: MachineQuestionMeta[];
-            }>) => {
-              return (
-                <div style={style}>
-                  <QuestionCard
-                    key={questions[index].id}
-                    questionData={questions[index]}
-                  />
-                </div>
-              );
-            }}
-          />
-
-          {/* {filteredQuestions.map((ques) => {
-            return <QuestionCard key={ques.id} questionData={ques} />;
-          })} */}
+          {!filteredQuestions.length ? (
+            <SingleBoxPulse height="150px" />
+          ) : (
+            <FixedSizeList
+              rowCount={filteredQuestions.length}
+              rowHeight={questionRowHeight}
+              rowProps={{ questions: filteredQuestions }}
+              rowComponent={({
+                index,
+                style,
+                questions,
+              }: RowComponentProps<{
+                questions: MachineQuestionMeta[];
+              }>) => {
+                return (
+                  <div style={style}>
+                    <QuestionCard
+                      key={questions[index].id}
+                      questionData={questions[index]}
+                    />
+                  </div>
+                );
+              }}
+            />
+          )}
         </div>
       </div>
       {(!isTablet || filterToggle) && (

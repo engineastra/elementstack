@@ -6,6 +6,8 @@ import OptionCard from '@web-app/components/OptionCard';
 import Header from '@web-app/app/Header';
 import { oxanium } from '@web-app/constants/Common';
 import CodemirrorEditor from '@web-app/components/CodemirrorEditor';
+import { Suspense } from 'react';
+import SingleBoxPulse from '@web-app/components/skeletons/SingleBoxPulse';
 
 export default function Home() {
   return (
@@ -27,14 +29,17 @@ export default function Home() {
             })}
           </div>
         </div>
-        <div className="flex flex-col md:h-[400px] rounded-2xl overflow-hidden bg-pannel p-4">
+        <div className="flex flex-col h-[400px] w-[90vw] lg:w-[450px] rounded-2xl overflow-hidden bg-pannel p-4">
           <Image width={40} src={yrgDots} alt="yrg-dots"></Image>
-          <div className="flex pt-6 h-[95%] *:pointer-events-none [&_.cm-gutters]:bg-pannel [&_.cm-editor]:bg-pannel max-w-[80vw] md:max-w-[450px] overflow-hidden">
-            <CodemirrorEditor
-              extention="jsx"
-              value={COMMON_TEXTS.HOME_EDITOR_DEFAULT_VALUE}
-              readOnly
-            />
+          <div className="flex pt-6 h-[95%] w-full *:pointer-events-none [&_.cm-gutters]:bg-pannel [&_.cm-editor]:bg-pannel overflow-hidden">
+            <Suspense fallback={<SingleBoxPulse />}>
+              <CodemirrorEditor
+                extention="jsx"
+                value={COMMON_TEXTS.HOME_EDITOR_DEFAULT_VALUE}
+                readOnly
+              />
+            </Suspense>
+            {/* <SingleBoxPulse /> */}
           </div>
         </div>
       </div>

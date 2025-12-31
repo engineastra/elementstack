@@ -163,7 +163,7 @@ const SingleQuestion = ({
   return (
     <div
       ref={mainWindowRef}
-      className="relative flex flex-col md:flex-row w-full h-[100vh] md:max-h-[100vh] p-2 gap-1 bg-backgroundAccent md:overflow-hidden"
+      className="relative flex flex-col lg:flex-row w-full h-[100vh] md:max-h-[100vh] p-2 gap-1 bg-backgroundAccent md:overflow-hidden"
     >
       <div
         ref={leftRef}

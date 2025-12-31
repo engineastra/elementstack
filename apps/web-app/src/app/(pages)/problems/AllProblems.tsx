@@ -17,6 +17,7 @@ import {
   DEVICE_SIZES,
   SizeProviderContext,
 } from '@web-app/contexts/SizeProvider';
+import SingleBoxPulse from '@web-app/components/skeletons/SingleBoxPulse';
 
 const AllProblems = ({ problems }: { problems: DsaProblemMeta[] }) => {
   const { windowSize } = useContext(SizeProviderContext);
@@ -113,27 +114,31 @@ const AllProblems = ({ problems }: { problems: DsaProblemMeta[] }) => {
           onSearch={debouncedSearch}
         />
         <div className="flex flex-col flex-1 gap-[10px]">
-          <FixedSizeList
-            rowCount={filteredQuestions.length}
-            rowHeight={questionRowHeight}
-            rowProps={{ problems: filteredQuestions }}
-            rowComponent={({
-              index,
-              style,
-              problems,
-            }: RowComponentProps<{
-              problems: DsaProblemMeta[];
-            }>) => {
-              return (
-                <div style={style}>
-                  <ProblemCard
-                    key={problems[index].id}
-                    problemData={problems[index]}
-                  />
-                </div>
-              );
-            }}
-          />
+          {!filteredQuestions.length ? (
+            <SingleBoxPulse height="150px" />
+          ) : (
+            <FixedSizeList
+              rowCount={filteredQuestions.length}
+              rowHeight={questionRowHeight}
+              rowProps={{ problems: filteredQuestions }}
+              rowComponent={({
+                index,
+                style,
+                problems,
+              }: RowComponentProps<{
+                problems: DsaProblemMeta[];
+              }>) => {
+                return (
+                  <div style={style}>
+                    <ProblemCard
+                      key={problems[index].id}
+                      problemData={problems[index]}
+                    />
+                  </div>
+                );
+              }}
+            />
+          )}
         </div>
       </div>
       {(!isTablet || filterToggle) && (
