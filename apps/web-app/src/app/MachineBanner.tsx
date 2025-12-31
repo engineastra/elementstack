@@ -106,7 +106,7 @@ const MachineBanner = () => {
   if (!questionData) return <></>;
 
   return (
-    <div className="relative flex flex-col lg:flex-row w-full px-[20px] min-h-[200px] p-[20px] items-center justify-around border border-machine-500 rounded-xl bg-opacity-10 overflow-hidden gap-[35px]">
+    <div className="relative flex flex-col lg:flex-row w-full px-[20px] min-h-[200px] p-[20px] items-center justify-around border border-machine-500 rounded-xl bg-opacity-10 overflow-hidden gap-[35px] bg-card">
       <div className="flex flex-col items-center justify-center h-full w-full lg:w-[35%] gap-[20px]">
         <Image
           className="w-[40px]"

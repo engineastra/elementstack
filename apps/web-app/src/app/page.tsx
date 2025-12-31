@@ -17,8 +17,8 @@ export default function Home() {
       className={`flex flex-col min-h-[100vh] max-w-[1400px] ${oxanium.variable} px-5 py-4 pb-[30px]`}
     >
       <Header />
-      <div className="flex min-h-[78vh] items-center justify-around w-full py-7 lg:mt-[60px] flex-col lg:flex-row gap-[40px]">
-        <div className="flex flex-col lg:max-w-[55%]">
+      <div className="flex lg:min-h-[78vh] items-center w-full py-7 lg:mt-[60px] flex-col lg:flex-row gap-[40px] lg:mb-[20px]">
+        <div className="flex flex-col lg:max-w-[55%] lg:pl-[30px]">
           <p className="oxanium-font  text-primary font-bold text-[36px] lg:text-[56px]">
             {COMMON_TEXTS.TAG_LINE}
           </p>
@@ -31,7 +31,7 @@ export default function Home() {
             })}
           </div>
         </div>
-        <div className="flex flex-col h-[400px] w-[95vw] lg:w-[450px] rounded-2xl overflow-hidden bg-pannel p-4">
+        <div className="hidden lg:flex flex-col h-[400px] lg:w-[450px] rounded-2xl overflow-hidden bg-pannel p-4 absolute right-0 scale-[130%] opacity-35">
           <Image width={40} src={yrgDots} alt="yrg-dots"></Image>
           <div className="flex pt-6 h-[95%] w-full *:pointer-events-none [&_.cm-gutters]:bg-pannel [&_.cm-editor]:bg-pannel overflow-hidden">
             <Suspense fallback={<SingleBoxPulse />}>
