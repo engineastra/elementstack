@@ -25,7 +25,7 @@ const Description = () => {
   );
   return (
     <>
-      <div className="flex flex-col w-full md:max-w-[400px] h-full p-4 gap-[20px] overflow-y-auto">
+      <div className="flex flex-col w-full h-full p-4 gap-[20px] overflow-y-auto">
         <div className="flex h-fit w-full gap-2 justify-center items-center">
           <p
             className={`font-medium w-fit text-[20px] text-machine-500 ${oxanium.className}`}

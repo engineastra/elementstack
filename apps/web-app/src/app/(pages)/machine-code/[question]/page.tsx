@@ -3,6 +3,7 @@ import React, {
   use,
   useContext,
   useEffect,
+  useRef,
   useState,
   useTransition,
 } from 'react';
@@ -31,6 +32,7 @@ import {
 } from '@web-app/contexts/SizeProvider';
 import { FullPreviewContext } from '@web-app/contexts/FullPreviewProvider';
 import { useRouter } from 'next/navigation';
+import HorizontalResizeDivider from '@web-app/components/HorizontalResizeDivider';
 
 async function getQuestionById(id: string) {
   const resp = await fetch(`/api/machine/question/${id}`);
@@ -56,8 +58,14 @@ const SingleQuestion = ({
     DEVICE_SIZES.sm,
     DEVICE_SIZES.md,
   ].includes(windowSize);
+  const [dividerMain, setDividerMain] = useState(33);
+  const [dividerRightSec, setDividerRightSec] = useState(50);
+  const mainWindowRef = useRef<HTMLDivElement>(null);
+  const leftRef = useRef<HTMLDivElement>(null);
+  const rightRef = useRef<HTMLDivElement>(null);
+  const codeRef = useRef<HTMLDivElement>(null);
+  const previewRef = useRef<HTMLDivElement>(null);
   const [isHorzSplit, setIsHorzSplit] = useState(true);
-  const [isVertSplit, setIsVertSplit] = useState(false);
   const [, loadQuestionInTransition] = useTransition();
   const { metaData, rootFolder, selectedLeftTab, selectedRightTab } =
     machineQuestionDetails;
@@ -71,7 +79,6 @@ const SingleQuestion = ({
   useEffect(() => {
     if (isTablet) {
       setIsHorzSplit(false);
-      setIsVertSplit(false);
     }
   }, [isTablet]);
 
@@ -127,27 +134,78 @@ const SingleQuestion = ({
     router.push('/webpreview');
   };
 
+  const onResizeMain = (currPos: number) => {
+    if (leftRef.current && rightRef.current) {
+      leftRef.current.style.width = currPos + '%';
+      rightRef.current.style.width = 100 - currPos + '%';
+      setDividerMain(currPos);
+    }
+  };
+
+  const onResizeRightSec = (currPos: number) => {
+    if (codeRef.current && previewRef.current) {
+      codeRef.current.style.width = currPos + '%';
+      previewRef.current.style.width = 100 - currPos + '%';
+      setDividerRightSec(currPos);
+    }
+  };
+
+  useEffect(() => {
+    if (isTablet) {
+      if (leftRef.current) leftRef.current.style.width = '100%';
+      if (rightRef.current) rightRef.current.style.width = '100%';
+    } else {
+      onResizeMain(33);
+      onResizeRightSec(50);
+    }
+  }, [isTablet, codeRef.current]);
+
   return (
-    <div className="relative flex flex-col md:flex-row w-full h-[100vh] md:max-h-[100vh] p-2 gap-2 bg-backgroundAccent md:overflow-hidden">
-      <div className="flex shrink-0 flex-col md:min-w-[250px] rounded-xl border bg-card border-greenishgrey overflow-y-auto gap-2">
+    <div
+      ref={mainWindowRef}
+      className="relative flex flex-col md:flex-row w-full h-[100vh] md:max-h-[100vh] p-2 gap-1 bg-backgroundAccent md:overflow-hidden"
+    >
+      <div
+        ref={leftRef}
+        className="flex shrink-0 flex-col md:min-w-[250px] rounded-xl border bg-card border-greenishgrey overflow-y-auto gap-2"
+      >
         <LeftTab />
         {selectedLeftTab === MachineLeftTabs.Desc && <Description />}
         {selectedLeftTab === MachineLeftTabs.FileSystem && <FilesSection />}
       </div>
-
-      {isHorzSplit || isVertSplit ? (
+      {!isTablet && (
+        <HorizontalResizeDivider
+          left={dividerMain}
+          max={60}
+          windowRef={mainWindowRef as React.RefObject<HTMLDivElement>}
+          onResize={onResizeMain}
+        />
+      )}
+      {isHorzSplit ? (
         <div
-          className={`flex ${
-            isVertSplit ? 'flex-col' : 'flex-row'
-          } w-full h-full gap-2 overflow-y-auto`}
+          ref={rightRef}
+          className={`flex w-full h-full gap-1 overflow-y-auto`}
         >
-          <div className="flex flex-1 flex-col rounded-xl min-h-[70vh] border bg-card border-greenishgrey overflow-hidden">
+          <div
+            ref={codeRef}
+            className="flex flex-col rounded-xl min-h-[70vh] border bg-card border-greenishgrey overflow-hidden"
+          >
             <div className="flex shrink-0 w-full h-[40px] bg-pannel mr-[100px] text-machine-500 justify-center items-center text-[13px] border-b border-b-machine-500 font-semibold">
               {MachineRightTabs.Code}
             </div>
             <MachineCodeEditor />
           </div>
-          <div className="flex flex-1 flex-col rounded-xl min-h-[70vh] border bg-card border-greenishgrey overflow-hidden">
+          <HorizontalResizeDivider
+            left={dividerRightSec}
+            min={35}
+            max={65}
+            windowRef={rightRef as React.RefObject<HTMLDivElement>}
+            onResize={onResizeRightSec}
+          />
+          <div
+            ref={previewRef}
+            className="flex flex-col rounded-xl min-h-[70vh] border bg-card border-greenishgrey overflow-hidden"
+          >
             <div className="relative flex shrink-0 w-full h-[40px] bg-pannel mr-[100px] text-machine-500 justify-center items-center text-[13px] border-b border-b-machine-500 font-semibold">
               <p className="text-[13px] text-machine-500 font-semibold">
                 {MachineRightTabs.Preview}
@@ -170,7 +228,6 @@ const SingleQuestion = ({
                 }}
                 onClick={() => {
                   setIsHorzSplit(false);
-                  setIsVertSplit(false);
                 }}
               />
             </div>
@@ -180,12 +237,11 @@ const SingleQuestion = ({
           </div>
         </div>
       ) : (
-        <div className="flex flex-1 flex-col rounded-xl min-h-[70vh] border bg-card border-greenishgrey overflow-hidden">
-          <RightTab
-            isTablet={isTablet}
-            setIsHorzSplit={setIsHorzSplit}
-            setIsVertSplit={setIsVertSplit}
-          />
+        <div
+          ref={rightRef}
+          className="flex w-full flex-col rounded-xl min-h-[70vh] border bg-card border-greenishgrey overflow-hidden"
+        >
+          <RightTab isTablet={isTablet} setIsHorzSplit={setIsHorzSplit} />
           {selectedRightTab === MachineRightTabs.Code && <MachineCodeEditor />}
           {selectedRightTab === MachineRightTabs.Preview && (
             <div className="h-full w-full">

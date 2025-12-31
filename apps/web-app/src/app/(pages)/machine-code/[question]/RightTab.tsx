@@ -7,11 +7,9 @@ import { Splitscreen } from '@mui/icons-material';
 const RightTab = ({
   isTablet,
   setIsHorzSplit,
-  setIsVertSplit,
 }: {
   isTablet: boolean;
   setIsHorzSplit: Dispatch<boolean>;
-  setIsVertSplit: Dispatch<boolean>;
 }) => {
   const { machineQuestionDetails, setMachineQuestionDetails } = useContext(
     MachineQuestionDetailsContext
@@ -49,10 +47,6 @@ const RightTab = ({
             <Splitscreen
               sx={{ fontSize: 15, rotate: '90deg', cursor: 'pointer' }}
               onClick={() => setIsHorzSplit(true)}
-            />
-            <Splitscreen
-              sx={{ fontSize: 15, cursor: 'pointer' }}
-              onClick={() => setIsVertSplit(true)}
             />
           </div>
         )}

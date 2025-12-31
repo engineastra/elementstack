@@ -5,7 +5,6 @@ export const DividerStyle: React.CSSProperties = {
   borderRadius: '5px',
   height: '100%',
   width: '3px',
-  cursor: 'col-resize',
 };
 
 const HorizontalResizeDivider = ({

@@ -98,6 +98,7 @@ html {
     background-color: #0b1020;
     &:hover {
       background-color: #71f163 !important;
+      cursor: col-resize;
     }
   }
 }
