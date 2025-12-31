@@ -1,12 +1,13 @@
 'use client';
 import React, { useState } from 'react';
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
+import { COMMON_COLORS } from '@elementstack/shared-assets/Constants';
 
 export type ValueListType = { id: string; displayText: string };
 
 const FilterCard = ({
   name,
-  themeColor = 'primary',
+  themeColor = COMMON_COLORS.primary,
   valueList,
   selectedValues,
   isExpanded = false,
@@ -26,7 +27,9 @@ const FilterCard = ({
         className="flex justify-between items-center cursor-pointer"
         onClick={() => setExpand(!expand)}
       >
-        <p className="pl-1 w-fit text-[16px] text-primaryText">{name}</p>
+        <p className="pl-1 w-fit text-[16px]">
+          {name}
+        </p>
         {expand ? (
           <ExpandLess sx={{ fontSize: 20 }} />
         ) : (
@@ -37,22 +40,19 @@ const FilterCard = ({
         <div className="flex w-full flex-wrap gap-2">
           {valueList.map((val: ValueListType) => {
             if (!val) return <></>;
+            const isSelected = selectedValues.some(
+              (selectedVal) => selectedVal?.id === val.id
+            );
             return (
               <p
                 key={val.id}
-                className={`w-fit text-[12px] cursor-pointer text-${
-                  selectedValues.some(
-                    (selectedVal) => selectedVal?.id === val.id
-                  )
+                className={`w-fit text-[12px] cursor-pointer px-2 py-1 rounded-2xl border`}
+                style={{
+                  color: isSelected ? themeColor : COMMON_COLORS.secondaryText,
+                  borderColor: isSelected
                     ? themeColor
-                    : 'secondaryText'
-                } px-2 py-1 rounded-2xl border border-${
-                  selectedValues.some(
-                    (selectedVal) => selectedVal?.id === val.id
-                  )
-                    ? themeColor
-                    : 'secondaryText'
-                }`}
+                    : COMMON_COLORS.secondaryText,
+                }}
                 onClick={() => onSelect(val)}
               >
                 {val.displayText}

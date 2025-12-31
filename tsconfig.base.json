@@ -14,6 +14,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
+    "ignoreDeprecations": "6.0", // ← Silences the deprecation warning
     "typeRoots": ["./node_modules/@types", "./libs/*/types"],
     "paths": {
       "@web-app/*": ["apps/web-app/src/*"],

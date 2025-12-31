@@ -6,12 +6,11 @@ import {
   useDynamicRowHeight,
 } from 'react-window';
 import { FilterAlt, FilterAltOff } from '@mui/icons-material';
-import { MachineQuestionMeta } from '@elementstack/shared-assets/Types';
-import QuestionCard from './QuestionCard';
+import { DsaProblemMeta } from '@elementstack/shared-assets/Types';
+import ProblemCard from './ProblemCard';
 import Filters from './Filters';
 import { useContext, useEffect, useState } from 'react';
 import { ValueListType } from '@web-app/components/FilterCard';
-import { MACHINE_TOPICS_TO_FEATURES } from '@elementstack/shared-assets/Constants';
 import Header from './Header';
 import SearchBar from '@web-app/components/SearchBar';
 import {
@@ -19,19 +18,23 @@ import {
   SizeProviderContext,
 } from '@web-app/contexts/SizeProvider';
 
-const AllQuestions = ({ questions }: { questions: MachineQuestionMeta[] }) => {
+const AllProblems = ({ problems }: { problems: DsaProblemMeta[] }) => {
   const { windowSize } = useContext(SizeProviderContext);
   const isTablet = [
     DEVICE_SIZES.xsm,
     DEVICE_SIZES.sm,
     DEVICE_SIZES.md,
   ].includes(windowSize);
-  const [filteredQuestions, setFilteredQuestions] = useState<
-    MachineQuestionMeta[]
-  >([]);
+  const [filteredQuestions, setFilteredQuestions] = useState<DsaProblemMeta[]>(
+    []
+  );
+  const [filterCategory, setFilterCategory] = useState<ValueListType[]>([]);
   const [filterTopics, setFilterTopics] = useState<ValueListType[]>([]);
+  const [filterConcepts, setFilterConcepts] = useState<ValueListType[]>([]);
+  const [filterCompanyTags, setFilterCompanyTags] = useState<ValueListType[]>(
+    []
+  );
   const [filterLevels, setFilterLevels] = useState<ValueListType[]>([]);
-  const [filterFrameWork, setFilterFrameWork] = useState<ValueListType[]>([]);
   const [filterProgresses, setFilterProgresses] = useState<ValueListType[]>([]);
   const [filterQuestionTypes, setFilterQuestionTypes] = useState<
     ValueListType[]
@@ -49,36 +52,40 @@ const AllQuestions = ({ questions }: { questions: MachineQuestionMeta[] }) => {
 
   useEffect(() => {
     let newList = [
-      ...questions.filter(
+      ...problems.filter(
         (ques) =>
           (!searchKey ||
             ques.title.toLocaleLowerCase().includes(searchKey) ||
             ques.quickDescription.toLocaleLowerCase().includes(searchKey)) &&
+          (!filterCategory.length ||
+            filterCategory.some((val) => ques.category.includes(val.id))) &&
+          (!filterConcepts.length ||
+            filterConcepts.some((val) =>
+              ques.keyConcepts.includes(val.displayText)
+            )) &&
           (!filterTopics.length ||
-            filterTopics.some((top) =>
-              ques.keyFeatures.some((feature) =>
-                MACHINE_TOPICS_TO_FEATURES.find(
-                  (lst) => lst.id === top.id
-                )?.features?.includes(feature)
-              )
+            filterTopics.some((val) => ques.relatedTopics.includes(val.id))) &&
+          (!filterCompanyTags.length ||
+            filterCompanyTags.some((val) =>
+              ques.companyTags.includes(val.displayText)
             )) &&
           (!filterLevels.length ||
-            filterLevels.some((lvlObj) => lvlObj.displayText === ques.level)) &&
-          (!filterFrameWork.length ||
-            filterFrameWork.some((obj) => obj.displayText === ques.techStack))
+            filterLevels.some((lvlObj) => lvlObj.displayText === ques.level))
       ),
     ];
-    if (!filterTopics.length && !filterLevels.length && !newList.length) {
-      newList = [...questions];
+    if (!filterConcepts.length && !filterLevels.length && !newList.length) {
+      newList = [...problems];
     }
     setFilteredQuestions(newList);
   }, [
+    filterCategory,
     filterTopics,
+    filterConcepts,
+    filterCompanyTags,
     filterLevels,
-    filterFrameWork,
     filterProgresses,
     filterQuestionTypes,
-    questions,
+    problems,
     searchKey,
   ]);
 
@@ -101,52 +108,52 @@ const AllQuestions = ({ questions }: { questions: MachineQuestionMeta[] }) => {
           )}
         </div>
         <SearchBar
-          placeholder="Search questions"
-          themeColor="machine-500"
+          placeholder="Search problems"
+          themeColor="problems-500"
           onSearch={debouncedSearch}
         />
         <div className="flex flex-col flex-1 gap-[10px]">
           <FixedSizeList
             rowCount={filteredQuestions.length}
             rowHeight={questionRowHeight}
-            rowProps={{ questions: filteredQuestions }}
+            rowProps={{ problems: filteredQuestions }}
             rowComponent={({
               index,
               style,
-              questions,
+              problems,
             }: RowComponentProps<{
-              questions: MachineQuestionMeta[];
+              problems: DsaProblemMeta[];
             }>) => {
               return (
                 <div style={style}>
-                  <QuestionCard
-                    key={questions[index].id}
-                    questionData={questions[index]}
+                  <ProblemCard
+                    key={problems[index].id}
+                    problemData={problems[index]}
                   />
                 </div>
               );
             }}
           />
-
-          {/* {filteredQuestions.map((ques) => {
-            return <QuestionCard key={ques.id} questionData={ques} />;
-          })} */}
         </div>
       </div>
       {(!isTablet || filterToggle) && (
         <div className="absolute lg:sticky top-[58px] lg:top-0 right-0 flex md:flex-[0.4] md:h-full bg-black lg:bg-transparent border border-greenishgrey lg:border-transparent p-2 rounded-xl">
           <div className="w-full overflow-y-auto">
             <Filters
-              filterTopics={filterTopics}
+              filterConcepts={filterConcepts}
               filterLevels={filterLevels}
               filterProgresses={filterProgresses}
               filterQuestionTypes={filterQuestionTypes}
-              filterFrameWork={filterFrameWork}
-              setFilterTopics={setFilterTopics}
+              filterCompanyTags={filterCompanyTags}
+              filterTopics={filterTopics}
+              filterCategory={filterCategory}
+              setFilterConcepts={setFilterConcepts}
               setFilterLevels={setFilterLevels}
               setFilterProgresses={setFilterProgresses}
               setFilterQuestionTypes={setFilterQuestionTypes}
-              setFilterFramework={setFilterFrameWork}
+              setFilterCompanyTags={setFilterCompanyTags}
+              setFilterTopics={setFilterTopics}
+              setFilterCategory={setFilterCategory}
             />
           </div>
         </div>
@@ -155,4 +162,4 @@ const AllQuestions = ({ questions }: { questions: MachineQuestionMeta[] }) => {
   );
 };
 
-export default AllQuestions;
+export default AllProblems;

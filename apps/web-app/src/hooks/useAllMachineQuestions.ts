@@ -2,9 +2,7 @@ import { MachineQuestionMeta } from '@elementstack/shared-assets/Types';
 import { useEffect, useState, useTransition } from 'react';
 
 async function getAllQuestions() {
-  const resp = await fetch('/api/machine/allQuestions', {
-    cache: 'force-cache',
-  });
+  const resp = await fetch('/api/machine/allQuestions');
   const questions = await resp.json();
   return questions;
 }

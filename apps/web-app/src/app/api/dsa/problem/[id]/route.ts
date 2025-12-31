@@ -1,4 +1,4 @@
-import { getQuestionByIdFromDb } from '@elementstack/shared-db/machineQuestionsQueries';
+import { getDsaProblemByIdFromDb } from '@elementstack/shared-db/dsaProblemsQueries';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
@@ -6,7 +6,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const question = await getQuestionByIdFromDb(id);
+  const question = await getDsaProblemByIdFromDb(id);
   return NextResponse.json(question, {
     headers: {
       'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',

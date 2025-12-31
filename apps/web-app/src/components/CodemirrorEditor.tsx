@@ -37,7 +37,7 @@ const CodemirrorEditor = ({
       extensions={[
         editorEssentials({
           onSave: () => {
-            console.log('Saved');
+            // TODO: Save Functionality
           },
         }),
         smartAutocomplete((projectConfig?.key || '') as LanguageKey),

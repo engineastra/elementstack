@@ -16,11 +16,10 @@ const Header = () => {
       <div
         className={`flex flex-wrap md:flex-row items-center gap-3 justify-between`}
       >
-        {/* <SearchBar placeholder="Search questions" /> */}
         <p
           className={`w-fit ${oxanium.className} ${
             isMobile ? 'text-[18px]' : 'text-[24px]'
-          } text-primary font-medium`}
+          } text-problems-500 font-medium`}
         >
           {COMMON_TEXTS.DSA_PROBLEMS}
         </p>

@@ -102,14 +102,20 @@ export type MachineQuestionData = {
   nameChangeInputData: MachineNameInputType;
 };
 
-export type DSAQuestionMeta = {
+export type TestCase = Record<
+  string,
+  { input: string; output: string; explanation: string }
+>;
+
+export type DsaProblemMeta = {
   id: string;
   title: string;
   category: string;
   subcategory: string;
-  level: 'Easy' | 'Medium' | 'Hard';
+  level: QuestionLevel;
   quickDescription: string;
   detailedDescription: string;
+  testCases: TestCase;
   companyTags: Array<string>;
   constraints: Array<string>;
   hints: Array<string>;
@@ -122,3 +128,12 @@ export type DSAQuestionMeta = {
   updatedAt?: Date;
   isSolved?: boolean;
 };
+
+export type DsaProblemData = {
+  metaData: DsaProblemMeta;
+  selectedLeftTab: string;
+  selectedRightTab: string;
+  values: Record<string, string>;
+};
+
+export type DsaTabType = { name: string; isLeft: boolean };

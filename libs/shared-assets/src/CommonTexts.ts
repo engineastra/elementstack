@@ -26,6 +26,6 @@ function App() {
   CANCEL: 'Cancel',
   ALL_PROJECTS: 'All Projects',
   MACHINE_CODING: 'All Questions',
-  DSA_PROBLEMS: 'DSA Problems',
+  DSA_PROBLEMS: '150 DSA Problems',
   PEER_CODE: 'Connect with your friends',
 };

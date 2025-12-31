@@ -23,3 +23,27 @@ model machine_coding_questions {
   created_at           DateTime  @default(now()) @db.Timestamptz(6)
   updated_at           DateTime? @db.Timestamp(6)
 }
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model dsa_questions {
+  id                   String   @id @db.VarChar
+  s_no                 BigInt   @unique @default(autoincrement())
+  title                String   @db.VarChar
+  category             String   @db.VarChar
+  subcategory          String   @db.VarChar
+  level                String   @db.VarChar
+  company_tags         Json?
+  quick_description    String   @db.VarChar
+  detailed_description String   @db.VarChar
+  constraints          Json?
+  hints                Json?
+  key_concepts         Json?
+  similar_problems     Json?
+  time_estimate        String   @db.VarChar
+  related_topics       Json?
+  solution             Json?
+  created_at           DateTime @default(now()) @db.Timestamptz(6)
+  updated_at           DateTime @default(now()) @db.Timestamp(6)
+  test_cases           Json     @default("{}")
+}

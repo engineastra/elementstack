@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAllQuestionsFromDb } from '@elementstack/shared-db/machineQuestionsQueries';
+import { getAllDsaProblemsFromDb } from '@elementstack/shared-db/dsaProblemsQueries';
 
 (BigInt.prototype as any).toJSON = function () {
   return this.toString();
@@ -7,7 +7,7 @@ import { getAllQuestionsFromDb } from '@elementstack/shared-db/machineQuestionsQ
 
 // GET request
 export async function GET(request: NextRequest) {
-  const questions = await getAllQuestionsFromDb();
+  const questions = await getAllDsaProblemsFromDb();
   return NextResponse.json(questions, {
     headers: {
       'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',

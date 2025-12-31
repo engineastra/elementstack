@@ -19,3 +19,8 @@ export const decodeBase64 = (value: string) =>
 export const iconColor = (color: string) => ({
   '& path': { fill: color },
 });
+
+export function capitalizeFirst(str: string | undefined) {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

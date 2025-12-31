@@ -2,7 +2,7 @@
 import { QuestionLevel } from '@elementstack/shared-assets/Types';
 import FilterCard, { ValueListType } from '@web-app/components/FilterCard';
 import { Dispatch } from 'react';
-import { TOPICS_TO_FEATURES } from '@elementstack/shared-assets/Constants';
+import { COMMON_COLORS, MACHINE_TOPICS_TO_FEATURES } from '@elementstack/shared-assets/Constants';
 import { TechStack } from '@elementstack/shared-assets/Enums';
 
 const Filters = ({
@@ -28,8 +28,9 @@ const Filters = ({
     <div className="flex flex-col w-full">
       <FilterCard
         name="Topics"
+        themeColor={COMMON_COLORS.machine[500]}
         isExpanded
-        valueList={TOPICS_TO_FEATURES.map((obj) => ({
+        valueList={MACHINE_TOPICS_TO_FEATURES.map((obj) => ({
           id: obj.id,
           displayText: obj.topic,
         }))}
@@ -44,6 +45,7 @@ const Filters = ({
       />
       <FilterCard
         name="Level"
+        themeColor={COMMON_COLORS.machine[500]}
         valueList={Object.values(QuestionLevel).map((lvl) => ({
           id: 'level-' + lvl,
           displayText: lvl,
@@ -61,6 +63,7 @@ const Filters = ({
       />
       <FilterCard
         name="Frameworks"
+        themeColor={COMMON_COLORS.machine[500]}
         valueList={Object.values(TechStack).map((val) => ({
           id: 'tech-' + val,
           displayText: val,
@@ -68,7 +71,9 @@ const Filters = ({
         selectedValues={filterFrameWork}
         onSelect={(val: ValueListType) => {
           if (filterFrameWork.some((obj) => obj.id === val.id)) {
-            setFilterFramework(filterFrameWork.filter((obj) => obj.id !== val.id));
+            setFilterFramework(
+              filterFrameWork.filter((obj) => obj.id !== val.id)
+            );
           } else {
             setFilterFramework([...filterFrameWork, val]);
           }

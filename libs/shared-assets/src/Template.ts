@@ -376,7 +376,6 @@ export const getFolderTemplate: (
       fld.parentFolderId = newFolder.id;
       fld.canBeRemoved = false;
     });
-    console.log(newFolder);
     return newFolder;
   }
   return null;
