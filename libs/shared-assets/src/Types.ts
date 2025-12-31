@@ -91,9 +91,8 @@ export type MachineNameInputType = {
 
 export type MachineQuestionData = {
   metaData: MachineQuestionMeta;
-  solutionFiles: Array<FileData>;
-  selectedLeftTab: MachineLeftTabs | undefined;
-  selectedRightTab: MachineRightTabs | undefined;
+  selectedLeftTab?: MachineLeftTabs | undefined;
+  selectedRightTab?: MachineRightTabs | undefined;
   rootFolder: Folder;
   selectedFileId: string;
   selectedFolderId: string;

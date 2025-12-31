@@ -1,10 +1,11 @@
 'use client';
 import React, { useState } from 'react';
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
-import { QuestionLevel } from '@elementstack/shared-assets/Types';
+import {
+  MachineQuestionData,
+  QuestionLevel,
+} from '@elementstack/shared-assets/Types';
 import { oxanium } from '@web-app/constants/Common';
-import { MachineQuestionDetailsContext } from '@web-app/contexts/MachineQuestionProvider';
-import { useContext } from 'react';
 import { MachineRightTabs } from '@elementstack/shared-assets/Enums';
 import SingleBoxPulse from '@web-app/components/skeletons/SingleBoxPulse';
 
@@ -18,40 +19,43 @@ const getLevelColor = (type: QuestionLevel) => {
   }
 };
 
-const Description = () => {
+const Description = ({
+  questionDetails,
+  setQuestionDetails,
+}: {
+  questionDetails: MachineQuestionData;
+  setQuestionDetails: (data: Partial<MachineQuestionData>) => void;
+}) => {
   const [hintExpand, setHintExpand] = useState(false);
   const [topicsExpand, setTopicsExpand] = useState(false);
-  const { machineQuestionDetails, setMachineQuestionDetails } = useContext(
-    MachineQuestionDetailsContext
-  );
   return (
     <>
-      {machineQuestionDetails.metaData.id ? (
+      {questionDetails.metaData.id ? (
         <div className="flex flex-col w-full h-full p-4 gap-[20px] overflow-y-auto">
           <div className="flex h-fit w-full gap-2 justify-center items-center">
             <p
               className={`font-medium w-fit text-[20px] text-machine-500 ${oxanium.className}`}
             >
-              {machineQuestionDetails.metaData.title}
+              {questionDetails.metaData.title}
             </p>
             <p
               className={`ml-auto w-fit text-[12px] text-${getLevelColor(
-                machineQuestionDetails.metaData.level
+                questionDetails.metaData.level
               )} px-2 py-1 rounded-2xl border border-${getLevelColor(
-                machineQuestionDetails.metaData.level
+                questionDetails.metaData.level
               )}`}
             >
-              {machineQuestionDetails.metaData.level}
+              {questionDetails.metaData.level}
             </p>
           </div>
           <p className={`text-[14px] text-gray-300 text-justify`}>
-            {machineQuestionDetails.metaData.detailedDescription}
+            {questionDetails.metaData.detailedDescription}
           </p>
           <div
             className="flex shrink-0 w-full p-3 px-[15px] bg-backgroundAccent hover:bg-black rounded-xl justify-between items-center hover:scale-[101%] cursor-pointer"
             onClick={() =>
-              setMachineQuestionDetails({
-                payload: { selectedRightTab: MachineRightTabs.SolutionPreview },
+              setQuestionDetails({
+                selectedRightTab: MachineRightTabs.SolutionPreview,
               })
             }
           >
@@ -83,7 +87,7 @@ const Description = () => {
             </div>
             {hintExpand && (
               <ul className="ml-4 mt-2">
-                {machineQuestionDetails.metaData.hints.map((val: string) => {
+                {questionDetails.metaData.hints.map((val: string) => {
                   return (
                     <li
                       key={val}
@@ -112,18 +116,16 @@ const Description = () => {
             </div>
             {topicsExpand && (
               <div className="flex flex-wrap mt-4 gap-2">
-                {machineQuestionDetails.metaData.keyFeatures.map(
-                  (val: string) => {
-                    return (
-                      <p
-                        key={val}
-                        className={`list-disc w-fit text-[13px] cursor-pointer px-2 py-1 text-machine-500 border border-machine-500 rounded-xl`}
-                      >
-                        {val}
-                      </p>
-                    );
-                  }
-                )}
+                {questionDetails.metaData.keyFeatures.map((val: string) => {
+                  return (
+                    <p
+                      key={val}
+                      className={`list-disc w-fit text-[13px] cursor-pointer px-2 py-1 text-machine-500 border border-machine-500 rounded-xl`}
+                    >
+                      {val}
+                    </p>
+                  );
+                })}
               </div>
             )}
           </div>

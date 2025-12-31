@@ -15,11 +15,142 @@ export const BOILER_PLATES = {
 </html>`,
   js: `import "./styles.css";
 
-document.getElementById("app").innerHTML = \`
-<h1>Hello JavaScript!</h1>
-\`;`,
-  css: `body {
-  font-family: sans-serif;
+const app = document.getElementById('app');
+
+app.innerHTML = \`
+  <main class="app-container">
+  <main class="app-container">
+    <header class="app-header">
+      <h1>
+        Welcome to <span>ElementStack</span>
+      </h1>
+      <p>
+        Edit <code>index.js</code> and save to get started.
+      </p>
+    </header>
+
+    <footer class="app-footer">
+      <span>⚡ Vanilla JavaScript</span>
+      <span>•</span>
+      <span>Minimal. Fast. Zero Build.</span>
+    </footer>
+  </main>
+\`;
+`,
+  css: `:root {
+  --bg: #0b0f1a;
+  --panel: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #e6e8eb;
+  --muted: #9aa4b2;
+  --accent: #7c7cff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background: radial-gradient(
+      circle at top,
+      rgba(124, 124, 255, 0.15),
+      transparent 40%
+    ),
+    var(--bg);
+  color: var(--text);
+}
+
+#app {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 720px;
+  padding: 40px 32px;
+  border-radius: 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  text-align: center;
+}
+
+.app-header h1 {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.app-header h1 span {
+  background: linear-gradient(90deg, #7c7cff, #4fd1c5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.app-header p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.app-header code {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.9em;
+}
+
+.app-actions {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.app-actions a {
+  padding: 10px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.app-actions .primary {
+  background: var(--accent);
+  color: #0b0f1a;
+  border-color: transparent;
+}
+
+.app-actions .primary:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+.app-actions .secondary {
+  color: var(--text);
+  background: transparent;
+}
+
+.app-actions .secondary:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app-footer {
+  margin-top: 40px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  flex-wrap: wrap;
 }
 `,
   ts: `import "./styles.css";
@@ -31,9 +162,23 @@ document.getElementById("app").innerHTML = \`
 
 export default function App() {
   return (
-    <div className="App">
-      <h1>Hi There!</h1>
-      <h2>Start building something great</h2>
+    <div className="app-root">
+      <main className="app-container">
+        <header className="app-header">
+          <h1>
+            Welcome to <span>ElementStack</span>
+          </h1>
+          <p>
+            Edit <code>App.[jsx/tsx]</code> and save to get started.
+          </p>
+        </header>
+
+        <footer className="app-footer">
+          <span>⚡ Powered by React</span>
+          <span>•</span>
+          <span>Minimal. Fast. Extensible.</span>
+        </footer>
+      </main>
     </div>
   );
 }
@@ -65,10 +210,123 @@ if (!rootEl) {
 const root = createRoot(rootEl);
 root.render(<App />);
 `,
-  jsxCSS: `.App {
-  font-family: sans-serif;
+  jsxCSS: `:root {
+  --bg: #0b0f1a;
+  --panel: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #e6e8eb;
+  --muted: #9aa4b2;
+  --accent: #7c7cff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background: radial-gradient(
+      circle at top,
+      rgba(124, 124, 255, 0.15),
+      transparent 40%
+    ),
+    var(--bg);
+  color: var(--text);
+}
+
+.app-root {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 720px;
+  padding: 40px 32px;
+  border-radius: 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
   text-align: center;
-}`,
+}
+
+.app-header h1 {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.app-header h1 span {
+  background: linear-gradient(90deg, #7c7cff, #4fd1c5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.app-header p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.app-header code {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.9em;
+}
+
+.app-actions {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.app-actions a {
+  padding: 10px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.app-actions .primary {
+  background: var(--accent);
+  color: #0b0f1a;
+  border-color: transparent;
+}
+
+.app-actions .primary:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+.app-actions .secondary {
+  color: var(--text);
+  background: transparent;
+}
+
+.app-actions .secondary:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app-footer {
+  margin-top: 40px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+}
+`,
   jsPackageJSON: `{
   "name": "Javascript",
   "version": "ES2022",

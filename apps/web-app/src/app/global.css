@@ -13,7 +13,7 @@ html {
   --primary-text: #f9fafb;
   --black-gradient: linear-gradient(180deg, #000000 0%, #05112c 100%);
   --green-gradient: linear-gradient(0deg, #22c55e 0%, #71f163 100%);
-  --red-gradient: linear-gradient(180deg, 	#bb9b49, #a2790d);
+  --red-gradient: linear-gradient(180deg, #bb9b49, #a2790d);
   --purple-gradient: linear-gradient(180deg, #513690 0%, #15111d 100%);
   --blue-gradient: linear-gradient(180deg, #0f5c83 0%, #0c1945 100%);
   --darkgreen-gradient: linear-gradient(180deg, #178c42 0%, #0d3a1e 100%);
@@ -124,4 +124,13 @@ html {
       height: inherit;
     }
   }
+}
+
+.cm-editor,
+.cm-scroller,
+.cm-content {
+  height: 100% !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  min-width: 0 !important;
 }

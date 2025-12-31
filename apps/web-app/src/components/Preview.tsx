@@ -1,4 +1,5 @@
 'use client';
+import { COMMON_COLORS } from '@elementstack/shared-assets/Constants';
 import { Folder, ProjectType } from '@elementstack/shared-assets/Types';
 import {
   flattenFiles,
@@ -63,7 +64,7 @@ export function SandboxPreview({
           width: '100%',
           height: '100%',
           border: 'none',
-          backgroundColor: 'white',
+          backgroundColor: COMMON_COLORS.card,
         }}
       />
     </div>

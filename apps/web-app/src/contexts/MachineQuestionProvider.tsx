@@ -29,7 +29,6 @@ const initialState: MachineQuestionData = {
       level: QuestionLevel.EASY,
     },
   },
-  solutionFiles: [],
   selectedLeftTab: MachineLeftTabs.Desc,
   selectedRightTab: MachineRightTabs.Code,
   rootFolder: {

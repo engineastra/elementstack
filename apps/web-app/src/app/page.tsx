@@ -8,14 +8,16 @@ import { oxanium } from '@web-app/constants/Common';
 import CodemirrorEditor from '@web-app/components/CodemirrorEditor';
 import { Suspense } from 'react';
 import SingleBoxPulse from '@web-app/components/skeletons/SingleBoxPulse';
+import ProjectBanner from './ProjectBanner';
+import MachineBanner from './MachineBanner';
 
 export default function Home() {
   return (
     <div
-      className={`flex flex-col min-h-[100vh] max-w-[1400px] ${oxanium.variable} px-5 py-4`}
+      className={`flex flex-col min-h-[100vh] max-w-[1400px] ${oxanium.variable} px-5 py-4 pb-[30px]`}
     >
       <Header />
-      <div className="flex min-h-[80vh] justify-around w-full py-7 lg:mt-[100px] flex-col lg:flex-row gap-[40px]">
+      <div className="flex min-h-[78vh] items-center justify-around w-full py-7 lg:mt-[60px] flex-col lg:flex-row gap-[40px]">
         <div className="flex flex-col lg:max-w-[55%]">
           <p className="oxanium-font  text-primary font-bold text-[36px] lg:text-[56px]">
             {COMMON_TEXTS.TAG_LINE}
@@ -29,7 +31,7 @@ export default function Home() {
             })}
           </div>
         </div>
-        <div className="flex flex-col h-[400px] w-[90vw] lg:w-[450px] rounded-2xl overflow-hidden bg-pannel p-4">
+        <div className="flex flex-col h-[400px] w-[95vw] lg:w-[450px] rounded-2xl overflow-hidden bg-pannel p-4">
           <Image width={40} src={yrgDots} alt="yrg-dots"></Image>
           <div className="flex pt-6 h-[95%] w-full *:pointer-events-none [&_.cm-gutters]:bg-pannel [&_.cm-editor]:bg-pannel overflow-hidden">
             <Suspense fallback={<SingleBoxPulse />}>
@@ -39,9 +41,12 @@ export default function Home() {
                 readOnly
               />
             </Suspense>
-            {/* <SingleBoxPulse /> */}
           </div>
         </div>
+      </div>
+      <div className="flex flex-col gap-[40px]">
+        <ProjectBanner />
+        <MachineBanner />
       </div>
     </div>
   );

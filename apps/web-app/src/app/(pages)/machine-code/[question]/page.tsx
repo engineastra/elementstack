@@ -170,7 +170,14 @@ const SingleQuestion = ({
         className="flex shrink-0 flex-col md:min-w-[250px] rounded-xl border bg-card border-greenishgrey overflow-y-auto gap-2"
       >
         <LeftTab />
-        {selectedLeftTab === MachineLeftTabs.Desc && <Description />}
+        {selectedLeftTab === MachineLeftTabs.Desc && (
+          <Description
+            questionDetails={machineQuestionDetails}
+            setQuestionDetails={(quesData) => {
+              setMachineQuestionDetails({ payload: quesData });
+            }}
+          />
+        )}
         {selectedLeftTab === MachineLeftTabs.FileSystem && <FilesSection />}
       </div>
       {!isTablet && (

@@ -24,6 +24,8 @@ const CodemirrorEditor = ({
   extention = 'txt',
   value,
   readOnly = false,
+  height = '100%',
+  width = '100%',
   setValue,
 }: CodemirrorEditorProp) => {
   // eslin-disable next-line
@@ -32,7 +34,7 @@ const CodemirrorEditor = ({
   return (
     <CodeMirror
       value={value}
-      height="100%"
+      style={{ height, width }}
       theme={tomorrowNightBlue}
       extensions={[
         editorEssentials({
