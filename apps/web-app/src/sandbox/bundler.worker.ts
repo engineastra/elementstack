@@ -90,6 +90,14 @@ const vfsPlugin = (files: Record<string, string>, entryPoint: string) => ({
       }
 
       // 3. Handle Bare Imports (packages)
+      if (args.path === 'react' || args.path.startsWith('react/')) {
+        return {
+          path: `https://esm.sh/${args.path}`,
+          namespace: 'http',
+        };
+      }
+
+      // Other packages can still be bundled
       if (!args.path.startsWith('.') && !args.path.startsWith('/')) {
         return {
           path: `https://esm.sh/${args.path}?bundle`,

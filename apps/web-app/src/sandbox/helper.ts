@@ -21,8 +21,12 @@ export const flattenFiles = (
   return files;
 };
 
-export const updateIframe = (bundledCode: string, indexHtml?: string) => {
-  const iframe = document.getElementById('sandbox-iframe') as HTMLIFrameElement;
+export const updateIframe = (
+  bundledCode: string,
+  iframeId: string,
+  indexHtml?: string
+) => {
+  const iframe = document.getElementById(iframeId) as HTMLIFrameElement;
 
   // Base64-encode the JS so it is safe inside a data URL
   const base64Js = btoa(unescape(encodeURIComponent(bundledCode)));
@@ -38,9 +42,10 @@ export const updateIframe = (bundledCode: string, indexHtml?: string) => {
 
 export const updateErrorInIframe = (
   err: string,
+  iframeId: string,
   indexHtml = BOILER_PLATES['html']
 ) => {
-  const iframe = document.getElementById('sandbox-iframe') as HTMLIFrameElement;
+  const iframe = document.getElementById(iframeId) as HTMLIFrameElement;
 
   const htmlWithScript = indexHtml.replace(
     `<div id="root"></div>`,

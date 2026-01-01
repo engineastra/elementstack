@@ -29,7 +29,7 @@ const ProjectBanner = () => {
   if (!demoFolder) return <></>;
   const selectedFile = getFileById('020:App.jsx', demoFolder);
   const [selectedOption, setSelectedOption] = useState<'Code' | 'Preview'>(
-    'Code'
+    'Preview'
   );
 
   const updateValue = (val: string) => {
@@ -64,7 +64,7 @@ const ProjectBanner = () => {
           </ul>
         </div>
       </div>
-      <div className="flex w-[85vw] lg:w-[70%] flex-col h-full min-h-[600px] items-center p-4 bg-card rounded-xl">
+      <div className="flex w-[85vw] lg:w-[70%] flex-col h-[600px] min-h-[600px] items-center p-4 bg-card rounded-xl">
         <div className="flex w-full h-[35px] *:text-[13px] gap-2">
           <p
             className={`px-[10px] py-[3px] h-fit rounded-md cursor-pointer ${
@@ -102,7 +102,11 @@ const ProjectBanner = () => {
               />
             )
           ) : (
-            <SandboxPreview folder={demoFolder} type={ProjectType.jsx} />
+            <SandboxPreview
+              key="demo-folder"
+              folder={demoFolder}
+              type={ProjectType.jsx}
+            />
           )}
         </div>
       </div>

@@ -1,7 +1,10 @@
 'use client';
 import { OPTION_CARDS } from '@elementstack/shared-assets/Constants';
 import { TechStack } from '@elementstack/shared-assets/Enums';
-import { getFolderTemplate } from '@elementstack/shared-assets/Template';
+import {
+  BOILER_PLATES,
+  getFolderTemplate,
+} from '@elementstack/shared-assets/Template';
 import {
   FileData,
   MachineQuestionData,
@@ -46,7 +49,7 @@ const MachineBanner = () => {
   const [selectedFile, setSelectedFile] = useState<FileData | null>(null);
   const [selectedOption, setSelectedOption] = useState<
     'Problem' | 'Code' | 'Preview'
-  >('Problem');
+  >('Preview');
 
   useEffect(() => {
     loadQuestionInTransition(async () => {
@@ -82,6 +85,7 @@ const MachineBanner = () => {
             .find((fld) => fld.name === 'src')
             ?.files.find((file) => file.name === 'App.jsx');
           if (appJsxFile) {
+            appJsxFile.value = BOILER_PLATES.todoAppJSX;
             payload.selectedFileId = appJsxFile.id;
             payload.treeItemSelectionId = appJsxFile.id;
             payload.selectedFolderId = appJsxFile.parentFolderId;
@@ -128,7 +132,9 @@ const MachineBanner = () => {
           </ul>
         </div>
       </div>
-      <div className={`flex w-[85vw] lg:w-[70%] flex-col h-full min-h-[600px] items-center p-4 bg-card rounded-xl`}>
+      <div
+        className={`flex w-[85vw] lg:w-[70%] flex-col h-[600px] min-h-[600px] items-center p-4 bg-card rounded-xl`}
+      >
         <div className="flex w-full h-[35px] *:text-[13px] gap-2">
           <p
             className={`px-[10px] py-[3px] h-fit rounded-md cursor-pointer ${
@@ -184,6 +190,7 @@ const MachineBanner = () => {
           )}
           {selectedOption === 'Preview' && (
             <SandboxPreview
+              key={questionData.metaData.id}
               folder={questionData.rootFolder}
               type={ProjectType.jsx}
             />

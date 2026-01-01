@@ -355,6 +355,231 @@ body,
   "main": "src/index.tsx"
 }
 `,
+  todoAppJSX:`import { useState, useMemo } from "react";
+
+export default function App() {
+  const [todos, setTodos] = useState([]);
+  const [input, setInput] = useState("");
+  const [filter, setFilter] = useState("all");
+
+  const addTodo = () => {
+    const value = input.trim();
+    if (!value) return;
+
+    setTodos((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        text: value,
+        completed: false,
+      },
+    ]);
+    setInput("");
+  };
+
+  const toggleTodo = (id) => {
+    setTodos((prev) =>
+      prev.map((todo) =>
+        todo.id === id
+          ? { ...todo, completed: !todo.completed }
+          : todo
+      )
+    );
+  };
+
+  const deleteTodo = (id) => {
+    setTodos((prev) => prev.filter((t) => t.id !== id));
+  };
+
+  const filteredTodos = useMemo(() => {
+    if (filter === "active") return todos.filter((t) => !t.completed);
+    if (filter === "completed") return todos.filter((t) => t.completed);
+    return todos;
+  }, [todos, filter]);
+
+  return (
+    <div style={styles.page}>
+      <div style={styles.container}>
+        <h1 style={styles.title}>Todo List</h1>
+
+        {/* Input */}
+        <div style={styles.inputRow}>
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && addTodo()}
+            placeholder="Add a new todo"
+            style={styles.input}
+          />
+          <button onClick={addTodo} style={styles.primaryBtn}>
+            Add
+          </button>
+        </div>
+
+        {/* Filters */}
+        <div style={styles.filters}>
+          {["all", "active", "completed"].map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              style={{
+                ...styles.filterBtn,
+                ...(filter === f ? styles.filterActive : {}),
+              }}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+
+        {/* List */}
+        <ul style={styles.list}>
+          {filteredTodos.map((todo) => (
+            <li key={todo.id} style={styles.listItem}>
+              <label style={styles.todoLeft}>
+                <input
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => toggleTodo(todo.id)}
+                />
+                <span
+                  style={{
+                    marginLeft: 10,
+                    color: todo.completed ? "#6b7280" : "#e5e7eb",
+                    textDecoration: todo.completed
+                      ? "line-through"
+                      : "none",
+                  }}
+                >
+                  {todo.text}
+                </span>
+              </label>
+
+              <button
+                onClick={() => deleteTodo(todo.id)}
+                style={styles.deleteBtn}
+              >
+                ✕
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        {filteredTodos.length === 0 && (
+          <p style={styles.empty}>Nothing here ✨</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* -------------------- */
+/* Dark theme styles    */
+/* -------------------- */
+
+const styles = {
+  page: {
+    minHeight: "100vh",
+    backgroundColor: "#0b0f19",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  container: {
+    width: "100%",
+    maxWidth: 480,
+    padding: 24,
+    backgroundColor: "#111827",
+    borderRadius: 12,
+    boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
+    fontFamily: "system-ui, sans-serif",
+  },
+
+  title: {
+    color: "#f9fafb",
+    marginBottom: 16,
+  },
+
+  inputRow: {
+    display: "flex",
+    gap: 8,
+  },
+
+  input: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: "#020617",
+    border: "1px solid #1f2933",
+    borderRadius: 8,
+    color: "#e5e7eb",
+    outline: "none",
+  },
+
+  primaryBtn: {
+    padding: "10px 14px",
+    backgroundColor: "#6366f1",
+    border: "none",
+    borderRadius: 8,
+    color: "#fff",
+    cursor: "pointer",
+  },
+
+  filters: {
+    display: "flex",
+    gap: 8,
+    marginTop: 16,
+  },
+
+  filterBtn: {
+    padding: "6px 10px",
+    backgroundColor: "#020617",
+    border: "1px solid #1f2933",
+    borderRadius: 6,
+    color: "#9ca3af",
+    cursor: "pointer",
+  },
+
+  filterActive: {
+    backgroundColor: "#1e1b4b",
+    color: "#c7d2fe",
+    borderColor: "#6366f1",
+  },
+
+  list: {
+    listStyle: "none",
+    padding: 0,
+    marginTop: 16,
+  },
+
+  listItem: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "10px 0",
+    borderBottom: "1px solid #1f2933",
+  },
+
+  todoLeft: {
+    display: "flex",
+    alignItems: "center",
+  },
+
+  deleteBtn: {
+    background: "transparent",
+    border: "none",
+    color: "#9ca3af",
+    cursor: "pointer",
+    fontSize: 16,
+  },
+
+  empty: {
+    marginTop: 24,
+    color: "#6b7280",
+    textAlign: "center",
+  },
+};
+`
 };
 
 export const LANGUAGE_TEMPLATES: Record<string, Folder> = {

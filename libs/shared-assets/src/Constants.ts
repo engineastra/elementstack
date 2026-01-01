@@ -866,3 +866,4 @@ export const DsaTabs: Record<string, DsaTabType> = {
   Desc: { name: 'Description', isLeft: true },
   Code: { name: 'Code', isLeft: false },
 };
+

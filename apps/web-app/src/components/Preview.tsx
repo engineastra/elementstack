@@ -34,10 +34,11 @@ export function SandboxPreview({
 
       workerRef.current.onmessage = (e) => {
         if (e.data.error) {
-          updateErrorInIframe(e.data.error);
+          updateErrorInIframe(e.data.error, folder.id);
         } else {
           updateIframe(
             e.data.code,
+            folder.id,
             flatFiles[
               type === (ProjectType.js || ProjectType.ts)
                 ? '/src/index.html'
@@ -58,7 +59,7 @@ export function SandboxPreview({
   return (
     <div className="h-full w-full">
       <iframe
-        id="sandbox-iframe"
+        id={folder.id}
         sandbox="allow-scripts allow-same-origin allow-modals"
         style={{
           width: '100%',
