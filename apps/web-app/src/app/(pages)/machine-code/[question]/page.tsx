@@ -155,10 +155,10 @@ const SingleQuestion = ({
       if (leftRef.current) leftRef.current.style.width = '100%';
       if (rightRef.current) rightRef.current.style.width = '100%';
     } else {
-      onResizeMain(33);
+      onResizeMain(selectedLeftTab === MachineLeftTabs.FileSystem ? 10 : 33);
       onResizeRightSec(50);
     }
-  }, [isTablet, codeRef.current]);
+  }, [isTablet, codeRef.current, selectedLeftTab]);
 
   return (
     <div

@@ -136,7 +136,7 @@ const MachineFolderTree = ({ folder }: { folder: Folder }) => {
       {nameChangeInputData.toggle &&
         nameChangeInputData.isNew &&
         selectedFolderId === folder.id && (
-          <div className="flex my-[4px] ml-4 px-2 py-[2px] bg-greenishgrey rounded-xl gap-1 items-center">
+          <div className="flex w-fit my-[4px] ml-[25px] px-[5px] py-[2px] bg-greenishgrey rounded-xl items-center">
             {nameChangeInputData.type === FsItemType.FILE ? (
               <FileIcon
                 sx={{ fontSize: 15, ...iconColor(COMMON_COLORS.machine[500]) }}

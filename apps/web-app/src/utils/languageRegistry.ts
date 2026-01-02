@@ -201,9 +201,18 @@ export const LANGUAGES: Record<string, EditorLanguage> = {
   },
 };
 
-export function getLanguageByExtension(ext: string) {
+export function getConfigsByExtension(ext: string) {
   const normalized = ext.replace('.', '').toLowerCase();
   return Object.values(LANGUAGES).find((lang) =>
     lang.extensions.includes(normalized)
   );
+}
+
+export function getLanguageByExtension(ext: string): string {
+  const normalized = ext.replace('.', '').toLowerCase();
+  const langData = Object.values(LANGUAGES).find((lang) =>
+    lang.extensions.includes(normalized)
+  );
+  if (langData) return langData.key;
+  return 'text';
 }
