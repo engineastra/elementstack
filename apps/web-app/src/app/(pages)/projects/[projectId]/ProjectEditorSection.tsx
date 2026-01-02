@@ -62,7 +62,7 @@ function ProjectEditorSection({ selectedFileId }: { selectedFileId: string }) {
 
   return (
     <div
-      className="flex flex-col md:flex-row md:h-full w-full min-w-0 min-h-0 md:max-h-[98vh] gap-1 justify-start md:justify-between *:select-none"
+      className="flex flex-col-reverse md:flex-row md:h-full w-full min-w-0 min-h-0 md:max-h-[98vh] gap-1 justify-start md:justify-between *:select-none"
       ref={wrapperRef}
     >
       <div
