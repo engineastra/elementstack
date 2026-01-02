@@ -82,6 +82,13 @@ export type MachineQuestionMeta = {
   };
 };
 
+export type FsNameInputType = {
+  id: string;
+  type: FsItemType | '';
+  toggle: boolean;
+  isNew: boolean;
+};
+
 export type MachineNameInputType = {
   id: string;
   type: FsItemType | '';
