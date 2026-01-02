@@ -1,11 +1,19 @@
 import type { Extension } from '@codemirror/state';
-
-import { javascript } from '@codemirror/lang-javascript';
-import { python } from '@codemirror/lang-python';
-import { java } from '@codemirror/lang-java';
-import { cpp } from '@codemirror/lang-cpp';
-import { go } from '@codemirror/lang-go';
-import { rust } from '@codemirror/lang-rust';
+import { Completion } from '@codemirror/autocomplete';
+import {
+  javascript,
+  scopeCompletionSource as jsScopeCS,
+  javascriptLanguage,
+} from '@codemirror/lang-javascript';
+import {
+  python,
+  pythonLanguage,
+  globalCompletion as pygc,
+} from '@codemirror/lang-python';
+import { java, javaLanguage } from '@codemirror/lang-java';
+import { cpp, cppLanguage } from '@codemirror/lang-cpp';
+import { go, goLanguage } from '@codemirror/lang-go';
+import { rust, rustLanguage } from '@codemirror/lang-rust';
 import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
 import { json } from '@codemirror/lang-json';
@@ -13,7 +21,8 @@ import { markdown } from '@codemirror/lang-markdown';
 import { sql } from '@codemirror/lang-sql';
 import { xml } from '@codemirror/lang-xml';
 import { php } from '@codemirror/lang-php';
-
+import { completeFromList } from '@codemirror/autocomplete';
+import { LANGUAGE_COMPLETION_MAP, LanguageKey } from './smartAutocoplete';
 
 export interface EditorLanguage {
   key: string;
@@ -30,10 +39,23 @@ export const LANGUAGES: Record<string, EditorLanguage> = {
     label: 'JavaScript',
     extensions: ['js', 'mjs', 'cjs', 'jsx'],
     aliases: ['js', 'jsx'],
-    loader: () =>
-      javascript({
-        jsx: true,
-      }),
+
+    loader: () => {
+      let configs: any = [
+        javascript({
+          jsx: true,
+        }),
+      ];
+      if (typeof window !== 'undefined') {
+        configs = [
+          ...configs,
+          javascriptLanguage.data.of({
+            autocomplete: jsScopeCS(window),
+          }), // This returns an Extension (Facet), NOT LanguageSupport
+        ];
+      }
+      return configs;
+    },
   },
 
   typescript: {
@@ -41,25 +63,49 @@ export const LANGUAGES: Record<string, EditorLanguage> = {
     label: 'TypeScript',
     extensions: ['ts', 'tsx'],
     aliases: ['ts', 'tsx'],
-    loader: () =>
-      javascript({
-        typescript: true,
-        jsx: true,
-      }),
+    loader: () => {
+      let configs: any = [
+        javascript({
+          typescript: true,
+          jsx: true,
+        }),
+      ];
+      if (typeof window !== 'undefined') {
+        configs = [
+          ...configs,
+          javascriptLanguage.data.of({
+            autocomplete: jsScopeCS(window),
+          }), // This returns an Extension (Facet), NOT LanguageSupport
+        ];
+      }
+      return configs;
+    },
   },
 
   python: {
     key: 'python',
     label: 'Python',
     extensions: ['py'],
-    loader: () => python(),
+    loader: () => [
+      python(),
+      pythonLanguage.data.of({
+        autocomplete: pygc,
+      }),
+    ],
   },
 
   java: {
     key: 'java',
     label: 'Java',
     extensions: ['java'],
-    loader: () => java(),
+    loader: () => [
+      java(),
+      javaLanguage.data.of({
+        autocomplete: completeFromList(
+          LANGUAGE_COMPLETION_MAP[LanguageKey.Java] as Completion[]
+        ),
+      }),
+    ],
   },
 
   cpp: {
@@ -67,70 +113,91 @@ export const LANGUAGES: Record<string, EditorLanguage> = {
     label: 'C++',
     extensions: ['c', 'cpp', 'cc', 'cxx', 'h'],
     aliases: ['c++'],
-    loader: () => cpp(),
+    loader: () => [
+      cpp(),
+      cppLanguage.data.of({
+        autocomplete: completeFromList(
+          LANGUAGE_COMPLETION_MAP[LanguageKey.Cpp] as Completion[]
+        ),
+      }),
+    ],
   },
 
   go: {
     key: 'go',
     label: 'Go',
     extensions: ['go'],
-    loader: () => go(),
+    loader: () => [
+      go(),
+      goLanguage.data.of({
+        autocomplete: completeFromList(
+          LANGUAGE_COMPLETION_MAP[LanguageKey.Go] as Completion[]
+        ),
+      }),
+    ],
   },
 
   rust: {
     key: 'rust',
     label: 'Rust',
     extensions: ['rs'],
-    loader: () => rust(),
+    loader: () => [
+      rust(),
+      rustLanguage.data.of({
+        autocomplete: completeFromList(
+          LANGUAGE_COMPLETION_MAP[LanguageKey.Rust] as Completion[]
+        ),
+      }),
+    ],
   },
 
   html: {
     key: 'html',
     label: 'HTML',
     extensions: ['html', 'htm'],
-    loader: () => html(),
+    loader: () => [html()],
   },
 
   css: {
     key: 'css',
     label: 'CSS',
     extensions: ['css'],
-    loader: () => css(),
+    loader: () => [css()],
   },
 
   json: {
     key: 'json',
     label: 'JSON',
     extensions: ['json'],
-    loader: () => json(),
+    loader: () => [json()],
   },
 
   markdown: {
     key: 'markdown',
     label: 'Markdown',
     extensions: ['md', 'markdown'],
-    loader: () => markdown(),
+    loader: () => [markdown()],
   },
 
   sql: {
     key: 'sql',
     label: 'SQL',
     extensions: ['sql'],
-    loader: () => sql(),
+    loader: () => [sql()],
   },
 
   xml: {
     key: 'xml',
     label: 'XML',
     extensions: ['xml'],
-    loader: () => xml(),
+    loader: () => [xml()],
   },
 
   php: {
     key: 'php',
     label: 'PHP',
     extensions: ['php'],
-    loader: () => php(),
+    loader: () => [php()],
   },
 };
 

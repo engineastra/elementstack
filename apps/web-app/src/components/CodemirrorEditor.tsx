@@ -3,10 +3,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { editorEssentials } from '@web-app/utils/editorEssentials';
 import { tomorrowNightBlue } from '@uiw/codemirror-theme-tomorrow-night-blue';
 import { getLanguageByExtension } from '@web-app/utils/languageRegistry';
-import {
-  LanguageKey,
-  smartAutocomplete,
-} from '@web-app/utils/smartAutocoplete';
+import { autocompletion } from '@codemirror/autocomplete';
 
 type CodemirrorEditorProp = {
   hideNumbering?: boolean;
@@ -42,8 +39,8 @@ const CodemirrorEditor = ({
             // TODO: Save Functionality
           },
         }),
-        smartAutocomplete((projectConfig?.key || '') as LanguageKey),
-        ...[projectConfig ? [projectConfig.loader()] : []],
+        autocompletion(),
+        ...[projectConfig ? projectConfig.loader() : []],
       ]}
       editable={!readOnly}
       onChange={(val) => {
