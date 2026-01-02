@@ -4,7 +4,8 @@ import { editorEssentials } from '@web-app/utils/editorEssentials';
 import { tomorrowNightBlue } from '@uiw/codemirror-theme-tomorrow-night-blue';
 import { getConfigsByExtension } from '@web-app/utils/languageRegistry';
 import { autocompletion } from '@codemirror/autocomplete';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { debounce } from 'lodash';
 
 type CodemirrorEditorProp = {
   hideNumbering?: boolean;
@@ -30,18 +31,11 @@ const CodemirrorEditor = ({
   const viewRef = useRef<ReactCodeMirrorRef>(null);
   const projectConfig = getConfigsByExtension(extention);
 
-  useEffect(() => {
-    if (viewRef.current && viewRef.current.view) {
-      // EditorView instance, call focus on mount
-      const view = viewRef.current.view;
-      const docLength = view.state.doc.length;
-      view.dispatch({
-        selection: { anchor: docLength, head: docLength }, // cursor at absolute end
-        scrollIntoView: true, // auto-scroll to show cursor
-      });
-      viewRef.current.view.focus();
+  const debouncedUpdate = debounce((val) => {
+    if (setValue) {
+      setValue(val as string);
     }
-  }, [viewRef.current]);
+  }, 1200);
 
   return (
     <CodeMirror
@@ -59,9 +53,7 @@ const CodemirrorEditor = ({
         ...[projectConfig ? projectConfig.loader() : []],
       ]}
       editable={!readOnly}
-      onChange={(val) => {
-        setValue?.(val);
-      }}
+      onChange={debouncedUpdate}
     />
   );
 };

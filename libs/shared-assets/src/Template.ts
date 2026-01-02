@@ -703,7 +703,7 @@ export const LANGUAGE_TEMPLATES: Record<string, Folder> = {
         extention: 'json',
         language: 'json',
         parentFolderId: '0:', // Update on initialization w.r.t parent's id
-        value: BOILER_PLATES.jsx,
+        value: BOILER_PLATES.jsxPackageJSON,
       },
     ],
     folders: [

@@ -11,6 +11,7 @@ import {
   MachineRightTabs,
   TechStack,
 } from '@elementstack/shared-assets/Enums';
+import { getFsInitData } from '@web-app/components/filesystem/FileSystem';
 
 const initialState: MachineQuestionData = {
   metaData: {
@@ -31,25 +32,7 @@ const initialState: MachineQuestionData = {
   },
   selectedLeftTab: MachineLeftTabs.Desc,
   selectedRightTab: MachineRightTabs.Code,
-  rootFolder: {
-    id: '0',
-    name: '',
-    parentFolderId: '',
-    totalItems: 0,
-    isExpanded: true,
-    files: [],
-    folders: [],
-  },
-  selectedFileId: '',
-  selectedFolderId: '',
-  treeItemSelectionId: '',
-  multipleItemsSelected: [],
-  nameChangeInputData: {
-    id: '',
-    type: '',
-    toggle: false,
-    isNew: true,
-  },
+  fsDetails: getFsInitData(),
 };
 
 export const MachineQuestionDetailsInitialState = Object.freeze({
@@ -80,7 +63,7 @@ const MachineQuestionProvider = ({ children }: { children: ReactNode }) => {
     defaultStateReducer<MachineQuestionData, Partial<MachineQuestionData>>,
     initialState
   );
-  const { multipleItemsSelected, rootFolder } = state;
+  const { multipleItemsSelected, rootFolder } = state.fsDetails;
 
   const setMachineQuestionDetails = (action: {
     payload: Partial<MachineQuestionData>;

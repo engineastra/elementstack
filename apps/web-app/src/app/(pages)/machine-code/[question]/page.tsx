@@ -10,6 +10,7 @@ import React, {
 import { MachineQuestionDetailsContext } from '@web-app/contexts/MachineQuestionProvider';
 import Description from './Description';
 import {
+  FsState,
   MachineQuestionData,
   ProjectType,
   QuestionLevel,
@@ -21,7 +22,7 @@ import {
   TechStack,
 } from '@elementstack/shared-assets/Enums';
 import RightTab from './RightTab';
-import FilesSection from './FilesSection';
+import MachineFileSection from './MachineFilesSection';
 import { getFolderTemplate } from '@elementstack/shared-assets/Template';
 import MachineCodeEditor from './MachineCodeEditor';
 import { SandboxPreview } from '@web-app/components/Preview';
@@ -67,20 +68,15 @@ const SingleQuestion = ({
   const previewRef = useRef<HTMLDivElement>(null);
   const [isHorzSplit, setIsHorzSplit] = useState(true);
   const [, loadQuestionInTransition] = useTransition();
-  const { metaData, rootFolder, selectedLeftTab, selectedRightTab } =
+  const { metaData, fsDetails, selectedLeftTab, selectedRightTab } =
     machineQuestionDetails;
+  const { rootFolder } = fsDetails;
   const projectType = [
     TechStack.HTML5_JS_BASED,
     TechStack.VANILLA_JS_BASED,
   ].includes(metaData.techStack)
     ? ProjectType.js
     : ProjectType.jsx;
-
-  useEffect(() => {
-    if (isTablet) {
-      setIsHorzSplit(false);
-    }
-  }, [isTablet]);
 
   useEffect(() => {
     loadQuestionInTransition(async () => {
@@ -105,21 +101,23 @@ const SingleQuestion = ({
         ].includes(payload.metaData?.techStack as TechStack)
           ? ProjectType.js
           : ProjectType.jsx;
-        payload.rootFolder =
+        const fsPayload: Partial<FsState> = {};
+        fsPayload.rootFolder =
           getFolderTemplate(quesProjType, payload.metaData?.title || '') ||
           undefined;
-        if (payload.rootFolder) {
-          payload.rootFolder.isRoot = true;
-          payload.rootFolder.isExpanded = true;
-          const htmlFile = payload.rootFolder.folders
+        if (fsPayload.rootFolder) {
+          fsPayload.rootFolder.isRoot = true;
+          fsPayload.rootFolder.isExpanded = true;
+          const htmlFile = fsPayload.rootFolder.folders
             .find((fld) => fld.name === 'public' || fld.name === 'src')
             ?.files.find((file) => file.name === 'index.html');
           if (htmlFile) {
-            payload.selectedFileId = htmlFile.id;
-            payload.treeItemSelectionId = htmlFile.id;
-            payload.selectedFolderId = htmlFile.parentFolderId;
-            payload.multipleItemsSelected = [];
+            fsPayload.selectedFileId = htmlFile.id;
+            fsPayload.treeItemSelectionId = htmlFile.id;
+            fsPayload.selectedFolderId = htmlFile.parentFolderId;
+            fsPayload.multipleItemsSelected = [];
           }
+          payload.fsDetails = { ...fsDetails, ...fsPayload };
         }
         setMachineQuestionDetails({ payload });
       }
@@ -154,8 +152,9 @@ const SingleQuestion = ({
     if (isTablet) {
       if (leftRef.current) leftRef.current.style.width = '100%';
       if (rightRef.current) rightRef.current.style.width = '100%';
+      setIsHorzSplit(false);
     } else {
-      onResizeMain(selectedLeftTab === MachineLeftTabs.FileSystem ? 10 : 33);
+      onResizeMain(selectedLeftTab === MachineLeftTabs.FileSystem ? 10 : 30);
       onResizeRightSec(50);
     }
   }, [isTablet, codeRef.current, selectedLeftTab]);
@@ -178,7 +177,9 @@ const SingleQuestion = ({
             }}
           />
         )}
-        {selectedLeftTab === MachineLeftTabs.FileSystem && <FilesSection />}
+        {selectedLeftTab === MachineLeftTabs.FileSystem && (
+          <MachineFileSection />
+        )}
       </div>
       {!isTablet && (
         <HorizontalResizeDivider

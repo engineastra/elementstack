@@ -1,248 +1,102 @@
-'use client';
-import { FILE_TYPE_TO_ICON } from '@elementstack/shared-assets/Constants';
-import { FileData, Folder } from '@elementstack/shared-assets/Types';
-import {
-  ChevronRight,
-  ExpandMore,
-  Folder as FolderIcon,
-  InsertDriveFile as FileIcon,
-} from '@mui/icons-material';
-import Image from 'next/image';
-import { FsItemType } from '@elementstack/shared-assets/Enums';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import { Ref } from 'react';
-import { iconColor } from '@web-app/utils/commonUtils';
-import FileSystemRootLayout from './FileSystemRootLayout';
-import { useFileSystem } from './useFileSystem';
+import { Folder, FsState } from '@elementstack/shared-assets/Types';
+import { defaultStateReducer } from '@web-app/utils/commonUtils';
+import React, { createContext, Dispatch, useEffect, useReducer } from 'react';
+import FolderTree from './FolderTree';
+import FsHeader from './FsHeader';
 
-type NewInputFieldPropType<T extends FieldValues> = {
-  name: Path<T>;
-  ref?: Ref<HTMLInputElement>;
-  control: Control<T>;
-  onInputEnter: () => void;
+export const getFsInitData = (): FsState => {
+  return {
+    rootFolder: {
+      id: '0',
+      name: '',
+      parentFolderId: '',
+      totalItems: 0,
+      isExpanded: true,
+      files: [],
+      folders: [],
+    },
+    selectedFileId: '',
+    selectedFolderId: '',
+    treeItemSelectionId: '',
+    multipleItemsSelected: [],
+    nameChangeInputData: {
+      id: '',
+      type: '',
+      toggle: false,
+      isNew: true,
+    },
+  };
 };
 
-const NewInputField = <T extends FieldValues>({
-  name,
-  ref,
-  control,
-  onInputEnter,
-}: NewInputFieldPropType<T>) => (
-  <Controller
-    name={name}
-    control={control}
-    render={({ field, fieldState }) => (
-      <div className="flex flex-col bg-greenishgrey px-2 py-1 rounded-md">
-        <input
-          {...field}
-          ref={ref}
-          type="text"
-          className="text-[12px] text-white  outline-none bg-transparent"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              onInputEnter();
-            }
-          }}
-        />
-        {fieldState.error && (
-          <p className="text-error text-[8px] italic font-medium">
-            {fieldState.error.message}
-          </p>
-        )}
-      </div>
-    )}
-  />
-);
+const initialState: FsState = getFsInitData();
+
+export const FsContext = createContext<{
+  fsData: FsState;
+  setFsData: Dispatch<{ payload: Partial<FsState> }>;
+  deleteFilesAndFolders: (folder: Folder) => Folder;
+}>({
+  fsData: initialState,
+  setFsData: () => {
+    return;
+  },
+  deleteFilesAndFolders: (_: Folder) => {
+    return _;
+  },
+});
 
 const FileSystem = ({
-  folder,
   colorTheme,
+  initialFsData,
+  icon,
+  title,
+  onUpdateFsData,
 }: {
-  folder: Folder;
   colorTheme: string;
+  initialFsData: FsState;
+  icon?: string;
+  title?: string;
+  onUpdateFsData: (data: FsState) => void;
 }) => {
-  const {
-    inputRef,
-    control,
-    multipleItemsSelected,
-    treeItemSelectionId,
-    selectedFolderId,
-    nameChangeInputData,
-    handleFileOrFolderSelection,
-    onDragStartFileOrFolder,
-    onDragOverFileOrFolder,
-    onDropFileOrFolder,
-    onFileOrFolderNameDoubleClick,
-    onNameChangeEnter,
-  } = useFileSystem({ folder });
+  const [state, dispatch] = useReducer<
+    FsState,
+    [action: { payload: Partial<FsState> }]
+  >(defaultStateReducer, initialState);
+  const { multipleItemsSelected, rootFolder } = state;
+
+  const setFsData = (action: { payload: Partial<FsState> }) => {
+    dispatch(action);
+  };
+
+  const deleteFilesAndFolders = (currentFolder: Folder = rootFolder) => {
+    const filteredFiles = currentFolder.files.filter(
+      (file) => !multipleItemsSelected.includes(file.id) || !file.canBeRemoved
+    );
+    const filteredFolders = currentFolder.folders.filter(
+      (fld) => !multipleItemsSelected.includes(fld.id) || !fld.canBeRemoved
+    );
+    currentFolder.files = filteredFiles;
+    currentFolder.folders = filteredFolders;
+    currentFolder.folders.forEach((fld) => deleteFilesAndFolders(fld));
+    return { ...currentFolder };
+  };
+
+  useEffect(() => {
+    dispatch({ payload: initialFsData });
+  }, []);
+
   return (
-    <FileSystemRootLayout>
-      <div
-        className={`flex flex-col ${folder.isRoot ? 'flex-1' : ''}`}
-        onDrop={(e) => onDropFileOrFolder(e, folder)}
-        onDragOver={onDragOverFileOrFolder}
+    <>
+      <FsContext.Provider
+        value={{ fsData: state, setFsData, deleteFilesAndFolders }}
       >
-        <div
-          draggable={!folder.isRoot}
-          className="flex items-center pt-1 cursor-pointer"
-          onClick={(e) => handleFileOrFolderSelection({ e, folderObj: folder })}
-          onDragStart={(e) =>
-            onDragStartFileOrFolder(e, {
-              movableFileOrFolderId: folder.id,
-              movableFileOrFolderParentFolderId: folder.parentFolderId,
-              type: FsItemType.FOLDER,
-            })
-          }
-        >
-          {!folder.isRoot && (
-            <>
-              {folder.isExpanded ? (
-                <ExpandMore color="warning" sx={{ fontSize: 15 }} />
-              ) : (
-                <ChevronRight sx={{ fontSize: 15 }} />
-              )}
-            </>
-          )}
-          <FolderIcon
-            color="warning"
-            sx={{
-              fontSize: 15,
-              marginRight: '0.5rem',
-              ...iconColor(colorTheme),
-            }}
-          />
-          {nameChangeInputData.toggle &&
-          nameChangeInputData.id === folder.id ? (
-            <NewInputField
-              name="nameChangeInput"
-              ref={inputRef}
-              control={control}
-              onInputEnter={onNameChangeEnter}
-            />
-          ) : (
-            <p
-              className={`text-[12px] ${
-                treeItemSelectionId === folder.id ||
-                multipleItemsSelected.includes(folder.id)
-                  ? `text-${colorTheme}-500`
-                  : ''
-              }`}
-              onDoubleClick={() =>
-                onFileOrFolderNameDoubleClick(
-                  folder.id,
-                  FsItemType.FOLDER,
-                  folder.name
-                )
-              }
-            >
-              {folder.name}
-            </p>
-          )}
-        </div>
-        {nameChangeInputData.toggle &&
-          nameChangeInputData.isNew &&
-          selectedFolderId === folder.id && (
-            <div className="flex w-fit my-[4px] ml-[25px] px-[5px] py-[2px] bg-greenishgrey rounded-xl items-center">
-              {nameChangeInputData.type === FsItemType.FILE ? (
-                <FileIcon
-                  sx={{
-                    fontSize: 15,
-                    ...iconColor(colorTheme),
-                  }}
-                />
-              ) : (
-                <FolderIcon
-                  sx={{
-                    fontSize: 15,
-                    ...iconColor(colorTheme),
-                  }}
-                />
-              )}
-              <NewInputField
-                name="nameChangeInput"
-                ref={inputRef}
-                control={control}
-                onInputEnter={onNameChangeEnter}
-              />
-            </div>
-          )}
-        {folder.isExpanded && (
-          <div className="flex flex-col pl-4 h-full">
-            {folder.folders.map((subFolder) => {
-              return (
-                <FileSystem
-                  key={subFolder.id}
-                  folder={subFolder}
-                  colorTheme={colorTheme}
-                />
-              );
-            })}
-            {folder.files.map((file: FileData) => {
-              return (
-                <div
-                  key={file.id}
-                  draggable
-                  className="flex pl-[15px] gap-2 pt-1 cursor-pointer items-center"
-                  onClick={(e) => {
-                    handleFileOrFolderSelection({ e, fileObj: file });
-                  }}
-                  onDragStart={(e) =>
-                    onDragStartFileOrFolder(e, {
-                      movableFileOrFolderId: file.id,
-                      movableFileOrFolderParentFolderId: file.parentFolderId,
-                      type: FsItemType.FILE,
-                    })
-                  }
-                >
-                  {FILE_TYPE_TO_ICON[file.extention] ? (
-                    <Image
-                      src={FILE_TYPE_TO_ICON[file.extention]}
-                      alt={file.id}
-                      className="w-[15px] h-[12px]"
-                    />
-                  ) : (
-                    <FileIcon
-                      color="warning"
-                      sx={{
-                        fontSize: 15,
-                        ...iconColor(colorTheme),
-                      }}
-                    />
-                  )}
-                  {nameChangeInputData.toggle &&
-                  nameChangeInputData.id === file.id ? (
-                    <NewInputField
-                      name="nameChangeInput"
-                      ref={inputRef}
-                      control={control}
-                      onInputEnter={onNameChangeEnter}
-                    />
-                  ) : (
-                    <p
-                      className={`text-[12px] ${
-                        treeItemSelectionId === file.id ||
-                        multipleItemsSelected.includes(file.id)
-                          ? `text-${colorTheme}-500`
-                          : ''
-                      }`}
-                      onDoubleClick={() =>
-                        onFileOrFolderNameDoubleClick(
-                          file.id,
-                          FsItemType.FILE,
-                          file.name
-                        )
-                      }
-                    >
-                      {file.name}
-                    </p>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    </FileSystemRootLayout>
+        <FsHeader icon={icon} title={title} />
+        <FolderTree
+          folder={rootFolder}
+          colorTheme={colorTheme}
+          onUpdateFsData={onUpdateFsData}
+        />
+      </FsContext.Provider>
+    </>
   );
 };
 

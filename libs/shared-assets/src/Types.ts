@@ -28,6 +28,20 @@ export type Folder = {
   canBeRemoved?: boolean;
 };
 
+export type FsState = {
+  rootFolder: Folder;
+  selectedFolderId: string;
+  selectedFileId: string;
+  treeItemSelectionId: string;
+  multipleItemsSelected: Array<string>;
+  nameChangeInputData: {
+    id: string;
+    type: FsItemType | '';
+    toggle: boolean;
+    isNew: boolean;
+  };
+};
+
 export type ProjectDetailsSchema = {
   id: string;
   name: string;
@@ -98,14 +112,9 @@ export type MachineNameInputType = {
 
 export type MachineQuestionData = {
   metaData: MachineQuestionMeta;
+  fsDetails: FsState;
   selectedLeftTab?: MachineLeftTabs | undefined;
   selectedRightTab?: MachineRightTabs | undefined;
-  rootFolder: Folder;
-  selectedFileId: string;
-  selectedFolderId: string;
-  treeItemSelectionId: string;
-  multipleItemsSelected: Array<string>;
-  nameChangeInputData: MachineNameInputType;
 };
 
 export type TestCase = Record<

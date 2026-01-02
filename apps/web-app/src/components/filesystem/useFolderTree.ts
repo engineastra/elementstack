@@ -10,6 +10,7 @@ import {
   FileData,
   Folder,
   FsNameInputType,
+  FsState,
 } from '@elementstack/shared-assets/Types';
 import { FsItemType } from '@elementstack/shared-assets/Enums';
 import z from 'zod';
@@ -18,7 +19,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Regex from '@elementstack/shared-assets/Regex';
 import { getFolderById } from '@web-app/utils/projectUtils';
 import { getLanguageByExtension } from '@web-app/utils/languageRegistry';
-import { FsContext, FsState } from './FileSystemRootLayout';
+import { FsContext } from './FileSystem';
 
 type MovableFileOrFolderType = {
   movableFileOrFolderId: string;
@@ -54,7 +55,13 @@ const createSchema = (folder: Folder) => {
   });
 };
 
-export const useFileSystem = ({ folder }: { folder: Folder }) => {
+export const useFolderTree = ({
+  folder,
+  onUpdateFsData,
+}: {
+  folder: Folder;
+  onUpdateFsData: (data: FsState) => void;
+}) => {
   const { fsData, setFsData } = useContext(FsContext);
   const {
     rootFolder,
@@ -86,6 +93,10 @@ export const useFileSystem = ({ folder }: { folder: Folder }) => {
       isNew: true,
     } as FsNameInputType;
   };
+
+  useEffect(() => {
+    onUpdateFsData(fsData);
+  }, [fsData]);
 
   useEffect(() => {
     if (inputRef.current) {

@@ -8,13 +8,16 @@ function MachineCodeEditor() {
   const { machineQuestionDetails, setMachineQuestionDetails } = useContext(
     MachineQuestionDetailsContext
   );
-  const { rootFolder, selectedFileId } = machineQuestionDetails;
+  const { fsDetails } = machineQuestionDetails;
+  const { rootFolder, selectedFileId } = fsDetails;
   const fileObj = getFileById(selectedFileId, rootFolder);
 
   const updateValue = (val: string) => {
     if (fileObj) {
       fileObj.value = val;
-      setMachineQuestionDetails({ payload: { rootFolder: { ...rootFolder } } });
+      setMachineQuestionDetails({
+        payload: { fsDetails: { ...fsDetails, rootFolder: { ...rootFolder } } },
+      });
     }
   };
 

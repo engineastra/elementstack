@@ -6,38 +6,25 @@ import {
   DeleteSweep,
   IndeterminateCheckBoxOutlined as Discard,
 } from '@mui/icons-material';
-import { FsItemType, TechStack } from '@elementstack/shared-assets/Enums';
+import { FsItemType } from '@elementstack/shared-assets/Enums';
 import { useContext, useState } from 'react';
-import { CREATE_PROJECT_OPTIONS } from '@elementstack/shared-assets/Constants';
 import { iconColor } from '@web-app/utils/commonUtils';
 import Modal from '@web-app/components/Modal';
 import DeletePopUp from '@web-app/components/DeletePopUp';
-import { MachineQuestionDetailsContext } from '@web-app/contexts/MachineQuestionProvider';
-import { ProjectType } from '@elementstack/shared-assets/Types';
+import { FsContext } from './FileSystem';
 
-const RightTabHeader = () => {
+const FsHeader = ({ icon, title }: { icon?: string; title?: string }) => {
+  const { fsData, setFsData, deleteFilesAndFolders } = useContext(FsContext);
   const {
-    machineQuestionDetails,
-    setMachineQuestionDetails,
-    deleteFilesAndFolders,
-  } = useContext(MachineQuestionDetailsContext);
-  const {
-    metaData,
     treeItemSelectionId,
     multipleItemsSelected,
     rootFolder,
     nameChangeInputData,
-  } = machineQuestionDetails;
+  } = fsData;
   const [deleteConfimPopupToggle, setDeleteConfimPopupToggle] = useState(false);
-  const projectType = [
-    TechStack.HTML5_JS_BASED,
-    TechStack.VANILLA_JS_BASED,
-  ].includes(metaData.techStack)
-    ? ProjectType.js
-    : ProjectType.jsx;
 
   const handleOnAddClick = (type: FsItemType) => {
-    setMachineQuestionDetails({
+    setFsData({
       payload: {
         nameChangeInputData: { ...nameChangeInputData, type, toggle: true },
       },
@@ -46,8 +33,8 @@ const RightTabHeader = () => {
 
   const handleOnDeleteItems = () => {
     if (multipleItemsSelected.length) {
-      const newRootFolder = deleteFilesAndFolders();
-      setMachineQuestionDetails({
+      const newRootFolder = deleteFilesAndFolders(rootFolder);
+      setFsData({
         payload: {
           rootFolder: newRootFolder,
           multipleItemsSelected: [],
@@ -61,15 +48,9 @@ const RightTabHeader = () => {
   };
 
   return (
-    <div className="flex items-center rounded-md rounded-b-none max-h-[100vh] ">
-      <Image
-        className="w-4"
-        src={CREATE_PROJECT_OPTIONS[projectType].icon}
-        alt="app-logo"
-      />
-      <p className="text-[12px] ml-[6px] mr-[15px]">
-        {CREATE_PROJECT_OPTIONS[projectType].title}
-      </p>
+    <div className="flex items-center rounded-md rounded-b-none">
+      {icon && <Image className="w-4" src={icon} alt="app-logo" />}
+      {title && <p className="text-[12px] ml-[6px] mr-[15px]">{title}</p>}
       <div className={`flex h-full items-center justify-center gap-1 ml-auto`}>
         {multipleItemsSelected.length > 0 && (
           <DeleteSweep
@@ -105,7 +86,7 @@ const RightTabHeader = () => {
               ...iconColor('#e4fb64'),
             }}
             onClick={() => {
-              setMachineQuestionDetails({
+              setFsData({
                 payload: { multipleItemsSelected: [treeItemSelectionId] },
               });
             }}
@@ -125,4 +106,4 @@ const RightTabHeader = () => {
   );
 };
 
-export default RightTabHeader;
+export default FsHeader;

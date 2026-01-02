@@ -1,9 +1,6 @@
 'use client';
-import {
-  COMMON_COLORS,
-  FILE_TYPE_TO_ICON,
-} from '@elementstack/shared-assets/Constants';
-import { FileData, Folder } from '@elementstack/shared-assets/Types';
+import { FILE_TYPE_TO_ICON } from '@elementstack/shared-assets/Constants';
+import { FileData, Folder, FsState } from '@elementstack/shared-assets/Types';
 import {
   ChevronRight,
   ExpandMore,
@@ -15,7 +12,7 @@ import { FsItemType } from '@elementstack/shared-assets/Enums';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { Ref } from 'react';
 import { iconColor } from '@web-app/utils/commonUtils';
-import { useMachineFileSystem } from '@web-app/hooks/useMachineFileSystem';
+import { useFolderTree } from './useFolderTree';
 
 type NewInputFieldPropType<T extends FieldValues> = {
   name: Path<T>;
@@ -56,7 +53,15 @@ const NewInputField = <T extends FieldValues>({
   />
 );
 
-const MachineFolderTree = ({ folder }: { folder: Folder }) => {
+const FolderTree = ({
+  folder,
+  colorTheme,
+  onUpdateFsData,
+}: {
+  folder: Folder;
+  colorTheme: string;
+  onUpdateFsData: (data: FsState) => void;
+}) => {
   const {
     inputRef,
     control,
@@ -70,7 +75,8 @@ const MachineFolderTree = ({ folder }: { folder: Folder }) => {
     onDropFileOrFolder,
     onFileOrFolderNameDoubleClick,
     onNameChangeEnter,
-  } = useMachineFileSystem({ folder });
+  } = useFolderTree({ folder, onUpdateFsData });
+
   return (
     <div
       className={`flex flex-col ${folder.isRoot ? 'flex-1' : ''}`}
@@ -103,7 +109,7 @@ const MachineFolderTree = ({ folder }: { folder: Folder }) => {
           sx={{
             fontSize: 15,
             marginRight: '0.5rem',
-            ...iconColor(COMMON_COLORS.machine[500]),
+            ...iconColor(colorTheme),
           }}
         />
         {nameChangeInputData.toggle && nameChangeInputData.id === folder.id ? (
@@ -115,12 +121,14 @@ const MachineFolderTree = ({ folder }: { folder: Folder }) => {
           />
         ) : (
           <p
-            className={`text-[12px] ${
-              treeItemSelectionId === folder.id ||
-              multipleItemsSelected.includes(folder.id)
-                ? 'text-machine-500'
-                : ''
-            }`}
+            className={`text-[12px]`}
+            style={{
+              color:
+                treeItemSelectionId === folder.id ||
+                multipleItemsSelected.includes(folder.id)
+                  ? colorTheme
+                  : 'white',
+            }}
             onDoubleClick={() =>
               onFileOrFolderNameDoubleClick(
                 folder.id,
@@ -139,11 +147,17 @@ const MachineFolderTree = ({ folder }: { folder: Folder }) => {
           <div className="flex w-fit my-[4px] ml-[25px] px-[5px] py-[2px] bg-greenishgrey rounded-xl items-center">
             {nameChangeInputData.type === FsItemType.FILE ? (
               <FileIcon
-                sx={{ fontSize: 15, ...iconColor(COMMON_COLORS.machine[500]) }}
+                sx={{
+                  fontSize: 15,
+                  ...iconColor(colorTheme),
+                }}
               />
             ) : (
               <FolderIcon
-                sx={{ fontSize: 15, ...iconColor(COMMON_COLORS.machine[500]) }}
+                sx={{
+                  fontSize: 15,
+                  ...iconColor(colorTheme),
+                }}
               />
             )}
             <NewInputField
@@ -157,7 +171,14 @@ const MachineFolderTree = ({ folder }: { folder: Folder }) => {
       {folder.isExpanded && (
         <div className="flex flex-col pl-4 h-full">
           {folder.folders.map((subFolder) => {
-            return <MachineFolderTree key={subFolder.id} folder={subFolder} />;
+            return (
+              <FolderTree
+                key={subFolder.id}
+                folder={subFolder}
+                colorTheme={colorTheme}
+                onUpdateFsData={onUpdateFsData}
+              />
+            );
           })}
           {folder.files.map((file: FileData) => {
             return (
@@ -187,7 +208,7 @@ const MachineFolderTree = ({ folder }: { folder: Folder }) => {
                     color="warning"
                     sx={{
                       fontSize: 15,
-                      ...iconColor(COMMON_COLORS.machine[500]),
+                      ...iconColor(colorTheme),
                     }}
                   />
                 )}
@@ -201,12 +222,14 @@ const MachineFolderTree = ({ folder }: { folder: Folder }) => {
                   />
                 ) : (
                   <p
-                    className={`text-[12px] ${
-                      treeItemSelectionId === file.id ||
-                      multipleItemsSelected.includes(file.id)
-                        ? 'text-machine-500'
-                        : ''
-                    }`}
+                    className={`text-[12px]`}
+                    style={{
+                      color:
+                        treeItemSelectionId === file.id ||
+                        multipleItemsSelected.includes(file.id)
+                          ? colorTheme
+                          : 'white',
+                    }}
                     onDoubleClick={() =>
                       onFileOrFolderNameDoubleClick(
                         file.id,
@@ -227,4 +250,4 @@ const MachineFolderTree = ({ folder }: { folder: Folder }) => {
   );
 };
 
-export default MachineFolderTree;
+export default FolderTree;
