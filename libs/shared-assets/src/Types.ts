@@ -42,24 +42,15 @@ export type FsState = {
   };
 };
 
-export type ProjectDetailsSchema = {
+export type ProjectMeta = {
   id: string;
   name: string;
   type: string;
-  openedFile: FileData | null;
-  tabs: Array<FileData>;
-  rootFolder: Folder;
-  currentSelectedId: string;
-  selectedFileId: string;
-  selectedFolderId: string;
-  renameFileOrFolderObj: FileData | Folder | null;
-  multipleItemsSelected: Array<string>;
-  isPreviewOn: boolean;
-  sideBarExpanded: boolean;
-  newInputData: {
-    isEnabled: boolean;
-    type: FsItemType | undefined;
-  };
+};
+
+export type ProjectDetailsSchema = {
+  meta: ProjectMeta;
+  fsDetails: FsState;
 };
 
 export enum ProjectType {

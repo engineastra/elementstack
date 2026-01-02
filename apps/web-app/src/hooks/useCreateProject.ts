@@ -1,5 +1,5 @@
 // useCreateProject.ts
-import { useReducer, Reducer, useContext } from 'react';
+import { useReducer, Reducer } from 'react';
 import { defaultStateReducer } from '../utils/commonUtils';
 import Regex from '@elementstack/shared-assets/Regex';
 import { getFolderTemplate } from '@elementstack/shared-assets/Template';
@@ -9,11 +9,12 @@ import { z } from 'zod';
 import { useRouter } from 'next/navigation';
 import Routes from '../constants/Routes';
 import { v4 as uuidv4 } from 'uuid';
+import { ProjectDetailsInitialState } from '@web-app/contexts/ProjectDetailsProvider';
 import {
-  ProjectDetailsContext,
-  ProjectDetailsInitialState,
-} from '@web-app/contexts/ProjectDetailsProvider';
-import { ProjectDetailsSchema } from '@elementstack/shared-assets/Types';
+  ProjectDetailsSchema,
+  ProjectMeta,
+} from '@elementstack/shared-assets/Types';
+import { setProjectsInLocalStorage } from '@web-app/utils/projectUtils';
 
 type InitialStateSchema = {
   projectType: string;
@@ -29,10 +30,9 @@ type Action = { payload: Partial<InitialStateSchema> };
 
 export const useCreateProject = (
   onClose: () => void,
-  projects: Array<ProjectDetailsSchema>
+  projects: Array<ProjectMeta>
 ) => {
   const router = useRouter();
-  const { setProjectDetails } = useContext(ProjectDetailsContext);
   const [state, dispatch] = useReducer(
     defaultStateReducer as Reducer<InitialStateSchema, Action>,
     initialState
@@ -75,11 +75,9 @@ export const useCreateProject = (
   };
 
   const handleCreateClick = () => {
-    const payload = {
+    const payload: ProjectDetailsSchema = {
       ...ProjectDetailsInitialState,
-      id: uuidv4(),
-      name: projectName,
-      type: projectType,
+      meta: { id: uuidv4(), name: projectName, type: projectType },
     };
     const newRootFolder = getFolderTemplate(projectType, projectName);
     if (!newRootFolder) {
@@ -88,13 +86,16 @@ export const useCreateProject = (
       });
       return;
     }
-    newRootFolder.isRoot = true;
-    payload.rootFolder = newRootFolder;
-    payload.currentSelectedId = payload.rootFolder.id;
-    payload.selectedFolderId = payload.rootFolder.id;
-    setProjectDetails({ payload });
 
-    router.push(`${Routes.PROJECT}/${payload.id}`);
+    newRootFolder.isRoot = true;
+    payload.fsDetails = {
+      ...payload.fsDetails,
+      rootFolder: newRootFolder,
+      treeItemSelectionId: newRootFolder.id,
+      selectedFolderId: newRootFolder.id,
+    };
+    setProjectsInLocalStorage(payload);
+    router.push(`${Routes.PROJECT}/${payload.meta.id}`);
     onClose();
   };
 

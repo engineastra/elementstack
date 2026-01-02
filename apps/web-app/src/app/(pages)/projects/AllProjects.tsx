@@ -3,19 +3,12 @@ import {
   CREATE_PROJECT_OPTIONS,
   PROJECT_THEME_BY_TYPE,
 } from '@elementstack/shared-assets/Constants';
-import { ProjectDetailsSchema } from '@elementstack/shared-assets/Types';
+import { ProjectMeta } from '@elementstack/shared-assets/Types';
 import Routes from '@web-app/constants/Routes';
-import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
 import { getAllProjectsFromLocalStorage } from '@web-app/utils/projectUtils';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 const AllProjects = ({
   projects,
@@ -23,15 +16,14 @@ const AllProjects = ({
   setProjects,
   setSelectedProjects,
 }: {
-  projects: Array<ProjectDetailsSchema>;
+  projects: Array<ProjectMeta>;
   selectedProjects: Array<string>;
-  setProjects: Dispatch<Array<ProjectDetailsSchema>>;
+  setProjects: Dispatch<Array<ProjectMeta>>;
   setSelectedProjects: Dispatch<Array<string> | SetStateAction<Array<string>>>;
 }) => {
   const router = useRouter();
 
   const [isClient, setIsClient] = useState(false);
-  const { setProjectDetails } = useContext(ProjectDetailsContext);
 
   useEffect(() => {
     setIsClient(true);
@@ -40,7 +32,7 @@ const AllProjects = ({
 
   const onClickProject = (
     e: React.MouseEvent<HTMLDivElement>,
-    projPayload: ProjectDetailsSchema
+    projPayload: ProjectMeta
   ) => {
     if (e.ctrlKey || e.metaKey) {
       if (selectedProjects.includes(projPayload.id)) {
@@ -51,7 +43,6 @@ const AllProjects = ({
         setSelectedProjects((prev) => [...prev, projPayload.id]);
       }
     } else {
-      setProjectDetails({ payload: projPayload });
       router.push(`${Routes.PROJECT}/${projPayload.id}`);
     }
   };

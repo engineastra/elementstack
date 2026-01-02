@@ -2,6 +2,7 @@ import {
   FileData,
   Folder,
   ProjectDetailsSchema,
+  ProjectMeta,
 } from '@elementstack/shared-assets/Types';
 import { LOCAL_STORAGE_KEYS } from '@web-app/constants/Common';
 import { decodeBase64, encodeBase64 } from './commonUtils';
@@ -16,7 +17,7 @@ export const setProjectsInLocalStorage = (
       const allProjectsJSON = decodeBase64(allProjectsB64);
       allProjects = JSON.parse(allProjectsJSON);
       allProjects = allProjects.filter(
-        (proj) => proj.id && proj.id != projectDetails.id
+        (proj) => proj.meta.id && proj.meta.id != projectDetails.meta.id
       );
     }
     allProjects.push(projectDetails);
@@ -29,11 +30,19 @@ export const setProjectsInLocalStorage = (
 export const getAllProjectsFromLocalStorage = () => {
   if (typeof window !== 'undefined') {
     const allProjectsB64 = localStorage.getItem(LOCAL_STORAGE_KEYS.projects);
-    let allProjects: Array<ProjectDetailsSchema> = [];
+    let allProjects: Array<ProjectMeta> = [];
     if (allProjectsB64) {
       const allProjectsJSON = decodeBase64(allProjectsB64);
-      allProjects = JSON.parse(allProjectsJSON);
-      allProjects = allProjects.filter((proj) => proj.id);
+      const jsonData = JSON.parse(allProjectsJSON);
+      allProjects = jsonData
+        .filter((proj: ProjectDetailsSchema) => proj.meta.id)
+        .map((proj: ProjectDetailsSchema) => {
+          return {
+            id: proj.meta.id,
+            name: proj.meta.name,
+            type: proj.meta.type,
+          };
+        });
     }
     return allProjects.reverse();
   }
@@ -47,7 +56,9 @@ export const getProjectFromLocalStorageById = (id: string) => {
     if (allProjectsB64) {
       const allProjectsJSON = decodeBase64(allProjectsB64);
       allProjects = JSON.parse(allProjectsJSON);
-      const projectDetails = allProjects.filter((proj) => proj.id === id)[0];
+      const projectDetails = allProjects.filter(
+        (proj) => proj.meta.id === id
+      )[0];
       return projectDetails || [];
     }
     return allProjects;
@@ -62,7 +73,7 @@ export const deleteProjectFromLocalStorageById = (id: string) => {
     if (allProjectsB64) {
       const allProjectsJSON = decodeBase64(allProjectsB64);
       allProjects = JSON.parse(allProjectsJSON);
-      allProjects = allProjects.filter((proj) => proj.id !== id);
+      allProjects = allProjects.filter((proj) => proj.meta.id !== id);
       localStorage.removeItem(LOCAL_STORAGE_KEYS.projects);
       allProjects.forEach((proj) => setProjectsInLocalStorage(proj));
     }

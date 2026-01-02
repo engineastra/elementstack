@@ -1,6 +1,5 @@
 'use client';
 import React, { use, useContext, useEffect } from 'react';
-import SideBar from './SideBar';
 import ProjectEditorSection from './ProjectEditorSection';
 import { ProjectDetailsContext } from '@web-app/contexts/ProjectDetailsProvider';
 import { getProjectFromLocalStorageById } from '@web-app/utils/projectUtils';
@@ -14,16 +13,16 @@ const SingleProject = ({
   const { projectDetails, setProjectDetails } = useContext(
     ProjectDetailsContext
   );
-  const { selectedFileId } = projectDetails;
+  const { fsDetails } = projectDetails;
+  const { selectedFileId } = fsDetails;
   useEffect(() => {
     const projectData = getProjectFromLocalStorageById(paramObj.projectId);
     setProjectDetails({ payload: projectData });
   }, []);
 
-  if (!projectDetails.id) return <></>;
+  if (!projectDetails.meta.id) return <></>;
   return (
-    <div className="relative flex w-full h-[100vh] md:max-h-[100vh] p-2 gap-2">
-      <SideBar />
+    <div className="relative flex w-full min-h-[100vh] p-2 gap-2">
       <ProjectEditorSection selectedFileId={selectedFileId} />
     </div>
   );

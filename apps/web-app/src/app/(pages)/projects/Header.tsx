@@ -8,7 +8,7 @@ import {
 import { useProject } from '@web-app/hooks/useProject';
 import Modal from '@web-app/components/Modal';
 import CreateProject from './CreateProject';
-import { ProjectDetailsSchema } from '@elementstack/shared-assets/Types';
+import { ProjectMeta } from '@elementstack/shared-assets/Types';
 import { Dispatch, SetStateAction, useContext } from 'react';
 import {
   DEVICE_SIZES,
@@ -24,7 +24,7 @@ const Header = ({
   selectedProjects,
   setSelectedProjects,
 }: {
-  projects: Array<ProjectDetailsSchema>;
+  projects: Array<ProjectMeta>;
   selectedProjects: Array<string>;
   setSelectedProjects: Dispatch<Array<string> | SetStateAction<Array<string>>>;
 }) => {

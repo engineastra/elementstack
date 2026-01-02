@@ -12,33 +12,11 @@ import {
 } from '@elementstack/shared-assets/Types';
 import { defaultStateReducer } from '../utils/commonUtils';
 import { setProjectsInLocalStorage } from '@web-app/utils/projectUtils';
+import { getFsInitData } from '@web-app/components/filesystem/FileSystem';
 
 const initialState: ProjectDetailsSchema = {
-  id: '',
-  name: '',
-  type: '',
-  openedFile: null,
-  tabs: [],
-  rootFolder: {
-    id: '0',
-    name: '',
-    parentFolderId: '',
-    totalItems: 0,
-    isExpanded: true,
-    files: [],
-    folders: [],
-  },
-  currentSelectedId: '',
-  selectedFileId: '',
-  selectedFolderId: '',
-  renameFileOrFolderObj: null,
-  multipleItemsSelected: [],
-  isPreviewOn: true,
-  sideBarExpanded: true,
-  newInputData: {
-    isEnabled: false,
-    type: undefined,
-  },
+  meta: { id: '', name: '', type: '' },
+  fsDetails: getFsInitData(),
 };
 
 export const ProjectDetailsInitialState = Object.freeze({ ...initialState });
@@ -66,7 +44,7 @@ const ProjectDetailsProvider = ({ children }: { children: ReactNode }) => {
     defaultStateReducer<ProjectDetailsSchema, Partial<ProjectDetailsSchema>>,
     initialState
   );
-  const { multipleItemsSelected, rootFolder } = state;
+  const { multipleItemsSelected, rootFolder } = state.fsDetails;
 
   const deleteFilesAndFolders = (currentFolder: Folder = rootFolder) => {
     const filteredFiles = currentFolder.files.filter(
@@ -82,7 +60,7 @@ const ProjectDetailsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    if (state.id) setProjectsInLocalStorage(state);
+    if (state.meta.id) setProjectsInLocalStorage(state);
   }, [state]);
 
   const setProjectDetails = (action: {

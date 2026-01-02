@@ -3,11 +3,11 @@ import { oxanium } from '@web-app/constants/Common';
 import AllProjects from './AllProjects';
 import Header from './Header';
 import { useState } from 'react';
-import { ProjectDetailsSchema } from '@elementstack/shared-assets/Types';
+import { ProjectMeta } from '@elementstack/shared-assets/Types';
 
 const Project = () => {
-  const [projects, setProjects] = useState<Array<ProjectDetailsSchema>>([]);
-  const [selectedProjects, setSelectedProjects] = useState<Array<string>>([]);
+  const [projects, setProjects] = useState<ProjectMeta[]>([]);
+  const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
 
   return (
     <div

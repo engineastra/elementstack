@@ -4,13 +4,13 @@ import { CREATE_PROJECT_OPTIONS } from '@elementstack/shared-assets/Constants';
 import { oxanium } from '@web-app/constants/Common';
 import Image from 'next/image';
 import { useCreateProject } from '@web-app/hooks/useCreateProject';
-import { ProjectDetailsSchema } from '@elementstack/shared-assets/Types';
+import { ProjectMeta } from '@elementstack/shared-assets/Types';
 
 const CreateProject = ({
   projects,
   onClose,
 }: {
-  projects: Array<ProjectDetailsSchema>;
+  projects: Array<ProjectMeta>;
   onClose: () => void;
 }) => {
   const {
